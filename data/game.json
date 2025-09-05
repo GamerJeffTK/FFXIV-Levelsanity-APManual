@@ -1,0 +1,7 @@
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.game.schema.json",
+  "game": "FFXIVtest",
+  "creator": "PumpkinJackTR",
+  "filler_item_name": "test",
+  "starting_items": []
+}

@@ -1,0 +1,1492 @@
+{
+  "Gladiator/Paladin Levels 1 - 10": {
+    "connects_to": [
+      "Gladiator/Paladin Levels 11 - 20"
+    ],
+    "requires": [],
+    "starting": true
+  },
+  "Gladiator/Paladin Levels 11 - 20": {
+    "connects_to": [
+      "Gladiator/Paladin Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Gladiator/Paladin Levels 21 - 30": {
+    "connects_to": [
+      "Gladiator/Paladin Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Gladiator/Paladin Levels 31 - 40": {
+    "connects_to": [
+      "Gladiator/Paladin Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Gladiator/Paladin Levels 41 - 50": {
+    "connects_to": [
+      "Gladiator/Paladin Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Gladiator/Paladin Levels 51 - 60": {
+    "connects_to": [
+      "Gladiator/Paladin Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Gladiator/Paladin Levels 61 - 70": {
+    "connects_to": [
+      "Gladiator/Paladin Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Gladiator/Paladin Levels 71 - 80": {
+    "connects_to": [
+      "Gladiator/Paladin Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Gladiator/Paladin Levels 81 - 90": {
+    "connects_to": [
+      "Gladiator/Paladin Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Gladiator/Paladin Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Marauder/Warrior Levels 1 - 10": {
+    "connects_to": [
+      "Marauder/Warrior Levels 11 - 20"
+    ],
+    "starting": true,
+    "requires": []
+  },
+  "Marauder/Warrior Levels 11 - 20": {
+    "connects_to": [
+      "Marauder/Warrior Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Marauder/Warrior Levels 21 - 30": {
+    "connects_to": [
+      "Marauder/Warrior Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Marauder/Warrior Levels 31 - 40": {
+    "connects_to": [
+      "Marauder/Warrior Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Marauder/Warrior Levels 41 - 50": {
+    "connects_to": [
+      "Marauder/Warrior Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Marauder/Warrior Levels 51 - 60": {
+    "connects_to": [
+      "Marauder/Warrior Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Marauder/Warrior Levels 61 - 70": {
+    "connects_to": [
+      "Marauder/Warrior Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Marauder/Warrior Levels 71 - 80": {
+    "connects_to": [
+      "Marauder/Warrior Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Marauder/Warrior Levels 81 - 90": {
+    "connects_to": [
+      "Marauder/Warrior Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Marauder/Warrior Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Lancer/Dragoon Levels 1 - 10": {
+    "starting": true,
+    "connects_to": [
+      "Lancer/Dragoon Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Lancer/Dragoon Levels 11 - 20": {
+    "connects_to": [
+      "Lancer/Dragoon Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Lancer/Dragoon Levels 21 - 30": {
+    "connects_to": [
+      "Lancer/Dragoon Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Lancer/Dragoon Levels 31 - 40": {
+    "connects_to": [
+      "Lancer/Dragoon Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Lancer/Dragoon Levels 41 - 50": {
+    "connects_to": [
+      "Lancer/Dragoon Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Lancer/Dragoon Levels 51 - 60": {
+    "connects_to": [
+      "Lancer/Dragoon Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Lancer/Dragoon Levels 61 - 70": {
+    "connects_to": [
+      "Lancer/Dragoon Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Lancer/Dragoon Levels 71 - 80": {
+    "connects_to": [
+      "Lancer/Dragoon Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Lancer/Dragoon Levels 81 - 90": {
+    "connects_to": [
+      "Lancer/Dragoon Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Lancer/Dragoon Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Pugilist/Monk Levels 1 - 10": {
+    "starting": true,
+    "connects_to": [
+      "Pugilist/Monk Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Pugilist/Monk Levels 11 - 20": {
+    "connects_to": [
+      "Pugilist/Monk Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Pugilist/Monk Levels 21 - 30": {
+    "connects_to": [
+      "Pugilist/Monk Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Pugilist/Monk Levels 31 - 40": {
+    "connects_to": [
+      "Pugilist/Monk Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Pugilist/Monk Levels 41 - 50": {
+    "connects_to": [
+      "Pugilist/Monk Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Pugilist/Monk Levels 51 - 60": {
+    "connects_to": [
+      "Pugilist/Monk Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Pugilist/Monk Levels 61 - 70": {
+    "connects_to": [
+      "Pugilist/Monk Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Pugilist/Monk Levels 71 - 80": {
+    "connects_to": [
+      "Pugilist/Monk Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Pugilist/Monk Levels 81 - 90": {
+    "connects_to": [
+      "Pugilist/Monk Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Pugilist/Monk Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Archer/Bard Levels 1 - 10": {
+    "starting": true,
+    "connects_to": [
+      "Archer/Bard Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Archer/Bard Levels 11 - 20": {
+    "connects_to": [
+      "Archer/Bard Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Archer/Bard Levels 21 - 30": {
+    "connects_to": [
+      "Archer/Bard Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Archer/Bard Levels 31 - 40": {
+    "connects_to": [
+      "Archer/Bard Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Archer/Bard Levels 41 - 50": {
+    "connects_to": [
+      "Archer/Bard Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Archer/Bard Levels 51 - 60": {
+    "connects_to": [
+      "Archer/Bard Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Archer/Bard Levels 61 - 70": {
+    "connects_to": [
+      "Archer/Bard Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Archer/Bard Levels 71 - 80": {
+    "connects_to": [
+      "Archer/Bard Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Archer/Bard Levels 81 - 90": {
+    "connects_to": [
+      "Archer/Bard Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Archer/Bard Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Thaumaturge/Black Mage Levels 1 - 10": {
+    "starting": true,
+    "connects_to": [
+      "Thaumaturge/Black Mage Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Thaumaturge/Black Mage Levels 11 - 20": {
+    "connects_to": [
+      "Thaumaturge/Black Mage Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Thaumaturge/Black Mage Levels 21 - 30": {
+    "connects_to": [
+      "Thaumaturge/Black Mage Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Thaumaturge/Black Mage Levels 31 - 40": {
+    "connects_to": [
+      "Thaumaturge/Black Mage Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Thaumaturge/Black Mage Levels 41 - 50": {
+    "connects_to": [
+      "Thaumaturge/Black Mage Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Thaumaturge/Black Mage Levels 51 - 60": {
+    "connects_to": [
+      "Thaumaturge/Black Mage Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Thaumaturge/Black Mage Levels 61 - 70": {
+    "connects_to": [
+      "Thaumaturge/Black Mage Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Thaumaturge/Black Mage Levels 71 - 80": {
+    "connects_to": [
+      "Thaumaturge/Black Mage Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Thaumaturge/Black Mage Levels 81 - 90": {
+    "connects_to": [
+      "Thaumaturge/Black Mage Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Thaumaturge/Black Mage Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Conjurer/White Mage Levels 1 - 10": {
+    "starting": true,
+    "connects_to": [
+      "Conjurer/White Mage Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Conjurer/White Mage Levels 11 - 20": {
+    "connects_to": [
+      "Conjurer/White Mage Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Conjurer/White Mage Levels 21 - 30": {
+    "connects_to": [
+      "Conjurer/White Mage Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Conjurer/White Mage Levels 31 - 40": {
+    "connects_to": [
+      "Conjurer/White Mage Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Conjurer/White Mage Levels 41 - 50": {
+    "connects_to": [
+      "Conjurer/White Mage Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Conjurer/White Mage Levels 51 - 60": {
+    "connects_to": [
+      "Conjurer/White Mage Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Conjurer/White Mage Levels 61 - 70": {
+    "connects_to": [
+      "Conjurer/White Mage Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Conjurer/White Mage Levels 71 - 80": {
+    "connects_to": [
+      "Conjurer/White Mage Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Conjurer/White Mage Levels 81 - 90": {
+    "connects_to": [
+      "Conjurer/White Mage Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Conjurer/White Mage Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Arcanist/Summoner/Scholar Levels 1 - 10": {
+    "starting": true,
+    "connects_to": [
+      "Arcanist/Summoner/Scholar Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Arcanist/Summoner/Scholar Levels 11 - 20": {
+    "connects_to": [
+      "Arcanist/Summoner/Scholar Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Arcanist/Summoner/Scholar Levels 21 - 30": {
+    "connects_to": [
+      "Arcanist/Summoner/Scholar Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Arcanist/Summoner/Scholar Levels 31 - 40": {
+    "connects_to": [
+      "Arcanist/Summoner/Scholar Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Arcanist/Summoner/Scholar Levels 41 - 50": {
+    "connects_to": [
+      "Arcanist/Summoner/Scholar Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Arcanist/Summoner/Scholar Levels 51 - 60": {
+    "connects_to": [
+      "Arcanist/Summoner/Scholar Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Arcanist/Summoner/Scholar Levels 61 - 70": {
+    "connects_to": [
+      "Arcanist/Summoner/Scholar Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Arcanist/Summoner/Scholar Levels 71 - 80": {
+    "connects_to": [
+      "Arcanist/Summoner/Scholar Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Arcanist/Summoner/Scholar Levels 81 - 90": {
+    "connects_to": [
+      "Arcanist/Summoner/Scholar Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Arcanist/Summoner/Scholar Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Rogue/Ninja Levels 1 - 10": {
+    "connects_to": [
+      "Rogue/Ninja Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Rogue/Ninja Levels 11 - 20": {
+    "connects_to": [
+      "Rogue/Ninja Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Rogue/Ninja Levels 21 - 30": {
+    "connects_to": [
+      "Rogue/Ninja Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Rogue/Ninja Levels 31 - 40": {
+    "connects_to": [
+      "Rogue/Ninja Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Rogue/Ninja Levels 41 - 50": {
+    "connects_to": [
+      "Rogue/Ninja Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Rogue/Ninja Levels 51 - 60": {
+    "connects_to": [
+      "Rogue/Ninja Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Rogue/Ninja Levels 61 - 70": {
+    "connects_to": [
+      "Rogue/Ninja Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Rogue/Ninja Levels 71 - 80": {
+    "connects_to": [
+      "Rogue/Ninja Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Rogue/Ninja Levels 81 - 90": {
+    "connects_to": [
+      "Rogue/Ninja Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Rogue/Ninja Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Dark Knight Levels 30 - 40": {
+    "connects_to": [
+      "Dark Knight Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Dark Knight Levels 41 - 50": {
+    "connects_to": [
+      "Dark Knight Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Dark Knight Levels 51 - 60": {
+    "connects_to": [
+      "Dark Knight Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Dark Knight Levels 61 - 70": {
+    "connects_to": [
+      "Dark Knight Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Dark Knight Levels 71 - 80": {
+    "connects_to": [
+      "Dark Knight Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Dark Knight Levels 81 - 90": {
+    "connects_to": [
+      "Dark Knight Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Dark Knight Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Dark Knight Levels 30 - 10": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Machinist Levels 30 - 40": {
+    "connects_to": [
+      "Machinist Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Machinist Levels 41 - 50": {
+    "connects_to": [
+      "Machinist Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Machinist Levels 51 - 60": {
+    "connects_to": [
+      "Machinist Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Machinist Levels 61 - 70": {
+    "connects_to": [
+      "Machinist Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Machinist Levels 71 - 80": {
+    "connects_to": [
+      "Machinist Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Machinist Levels 81 - 90": {
+    "connects_to": [
+      "Machinist Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Machinist Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Astrologian Levels 30 - 40": {
+    "connects_to": [
+      "Astrologian Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Astrologian Levels 41 - 50": {
+    "connects_to": [
+      "Astrologian Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Astrologian Levels 51 - 60": {
+    "connects_to": [
+      "Astrologian Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Astrologian Levels 61 - 70": {
+    "connects_to": [
+      "Astrologian Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Astrologian Levels 71 - 80": {
+    "connects_to": [
+      "Astrologian Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Astrologian Levels 81 - 90": {
+    "connects_to": [
+      "Astrologian Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Astrologian Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Samurai Levels 50 - 60": {
+    "connects_to": [
+      "Samurai Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Samurai Levels 61 - 70": {
+    "connects_to": [
+      "Samurai Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Samurai Levels 71 - 80": {
+    "connects_to": [
+      "Samurai Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Samurai Levels 81 - 90": {
+    "connects_to": [
+      "Samurai Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Samurai Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Red Mage Levels 50 - 60": {
+    "connects_to": [
+      "Red Mage Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Red Mage Levels 61 - 70": {
+    "connects_to": [
+      "Red Mage Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Red Mage Levels 71 - 80": {
+    "connects_to": [
+      "Red Mage Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Red Mage Levels 81 - 90": {
+    "connects_to": [
+      "Red Mage Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Red Mage Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Blue Mage Levels 1 - 10": {
+    "connects_to": [
+      "Blue Mage Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Blue Mage Levels 11 - 20": {
+    "connects_to": [
+      "Blue Mage Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Blue Mage Levels 21 - 30": {
+    "connects_to": [
+      "Blue Mage Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Blue Mage Levels 31 - 40": {
+    "connects_to": [
+      "Blue Mage Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Blue Mage Levels 41 - 50": {
+    "connects_to": [
+      "Blue Mage Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Blue Mage Levels 51 - 60": {
+    "connects_to": [
+      "Blue Mage Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Blue Mage Levels 61 - 70": {
+    "connects_to": [
+      "Blue Mage Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Blue Mage Levels 71 - 80": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Gunbreaker Levels 60 - 70": {
+    "connects_to": [
+      "Gunbreaker Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Gunbreaker Levels 71 - 80": {
+    "connects_to": [
+      "Gunbreaker Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Gunbreaker Levels 81 - 90": {
+    "connects_to": [
+      "Gunbreaker Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Gunbreaker Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Dancer Levels 60 - 70": {
+    "connects_to": [
+      "Dancer Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Dancer Levels 71 - 80": {
+    "connects_to": [
+      "Dancer Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Dancer Levels 81 - 90": {
+    "connects_to": [
+      "Dancer Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Dancer Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Reaper Levels 70 - 80": {
+    "connects_to": [
+      "Reaper Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Reaper Levels 81 - 90": {
+    "connects_to": [
+      "Reaper Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Reaper Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Sage Levels 70 - 80": {
+    "connects_to": [
+      "Sage Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Sage Levels 81 - 90": {
+    "connects_to": [
+      "Sage Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Sage Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Viper Levels 80 - 90": {
+    "connects_to": [
+      "Viper Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Viper Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Pictomancer Levels 80 - 90": {
+    "connects_to": [
+      "Pictomancer Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Pictomancer Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Carpenter Levels 1 - 10": {
+    "connects_to": [
+      "Carpenter Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Carpenter Levels 11 - 20": {
+    "connects_to": [
+      "Carpenter Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Carpenter Levels 21 - 30": {
+    "connects_to": [
+      "Carpenter Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Carpenter Levels 31 - 40": {
+    "connects_to": [
+      "Carpenter Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Carpenter Levels 41 - 50": {
+    "connects_to": [
+      "Carpenter Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Carpenter Levels 51 - 60": {
+    "connects_to": [
+      "Carpenter Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Carpenter Levels 61 - 70": {
+    "connects_to": [
+      "Carpenter Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Carpenter Levels 71 - 80": {
+    "connects_to": [
+      "Carpenter Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Carpenter Levels 81 - 90": {
+    "connects_to": [
+      "Carpenter Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Carpenter Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Blacksmith Levels 1 - 10": {
+    "connects_to": [
+      "Blacksmith Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Blacksmith Levels 11 - 20": {
+    "connects_to": [
+      "Blacksmith Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Blacksmith Levels 21 - 30": {
+    "connects_to": [
+      "Blacksmith Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Blacksmith Levels 31 - 40": {
+    "connects_to": [
+      "Blacksmith Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Blacksmith Levels 41 - 50": {
+    "connects_to": [
+      "Blacksmith Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Blacksmith Levels 51 - 60": {
+    "connects_to": [
+      "Blacksmith Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Blacksmith Levels 61 - 70": {
+    "connects_to": [
+      "Blacksmith Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Blacksmith Levels 71 - 80": {
+    "connects_to": [
+      "Blacksmith Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Blacksmith Levels 81 - 90": {
+    "connects_to": [
+      "Blacksmith Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Blacksmith Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Armorer Levels 1 - 10": {
+    "connects_to": [
+      "Armorer Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Armorer Levels 11 - 20": {
+    "connects_to": [
+      "Armorer Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Armorer Levels 21 - 30": {
+    "connects_to": [
+      "Armorer Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Armorer Levels 31 - 40": {
+    "connects_to": [
+      "Armorer Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Armorer Levels 41 - 50": {
+    "connects_to": [
+      "Armorer Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Armorer Levels 51 - 60": {
+    "connects_to": [
+      "Armorer Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Armorer Levels 61 - 70": {
+    "connects_to": [
+      "Armorer Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Armorer Levels 71 - 80": {
+    "connects_to": [
+      "Armorer Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Armorer Levels 81 - 90": {
+    "connects_to": [
+      "Armorer Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Armorer Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Goldsmith Levels 1 - 10": {
+    "connects_to": [
+      "Goldsmith Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Goldsmith Levels 11 - 20": {
+    "connects_to": [
+      "Goldsmith Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Goldsmith Levels 21 - 30": {
+    "connects_to": [
+      "Goldsmith Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Goldsmith Levels 31 - 40": {
+    "connects_to": [
+      "Goldsmith Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Goldsmith Levels 41 - 50": {
+    "connects_to": [
+      "Goldsmith Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Goldsmith Levels 51 - 60": {
+    "connects_to": [
+      "Goldsmith Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Goldsmith Levels 61 - 70": {
+    "connects_to": [
+      "Goldsmith Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Goldsmith Levels 71 - 80": {
+    "connects_to": [
+      "Goldsmith Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Goldsmith Levels 81 - 90": {
+    "connects_to": [
+      "Goldsmith Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Goldsmith Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Leatherworker Levels 1 - 10": {
+    "connects_to": [
+      "Leatherworker Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Leatherworker Levels 11 - 20": {
+    "connects_to": [
+      "Leatherworker Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Leatherworker Levels 21 - 30": {
+    "connects_to": [
+      "Leatherworker Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Leatherworker Levels 31 - 40": {
+    "connects_to": [
+      "Leatherworker Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Leatherworker Levels 41 - 50": {
+    "connects_to": [
+      "Leatherworker Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Leatherworker Levels 51 - 60": {
+    "connects_to": [
+      "Leatherworker Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Leatherworker Levels 61 - 70": {
+    "connects_to": [
+      "Leatherworker Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Leatherworker Levels 71 - 80": {
+    "connects_to": [
+      "Leatherworker Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Leatherworker Levels 81 - 90": {
+    "connects_to": [
+      "Leatherworker Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Leatherworker Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Weaver Levels 1 - 10": {
+    "connects_to": [
+      "Weaver Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Weaver Levels 11 - 20": {
+    "connects_to": [
+      "Weaver Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Weaver Levels 21 - 30": {
+    "connects_to": [
+      "Weaver Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Weaver Levels 31 - 40": {
+    "connects_to": [
+      "Weaver Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Weaver Levels 41 - 50": {
+    "connects_to": [
+      "Weaver Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Weaver Levels 51 - 60": {
+    "connects_to": [
+      "Weaver Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Weaver Levels 61 - 70": {
+    "connects_to": [
+      "Weaver Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Weaver Levels 71 - 80": {
+    "connects_to": [
+      "Weaver Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Weaver Levels 81 - 90": {
+    "connects_to": [
+      "Weaver Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Weaver Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Alchemist Levels 1 - 10": {
+    "connects_to": [
+      "Alchemist Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Alchemist Levels 11 - 20": {
+    "connects_to": [
+      "Alchemist Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Alchemist Levels 21 - 30": {
+    "connects_to": [
+      "Alchemist Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Alchemist Levels 31 - 40": {
+    "connects_to": [
+      "Alchemist Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Alchemist Levels 41 - 50": {
+    "connects_to": [
+      "Alchemist Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Alchemist Levels 51 - 60": {
+    "connects_to": [
+      "Alchemist Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Alchemist Levels 61 - 70": {
+    "connects_to": [
+      "Alchemist Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Alchemist Levels 71 - 80": {
+    "connects_to": [
+      "Alchemist Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Alchemist Levels 81 - 90": {
+    "connects_to": [
+      "Alchemist Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Alchemist Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Culinarian Levels 1 - 10": {
+    "connects_to": [
+      "Culinarian Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Culinarian Levels 11 - 20": {
+    "connects_to": [
+      "Culinarian Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Culinarian Levels 21 - 30": {
+    "connects_to": [
+      "Culinarian Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Culinarian Levels 31 - 40": {
+    "connects_to": [
+      "Culinarian Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Culinarian Levels 41 - 50": {
+    "connects_to": [
+      "Culinarian Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Culinarian Levels 51 - 60": {
+    "connects_to": [
+      "Culinarian Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Culinarian Levels 61 - 70": {
+    "connects_to": [
+      "Culinarian Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Culinarian Levels 71 - 80": {
+    "connects_to": [
+      "Culinarian Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Culinarian Levels 81 - 90": {
+    "connects_to": [
+      "Culinarian Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Culinarian Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Miner Levels 1 - 10": {
+    "connects_to": [
+      "Miner Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Miner Levels 11 - 20": {
+    "connects_to": [
+      "Miner Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Miner Levels 21 - 30": {
+    "connects_to": [
+      "Miner Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Miner Levels 31 - 40": {
+    "connects_to": [
+      "Miner Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Miner Levels 41 - 50": {
+    "connects_to": [
+      "Miner Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Miner Levels 51 - 60": {
+    "connects_to": [
+      "Miner Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Miner Levels 61 - 70": {
+    "connects_to": [
+      "Miner Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Miner Levels 71 - 80": {
+    "connects_to": [
+      "Miner Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Miner Levels 81 - 90": {
+    "connects_to": [
+      "Miner Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Miner Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Botanist Levels 1 - 10": {
+    "connects_to": [
+      "Botanist Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Botanist Levels 11 - 20": {
+    "connects_to": [
+      "Botanist Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Botanist Levels 21 - 30": {
+    "connects_to": [
+      "Botanist Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Botanist Levels 31 - 40": {
+    "connects_to": [
+      "Botanist Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Botanist Levels 41 - 50": {
+    "connects_to": [
+      "Botanist Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Botanist Levels 51 - 60": {
+    "connects_to": [
+      "Botanist Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Botanist Levels 61 - 70": {
+    "connects_to": [
+      "Botanist Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Botanist Levels 71 - 80": {
+    "connects_to": [
+      "Botanist Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Botanist Levels 81 - 90": {
+    "connects_to": [
+      "Botanist Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Botanist Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  },
+  "Fisher Levels 1 - 10": {
+    "connects_to": [
+      "Fisher Levels 11 - 20"
+    ],
+    "requires": []
+  },
+  "Fisher Levels 11 - 20": {
+    "connects_to": [
+      "Fisher Levels 21 - 30"
+    ],
+    "requires": []
+  },
+  "Fisher Levels 21 - 30": {
+    "connects_to": [
+      "Fisher Levels 31 - 40"
+    ],
+    "requires": []
+  },
+  "Fisher Levels 31 - 40": {
+    "connects_to": [
+      "Fisher Levels 41 - 50"
+    ],
+    "requires": []
+  },
+  "Fisher Levels 41 - 50": {
+    "connects_to": [
+      "Fisher Levels 51 - 60"
+    ],
+    "requires": []
+  },
+  "Fisher Levels 51 - 60": {
+    "connects_to": [
+      "Fisher Levels 61 - 70"
+    ],
+    "requires": []
+  },
+  "Fisher Levels 61 - 70": {
+    "connects_to": [
+      "Fisher Levels 71 - 80"
+    ],
+    "requires": []
+  },
+  "Fisher Levels 71 - 80": {
+    "connects_to": [
+      "Fisher Levels 81 - 90"
+    ],
+    "requires": []
+  },
+  "Fisher Levels 81 - 90": {
+    "connects_to": [
+      "Fisher Levels 91 - 100"
+    ],
+    "requires": []
+  },
+  "Fisher Levels 91 - 100": {
+    "connects_to": [],
+    "requires": []
+  }
+}
