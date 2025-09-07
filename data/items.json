@@ -1,10 +1,8 @@
 [
   {
-    "count": "1",
-    "name": "test item (delete later)",
-    "category": [
-      "test"
-    ],
+    "count": "50",
+    "name": "A Faded Job Crystal",
+    "category": [],
     "progression": true
   }
 ]

@@ -2,55 +2,83 @@
 def after_load_game_file(game_table: dict) -> dict:
     return game_table
 
-TANKS = ["PLD","WAR","DRK","GNB"]
-HEALERS = ["WHM","AST","SGE"]
-MELEE = ["MNK","DRG","NIN","SAM","RPR","VPR"]
-CASTER = ["BLM","RDM","PCT"]
-RANGED = ["BRD","MCH","DNC"]
+ARR_JOB = ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN"]
+HW_JOB = ["DRK","MCH","AST"]
+STB_JOB = ["SAM","RDM"]
+SHB_JOB = ["GNB","DNC"]
+EW_JOB = ["RPR","SGE"]
+DT_JOB = ["VPR","PCT"]
 DOH = ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"]
 DOL = ["MIN","BTN","FSH"]
 
 def generate_level_list():
     level_list = []
-    classes = [TANKS,HEALERS,MELEE,CASTER,RANGED]
     
-    max_level = 100
-    max_blu = 80
-    for job_type in classes:
-        for job in job_type:
-            for i in range(1, max_level):
-                level_list.append({
-                    "name":f"{job} level {i}",
-                    "category": ["Class Level", "DOW/DOM"],
-                    })
+    max_level = 101
+    max_blu = 81
+    
+    for job in ARR_JOB:
+        for i in range(1, max_level):
+            level_list.append({
+                "name":f"{job} level {i}",
+                "category": [f"{job} Level", "DOW/DOM"],
+                })
+
+    for job in HW_JOB:
+        for i in range(30, max_level):
+            level_list.append({
+                "name":f"{job} level {i}",
+                "category": [f"{job} Level", "DOW/DOM"],
+                })
+
+    for job in STB_JOB:
+        for i in range(50, max_level):
+            level_list.append({
+                "name":f"{job} level {i}",
+                "category": [f"{job} Level", "DOW/DOM"],
+                })
+
+    for job in SHB_JOB:
+        for i in range(60, max_level):
+            level_list.append({
+                "name":f"{job} level {i}",
+                "category": [f"{job} Level", "DOW/DOM"],
+                })
+
+    for job in EW_JOB:
+        for i in range(70, max_level):
+            level_list.append({
+                "name":f"{job} level {i}",
+                "category": [f"{job} Level", "DOW/DOM"],
+                })
+
+    for job in DT_JOB:
+        for i in range(80, max_level):
+            level_list.append({
+                "name":f"{job} level {i}",
+                "category": [f"{job} Level", "DOW/DOM"],
+                })
     
     for i in range(1, max_blu):
         level_list.append({
             "name":f"BLU level {i}",
-            "category": ["Class Level", "DOW/DOM"],
-            })
-   
-    for i in range(1, max_level):
-        level_list.append({
-            "name":f"SMN/SCH level {i}",
-            "category": ["Class Level", "DOW/DOM"],
+            "category": ["BLU Level", "DOW/DOM"],
             })
 
     for job in DOH:
         for i in range(1, max_level):
              level_list.append({
                 "name":f"{job} level {i}",
-                "category": ["Class Level", "DOH"],
-                "count": max_level,
+                "category": [f"{job} Level", "DOH"],
                 })
 
     for job in DOL:
         for i in range(1, max_level):
             level_list.append({
                 "name":f"{job} level {i}",
-                "category": ["Class Level", "DOL"],
-                "count": max_level,
+                "category": [f"{job} Level", "DOL"],
                 })
+
     return level_list
 level_locations = generate_level_list()
 
@@ -58,7 +86,6 @@ level_locations = generate_level_list()
 # if you need access to the items after processing to add ids, etc., you should use the hooks in World.py
 def after_load_item_file(item_table: list) -> list:
     
-    classes = TANKS + HEALERS + MELEE + RANGED + CASTER + ["BLU"] + ["SMN/SCH"]
     #crafters
     DOH = ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL",]
     #gatherers
@@ -67,17 +94,60 @@ def after_load_item_file(item_table: list) -> list:
     max_level = 100
     max_blu = 80
 
-    for job in classes:
-        n = max_level
-        if job == "BLU":
-            n = max_blu
-
+    for job in ARR_JOB:
         item_table.append({
-            "name":f"1{job} Level",
-            "category": ["Class Level", "DOW/DOM"],
-            "count": n,
-            "progression": True,
-            })
+           "name":f"1 {job} Level",
+           "category": ["Class Level", "DOW/DOM"],
+           "count": max_level,
+           "progression": True,
+           })
+
+    for job in HW_JOB:
+        item_table.append({
+           "name":f"1 {job} Level",
+           "category": ["Class Level", "DOW/DOM"],
+           "count": max_level - 30,
+           "progression": True,
+           })
+
+    for job in STB_JOB:
+        item_table.append({
+           "name":f"1 {job} Level",
+           "category": ["Class Level", "DOW/DOM"],
+           "count": max_level - 50,
+           "progression": True,
+           })
+
+    for job in SHB_JOB:
+        item_table.append({
+           "name":f"1 {job} Level",
+           "category": ["Class Level", "DOW/DOM"],
+           "count": max_level - 60,
+           "progression": True,
+           })
+
+    for job in EW_JOB:
+        item_table.append({
+           "name":f"1 {job} Level",
+           "category": ["Class Level", "DOW/DOM"],
+           "count": max_level - 70,
+           "progression": True,
+           })
+
+    for job in DT_JOB:
+        item_table.append({
+           "name":f"1 {job} Level",
+           "category": ["Class Level", "DOW/DOM"],
+           "count": max_level - 80,
+           "progression": True,
+           })
+
+    item_table.append({
+        "name":f"2 BLU Levels",
+        "category": ["Class Level", "DOW/DOM"],
+        "count": max_blu/2,
+        "progression": True,
+        })
 
     for job in DOH:
         item_table.append({
