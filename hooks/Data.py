@@ -3,9 +3,97 @@ def after_load_game_file(game_table: dict) -> dict:
     return game_table
 
 TANKS = ["PLD","WAR","DRK","GNB"]
+HEALERS = ["WHM","AST","SGE"]
+MELEE = ["MNK","DRG","NIN","SAM","RPR","VPR"]
+CASTER = ["BLM","RDM","PCT"]
+RANGED = ["BRD","MCH","DNC"]
+DOH = ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"]
+DOL = ["MIN","BTN","FSH"]
+
+def generate_level_list():
+    level_list = []
+    classes = [TANKS,HEALERS,MELEE,CASTER,RANGED]
+    
+    max_level = 100
+    max_blu = 80
+    for job_type in classes:
+        for job in job_type:
+            for i in range(1, max_level):
+                level_list.append({
+                    "name":f"{job} level {i}",
+                    "category": ["Class Level", "DOW/DOM"],
+                    })
+    
+    for i in range(1, max_blu):
+        level_list.append({
+            "name":f"BLU level {i}",
+            "category": ["Class Level", "DOW/DOM"],
+            })
+   
+    for i in range(1, max_level):
+        level_list.append({
+            "name":f"SMN/SCH level {i}",
+            "category": ["Class Level", "DOW/DOM"],
+            })
+
+    for job in DOH:
+        for i in range(1, max_level):
+             level_list.append({
+                "name":f"{job} level {i}",
+                "category": ["Class Level", "DOH"],
+                "count": max_level,
+                })
+
+    for job in DOL:
+        for i in range(1, max_level):
+            level_list.append({
+                "name":f"{job} level {i}",
+                "category": ["Class Level", "DOL"],
+                "count": max_level,
+                })
+    return level_list
+level_locations = generate_level_list()
+
 # called after the items.json file has been loaded, before any item loading or processing has occurred
 # if you need access to the items after processing to add ids, etc., you should use the hooks in World.py
 def after_load_item_file(item_table: list) -> list:
+    
+    classes = TANKS + HEALERS + MELEE + RANGED + CASTER + ["BLU"] + ["SMN/SCH"]
+    #crafters
+    DOH = ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL",]
+    #gatherers
+    DOL = ["MIN","BTN","FSH",]
+
+    max_level = 100
+    max_blu = 80
+
+    for job in classes:
+        n = max_level
+        if job == "BLU":
+            n = max_blu
+
+        item_table.append({
+            "name":f"1{job} Level",
+            "category": ["Class Level", "DOW/DOM"],
+            "count": n,
+            "progression": True,
+            })
+
+    for job in DOH:
+        item_table.append({
+            "name": f"1 {job} Level",
+            "category": ["Class Level", "DOH"],
+            "count": max_level,
+            "progression": True,
+            })
+
+    for job in DOL:
+        item_table.append({
+            "name": f"1 {job} Level",
+            "category": ["Class Level", "DOL"],
+            "count": max_level,
+            "progression": True,
+            })
     return item_table
 
 # NOTE: Progressive items are not currently supported in Manual. Once they are,
@@ -16,6 +104,9 @@ def after_load_progressive_item_file(progressive_item_table: list) -> list:
 # called after the locations.json file has been loaded, before any location loading or processing has occurred
 # if you need access to the locations after processing to add ids, etc., you should use the hooks in World.py
 def after_load_location_file(location_table: list) -> list:
+    #add level locations
+    location_table.extend(level_locations)
+
     return location_table
 
 # called after the locations.json file has been loaded, before any location loading or processing has occurred
