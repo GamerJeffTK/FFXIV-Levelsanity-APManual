@@ -1,7 +1,12 @@
 {
   "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.game.schema.json",
-  "game": "FFXIVtest",
+  "game": "FFXIVLevelsanity",
   "creator": "PumpkinJackTR",
-  "filler_item_name": "test",
-  "starting_items": []
+  "filler_item_name": "Yet another trip to the Waking Sands",
+  "starting_items": [
+    {
+      "item_categories": ["ARR Starter Job"],
+      "random": 1
+    }
+  ]
 }

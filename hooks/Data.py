@@ -97,71 +97,142 @@ def after_load_item_file(item_table: list) -> list:
     for job in ARR_JOB:
         item_table.append({
            "name":f"1 {job} Level",
-           "category": ["Class Level", "DOW/DOM"],
-           "count": max_level,
+           "category": [f"{job} Level Cap", "DOW/DOM"],
+           "count": max_level - 10,
            "progression": True,
            })
+
+        if job != "NIN":
+            item_table.append({
+                "name":f"{job} unlocked (default cap 10)",
+                "category": ["Job Unlock", "DOW/DOM", "ARR Starter Job"],
+                "count": 1,
+                "progression": True,
+                })
+        else:
+            item_table.append({
+                "name":f"{job} unlocked (default cap 10)",
+                "category": ["Job Unlock", "DOW/DOM", "ARR Job"],
+                "count": 1,
+                "progression" : True,
+                })
 
     for job in HW_JOB:
         item_table.append({
            "name":f"1 {job} Level",
-           "category": ["Class Level", "DOW/DOM"],
+           "category": [f"{job} Level Cap", "DOW/DOM"],
            "count": max_level - 30,
            "progression": True,
            })
 
+        item_table.append({
+            "name":f"{job} unlocked",
+            "category": ["Job Unlock", "DOW/DOM", "HW Job"],
+            "count": 1,
+            "progression": True,
+            })
+
     for job in STB_JOB:
         item_table.append({
            "name":f"1 {job} Level",
-           "category": ["Class Level", "DOW/DOM"],
+           "category": [f"{job} Level Cap", "DOW/DOM"],
            "count": max_level - 50,
            "progression": True,
            })
 
+        item_table.append({
+            "name":f"{job} unlocked",
+            "category": ["Job Unlock", "DOW/DOM", "STB Job"],
+            "count": 1,
+            "progression": True,
+            })
+
     for job in SHB_JOB:
         item_table.append({
            "name":f"1 {job} Level",
-           "category": ["Class Level", "DOW/DOM"],
+           "category": [f"{job} Level Cap", "DOW/DOM"],
            "count": max_level - 60,
            "progression": True,
            })
 
+        item_table.append({
+            "name":f"{job} unlocked",
+            "category": ["Job Unlock", "DOW/DOM", "SHB Job"],
+            "count": 1,
+            "progression": True,
+            })
+
     for job in EW_JOB:
         item_table.append({
            "name":f"1 {job} Level",
-           "category": ["Class Level", "DOW/DOM"],
+           "category": [f"{job} Level Cap", "DOW/DOM"],
            "count": max_level - 70,
            "progression": True,
            })
 
+        item_table.append({
+            "name":f"{job} unlocked",
+            "category": ["Job Unlock", "DOW/DOM", "EW Job"],
+            "count": 1,
+            "progression": True,
+            })
+
     for job in DT_JOB:
         item_table.append({
            "name":f"1 {job} Level",
-           "category": ["Class Level", "DOW/DOM"],
+           "category": [f"{job} Level Cap", "DOW/DOM"],
            "count": max_level - 80,
            "progression": True,
            })
 
+        item_table.append({
+            "name":f"{job} unlocked",
+            "category": ["Job Unlock", "DOW/DOM", "DT Job"],
+            "count": 1,
+            "progression": True,
+            })
+
     item_table.append({
         "name":f"2 BLU Levels",
-        "category": ["Class Level", "DOW/DOM"],
+        "category": ["BLU Level Cap", "DOW/DOM"],
         "count": max_blu/2,
         "progression": True,
         })
 
+    item_table.append({
+            "name":f"BLU unlocked",
+            "category": ["Job Unlock", "DOW/DOM", "Limited Job"],
+            "count": 1,
+            "progression": True,
+            })
+
     for job in DOH:
         item_table.append({
             "name": f"1 {job} Level",
-            "category": ["Class Level", "DOH"],
+            "category": [f"{job} Level Cap", "DOH"],
             "count": max_level,
+            "progression": True,
+            })
+
+        item_table.append({
+            "name":f"{job} unlocked",
+            "category": ["Job Unlock", "DOW/DOM", "Crafting Job"],
+            "count": 1,
             "progression": True,
             })
 
     for job in DOL:
         item_table.append({
             "name": f"1 {job} Level",
-            "category": ["Class Level", "DOL"],
+            "category": [f"{job} Level Cap", "DOL"],
             "count": max_level,
+            "progression": True,
+            })
+
+        item_table.append({
+            "name":f"{job} unlocked",
+            "category": ["Job Unlock", "DOW/DOM", "Gathering Job"],
+            "count": 1,
             "progression": True,
             })
     return item_table
