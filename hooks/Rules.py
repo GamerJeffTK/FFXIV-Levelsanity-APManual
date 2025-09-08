@@ -16,10 +16,10 @@ def overfishedAnywhere(world: World, state: CollectionState, player: int):
 
 # You can also pass an argument to your function, like {function_name(15)}
 # Note that all arguments are strings, so you'll need to convert them to ints if you want to do math.
-def anyClassLevel(state: CollectionState, player: int, level: str):
+def anyClassLevel(world: World, multiworld: MultiWorld, state: CollectionState, player: int, level: str):
     """Has the player reached the given level in any class?"""
-    for item in ["Figher Level", "Black Belt Level", "Thief Level", "Red Mage Level", "White Mage Level", "Black Mage Level"]:
-        if state.count(item, player) >= int(level):
+    for job in world.item_name_groups["DOW/DOM"]:
+        if state.count(job, player) >= int(level):
             return True
     return False
 
