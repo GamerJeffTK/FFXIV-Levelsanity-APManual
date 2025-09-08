@@ -22,6 +22,7 @@ def generate_level_list():
             level_list.append({
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM"],
+                "region": f"{job}",
                 })
 
     for job in HW_JOB:
@@ -29,6 +30,7 @@ def generate_level_list():
             level_list.append({
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM"],
+                "region": f"{job}",
                 })
 
     for job in STB_JOB:
@@ -36,6 +38,7 @@ def generate_level_list():
             level_list.append({
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM"],
+                "region": f"{job}",
                 })
 
     for job in SHB_JOB:
@@ -43,6 +46,7 @@ def generate_level_list():
             level_list.append({
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM"],
+                "region": f"{job}",
                 })
 
     for job in EW_JOB:
@@ -50,6 +54,7 @@ def generate_level_list():
             level_list.append({
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM"],
+                "region": f"{job}",
                 })
 
     for job in DT_JOB:
@@ -57,12 +62,14 @@ def generate_level_list():
             level_list.append({
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM"],
+                "region": f"{job}",
                 })
     
     for i in range(1, max_blu):
         level_list.append({
             "name":f"BLU level {i}",
             "category": ["BLU Level", "DOW/DOM"],
+            "region": "BLU",
             })
 
     for job in DOH:
@@ -70,6 +77,7 @@ def generate_level_list():
              level_list.append({
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOH"],
+                "region": f"{job}",
                 })
 
     for job in DOL:
@@ -77,6 +85,7 @@ def generate_level_list():
             level_list.append({
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOL"],
+                "region": f"{job}",
                 })
 
     return level_list
