@@ -21,6 +21,9 @@ def anyClassLevel(world: World, multiworld: MultiWorld, state: CollectionState, 
     for job in world.item_name_groups["DOW/DOM"]:
         if state.count(job, player) >= int(level):
             return True
+    for job in world.item_name_groups["ARR Job"]:
+        if (state.count(job, player) + 10) >= int(level):
+            return True
     return False
 
 # You can also return a string from your function, and it will be evaluated as a requires string.

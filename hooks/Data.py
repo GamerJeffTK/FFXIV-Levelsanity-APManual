@@ -32,6 +32,7 @@ def generate_level_list():
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM"],
                 "region": f"{job}",
+                "requires": "{anyClassLevel(50)}",
                 })
 
     for job in STB_JOB:
@@ -40,6 +41,7 @@ def generate_level_list():
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM"],
                 "region": f"{job}",
+                "requires": "{anyClassLevel(50)}",
                 })
 
     for job in SHB_JOB:
@@ -48,6 +50,7 @@ def generate_level_list():
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM"],
                 "region": f"{job}",
+                "requires": "{anyClassLevel(60)}",
                 })
 
     for job in EW_JOB:
@@ -56,6 +59,7 @@ def generate_level_list():
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM"],
                 "region": f"{job}",
+                "requires": "{anyClassLevel(70)}",
                 })
 
     for job in DT_JOB:
@@ -64,6 +68,7 @@ def generate_level_list():
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM"],
                 "region": f"{job}",
+                "requires": "{anyClassLevel(80)}",
                 })
     
     for i in range(1, max_blu):
@@ -71,6 +76,7 @@ def generate_level_list():
             "name":f"BLU level {i}",
             "category": ["BLU Level", "DOW/DOM"],
             "region": "BLU",
+            "requires": "{anyClassLevel(50)}",
             })
 
     for job in DOH:
@@ -79,6 +85,7 @@ def generate_level_list():
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOH"],
                 "region": f"{job}",
+                "requires": "{anyClassLevel(15)}",
                 })
 
     for job in DOL:
@@ -87,6 +94,7 @@ def generate_level_list():
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOL"],
                 "region": f"{job}",
+                "requires": "{anyClassLevel(15)}",
                 })
 
     return level_list
@@ -115,7 +123,7 @@ def after_load_item_file(item_table: list) -> list:
         if job != "NIN":
             item_table.append({
                 "name":f"{job} unlocked (default cap 10)",
-                "category": ["Job Unlock", "DOW/DOM", "ARR Starter Job"],
+                "category": ["Job Unlock", "DOW/DOM", "ARR Starter Job", "ARR Job"],
                 "count": 1,
                 "progression": True,
                 })
@@ -263,71 +271,89 @@ def after_load_location_file(location_table: list) -> list:
 # called after the locations.json file has been loaded, before any location loading or processing has occurred
 # if you need access to the locations after processing to add ids, etc., you should use the hooks in World.py
 def after_load_region_file(region_table: dict) -> dict:
-    region_list = {}
+    region_table = {}
     for sub in OVERALL_JOBS:
-        if sub == ARR_JOB:
+        if sub in ARR_JOB:
             for job in ARR_JOB:
-                region_list[{job}] = ({
+                region_table.update({
                     f"{job}": {
-                        "starting": true,
-                        "connects_to": [],
+                        "starting": True,
+                        "connects_to": ["DRK", "MCH", "AST", "SAM", "RDM", "BLU", "GNB", "DNC", "RPR", "SGE", "VPR", "PCT", "CRP", "BSM", "ARM", "GSM", "LTW", "WVR", "ALC", "CUL", "MIN", "BTN", "FSH"],
                         "requires": f"|{job} unlocked (default cap 10)|"
                         }
-                       })
-        if sub == HW_JOB:
+                    })
+        if sub in HW_JOB:
             for job in HW_JOB:
-                region_list[{job}] = ({
+                region_table.update({
                     f"{job}": {
-                        "starting": false,
+                        "starting": False,
                         "connects_to": [],
-                        "requires": f"|{job} unlocked| AND |{anyClassLevel(" + str(50) + ")}|",
+                        "requires": f"|{job} unlocked|",
                         }
                     })
-        if sub == STB_JOB:
+        if sub in STB_JOB:
             for job in STB_JOB:
-                region_list[{job}] = ({
+                region_table.update({
                     f"{job}": {
-                        "starting": false,
+                        "starting": False,
                         "connects_to": [],
-                        "requires": f"|{job} unlocked| AND |{anyClassLevel(" + str(50) + ")}|",
+                        "requires": f"|{job} unlocked|",
                         }
                     })
         if sub == "BLU":
-                region_list[{job}] = ({
+                region_table.update({
                     "BLU": {
-                        "starting": false,
+                        "starting": False,
                         "connects_to": [],
-                        "requires": f"|BLU unlocked| AND |{anyClassLevel(" + str(50) + ")}|",
+                        "requires": f"|BLU unlocked|",
                         }
                     })
-        if sub == SHB_JOB:
+        if sub in SHB_JOB:
             for job in SHB_JOB:
-                region_list[{job}] = ({
+                region_table.update({
                     f"{job}": {
-                        "starting": false,
+                        "starting": False,
                         "connects_to": [],
-                        "requires": f"|{job} unlocked| AND |{anyClassLevel(" + str(60) + ")}|",
+                        "requires": f"|{job} unlocked|",
                         }
                     })
-        if sub == EW_JOB:
+        if sub in EW_JOB:
             for job in EW_JOB:
-                region_list[{job}] = ({
+                region_table.update({
                     f"{job}": {
-                        "starting": false,
+                        "starting": False,
                         "connects_to": [],
-                        "requires": f"|{job} unlocked| AND |{anyClassLevel(" + str(70) + ")}|",
+                        "requires": f"|{job} unlocked|",
                         }
                     })
-        if sub == DT_JOB:
+        if sub in DT_JOB:
             for job in DT_JOB:
-                region_list[{job}] = ({
+                region_table.update({
                     f"{job}": {
-                        "starting": false,
+                        "starting": False,
                         "connects_to": [],
-                        "requires": f"|{job} unlocked| AND |{anyClassLevel(" + str(80) + ")}|",
+                        "requires": f"|{job} unlocked|",
                         }
                     })
-    region_table.update(region_list)
+        if sub in DOH:
+            for job in DOH:
+                region_table.update({
+                    f"{job}": {
+                        "starting": False,
+                        "connects_to": [],
+                        "requires": f"|{job} unlocked|",
+                        }
+                    })
+        if sub in DOL:
+            for job in DOL:
+                region_table.update({
+                    f"{job}": {
+                        "starting": False,
+                        "connects_to": [],
+                        "requires": f"|{job} unlocked|",
+                        }
+                    })
+
     return region_table
 
 # called after the categories.json file has been loaded
