@@ -4,5 +4,11 @@
     "victory": true,
     "category": [],
     "requires": "|A Faded Job Crystal:50|"
+  },
+  {
+    "name": "A certain amount of levels",
+    "victory": true,
+    "category": [],
+    "requires": "|@DOW/DOM:75%| and |@DOL:75%| and |@DOH:75%|"
   }
 ]

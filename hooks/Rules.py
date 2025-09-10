@@ -18,11 +18,26 @@ def overfishedAnywhere(world: World, state: CollectionState, player: int):
 # Note that all arguments are strings, so you'll need to convert them to ints if you want to do math.
 def anyClassLevel(world: World, multiworld: MultiWorld, state: CollectionState, player: int, level: str):
     """Has the player reached the given level in any class?"""
-    for job in world.item_name_groups["DOW/DOM"]:
-        if state.count(job, player) >= int(level):
-            return True
     for job in world.item_name_groups["ARR Job"]:
         if (state.count(job, player) + 10) >= int(level):
+            return True
+    for job in world.item_name_groups["HW Job"]:
+        if (state.count(job, player) + 20) >= int(level):
+            return True
+    for job in world.item_name_groups["STB Job"]:
+        if (state.count(job, player) + 40) >= int(level):
+            return True
+    for job in world.item_name_groups["SHB Job"]:
+        if (state.count(job, player) + 50) >= int(level):
+            return True
+    for job in world.item_name_groups["EW Job"]:
+        if (state.count(job, player) + 60) >= int(level):
+            return True
+    for job in world.item_name_groups["DT Job"]:
+        if (state.count(job, player) + 70) >= int(level):
+            return True
+    for job in world.item_name_groups["BLU"]:
+        if (state.count(job, player)) >= int(level):
             return True
     return False
 

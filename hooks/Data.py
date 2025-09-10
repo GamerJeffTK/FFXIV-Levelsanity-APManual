@@ -42,7 +42,7 @@ def generate_level_list():
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM", f"{job}"],
                 "region": f"{job}",
-                "requires": f"|{job} unlocked| AND (|1 PLD Level:40| OR |1 WAR Level:40| OR |1 DRG Level:40| OR |1 MNK Level:40| OR |1 BRD Level:40| OR |1 BLM Level:40| OR |1 WHM Level:40| OR |1 SMN/SCH Level:40| OR |1 NIN Level:40|)",
+                "requires": f"|{job} unlocked|",
                 })
 
     for job in HW_JOB:
@@ -60,7 +60,7 @@ def generate_level_list():
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM", f"{job}"],
                 "region": f"{job}",
-                "requires": f"|{job} unlocked| AND (|1 PLD Level:40| OR |1 WAR Level:40| OR |1 DRG Level:40| OR |1 MNK Level:40| OR |1 BRD Level:40| OR |1 BLM Level:40| OR |1 WHM Level:40| OR |1 SMN/SCH Level:40| OR |1 NIN Level:40|)",
+                "requires": f"|{job} unlocked|",
                 })
 
     for job in STB_JOB:
@@ -78,7 +78,7 @@ def generate_level_list():
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM", f"{job}"],
                 "region": f"{job}",
-                "requires": f"|{job} unlocked| AND (|1 PLD Level:50| OR |1 WAR Level:50| OR |1 DRG Level:50| OR |1 MNK Level:50| OR |1 BRD Level:50| OR |1 BLM Level:50| OR |1 WHM Level:50| OR |1 SMN/SCH Level:50| OR |1 NIN Level:50| OR |1 BLU Level:50| OR |1 DRK Level:20| OR |1 MCH Level:20| OR |1 AST Level:20| OR |1 SAM Level:10| OR |1 RDM Level:10|)",
+                "requires": f"|{job} unlocked|",
                 })
 
     for job in SHB_JOB:
@@ -96,7 +96,7 @@ def generate_level_list():
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM", f"{job}"],
                 "region": f"{job}",
-                "requires": f"|{job} unlocked| AND (|1 PLD Level:60| OR |1 WAR Level:60| OR |1 DRG Level:60| OR |1 MNK Level:60| OR |1 BRD Level:60| OR |1 BLM Level:60| OR |1 WHM Level:60| OR |1 SMN/SCH Level:60| OR |1 NIN Level:60| OR |1 BLU Level:60| OR |1 DRK Level:30| OR |1 MCH Level:30| OR |1 AST Level:30| OR |1 SAM Level:20| OR |1 RDM Level:20| OR |1 GNB Level:10| OR |1 DNC Level:10|)",
+                "requires": f"|{job} unlocked|",
                 })
 
     for job in EW_JOB:
@@ -114,7 +114,7 @@ def generate_level_list():
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM", f"{job}"],
                 "region": f"{job}",
-                "requires": f"|{job} unlocked| AND (|1 PLD Level:70| OR |1 WAR Level:70| OR |1 DRG Level:70| OR |1 MNK Level:70| OR |1 BRD Level:70| OR |1 BLM Level:70| OR |1 WHM Level:70| OR |1 SMN/SCH Level:70| OR |1 NIN Level:70| OR |1 BLU Level:70| OR |1 DRK Level:40| OR |1 MCH Level:40| OR |1 AST Level:40| OR |1 SAM Level:30| OR |1 RDM Level:30| OR |1 GNB Level:20| OR |1 DNC Level:20| OR |1 RPR Level:10| OR |1 SGE Level:10|)",
+                "requires": f"|{job} unlocked|",
                 })
 
     for job in DT_JOB:
@@ -129,15 +129,15 @@ def generate_level_list():
     for i in range(1, 2):
         level_list.append({
             "name":f"BLU level {i}",
-            "category": ["BLU Level", "DOW/DOM", f"{job}"],
+            "category": ["BLU Level", "DOW/DOM", "BLU"],
             "region": "BLU",
-            "requires": "|BLU unlocked| AND (|1 PLD Level:40| OR |1 WAR Level:40| OR |1 DRG Level:40| OR |1 MNK Level:40| OR |1 BRD Level:40| OR |1 BLM Level:40| OR |1 WHM Level:40| OR |1 SMN/SCH Level:40| OR |1 NIN Level:40|)",
+            "requires": "|BLU unlocked|",
             })
 
     for i in range(2, max_blu):
         level_list.append({
             "name":f"BLU level {i}",
-            "category": ["BLU Level", "DOW/DOM", f"{job}"],
+            "category": ["BLU Level", "DOW/DOM", "BLU"],
             "region": "BLU",
             "requires": f"|1 BLU Level:{i-1}| AND |BLU unlocked|",
             })
@@ -148,7 +148,7 @@ def generate_level_list():
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOH", f"{job}"],
                 "region": f"{job}",
-                "requires": f"|{job} unlocked| AND (|1 PLD Level:15| OR |1 WAR Level:15| OR |1 DRG Level:15| OR |1 MNK Level:15| OR |1 BRD Level:15| OR |1 BLM Level:15| OR |1 WHM Level:15| OR |1 SMN/SCH Level:15| OR |1 NIN Level:15|)",
+                "requires": f"|{job} unlocked|",
                 })
 
     for job in DOH:
@@ -166,7 +166,7 @@ def generate_level_list():
                 "name":f"{job} level {i}",
                 "category": [f"{job} Level", "DOL", f"{job}"],
                 "region": f"{job}",
-                "requires": f"|{job} unlocked| AND (|1 PLD Level:15| OR |1 WAR Level:15| OR |1 DRG Level:15| OR |1 MNK Level:15| OR |1 BRD Level:15| OR |1 BLM Level:15| OR |1 WHM Level:15| OR |1 SMN/SCH Level:15| OR |1 NIN Level:15|)",
+                "requires": f"|{job} unlocked|",
                 })
     
     for job in DOL:
@@ -198,7 +198,7 @@ def after_load_item_file(item_table: list) -> list:
            "name":f"1 {job} Level",
            "category": [f"{job} Level Cap", "DOW/DOM", f"{job}"],
            "count": max_level - 10,
-           "progression": True,
+           "filler": True,
            })
 
         if job != "NIN":
@@ -221,7 +221,7 @@ def after_load_item_file(item_table: list) -> list:
            "name":f"1 {job} Level",
            "category": [f"{job} Level Cap", "DOW/DOM", f"{job}"],
            "count": max_level - 30,
-           "progression": True,
+           "filler": True,
            })
 
         item_table.append({
@@ -236,7 +236,7 @@ def after_load_item_file(item_table: list) -> list:
            "name":f"1 {job} Level",
            "category": [f"{job} Level Cap", "DOW/DOM", f"{job}"],
            "count": max_level - 50,
-           "progression": True,
+           "filler": True,
            })
 
         item_table.append({
@@ -251,7 +251,7 @@ def after_load_item_file(item_table: list) -> list:
            "name":f"1 {job} Level",
            "category": [f"{job} Level Cap", "DOW/DOM", f"{job}"],
            "count": max_level - 60,
-           "progression": True,
+           "filler": True,
            })
 
         item_table.append({
@@ -266,7 +266,7 @@ def after_load_item_file(item_table: list) -> list:
            "name":f"1 {job} Level",
            "category": [f"{job} Level Cap", "DOW/DOM", f"{job}"],
            "count": max_level - 70,
-           "progression": True,
+           "filler": True,
            })
 
         item_table.append({
@@ -281,7 +281,7 @@ def after_load_item_file(item_table: list) -> list:
            "name":f"1 {job} Level",
            "category": [f"{job} Level Cap", "DOW/DOM", f"{job}"],
            "count": max_level - 80,
-           "progression": True,
+           "filler": True,
            })
 
         item_table.append({
@@ -295,7 +295,7 @@ def after_load_item_file(item_table: list) -> list:
         "name":f"1 BLU Level",
         "category": ["BLU Level Cap", "DOW/DOM", "BLU"],
         "count": max_blu,
-        "progression": True,
+        "filler": True,
         })
 
     item_table.append({
@@ -310,12 +310,12 @@ def after_load_item_file(item_table: list) -> list:
             "name": f"1 {job} Level",
             "category": [f"{job} Level Cap", "DOH", f"{job}"],
             "count": max_level,
-            "progression": True,
+            "filler": True,
             })
 
         item_table.append({
             "name":f"{job} unlocked",
-            "category": ["Job Unlock", "DOW/DOM", "Crafting Job"],
+            "category": ["Job Unlock","DOH"],
             "count": 1,
             "progression": True,
             })
@@ -325,12 +325,12 @@ def after_load_item_file(item_table: list) -> list:
             "name": f"1 {job} Level",
             "category": [f"{job} Level Cap", "DOL", f"{job}"],
             "count": max_level,
-            "progression": True,
+            "filler": True,
             })
 
         item_table.append({
             "name":f"{job} unlocked",
-            "category": ["Job Unlock", "DOW/DOM", "Gathering Job"],
+            "category": ["Job Unlock", "DOL"],
             "count": 1,
             "progression": True,
             })
@@ -369,7 +369,7 @@ def after_load_region_file(region_table: dict) -> dict:
                     f"{job}": {
                         "starting": False,
                         "connects_to": [],
-                        "requires": f"|{job} unlocked| AND (|1 PLD Level:40| OR |1 WAR Level:40| OR |1 DRG Level:40| OR |1 MNK Level:40| OR |1 BRD Level:40| OR |1 BLM Level:40| OR |1 WHM Level:40| OR |1 SMN/SCH Level:40| OR |1 NIN Level:40|)",
+                        "requires": f"|{job} unlocked| AND " + "{anyClassLevel(50)}",
                         }
                     })
         if sub in STB_JOB:
@@ -378,7 +378,7 @@ def after_load_region_file(region_table: dict) -> dict:
                     f"{job}": {
                         "starting": False,
                         "connects_to": [],
-                        "requires": f"|{job} unlocked| AND (|1 PLD Level:40| OR |1 WAR Level:40| OR |1 DRG Level:40| OR |1 MNK Level:40| OR |1 BRD Level:40| OR |1 BLM Level:40| OR |1 WHM Level:40| OR |1 SMN/SCH Level:40| OR |1 NIN Level:40|)",
+                        "requires": f"|{job} unlocked| AND " + "{anyClassLevel(50)}",
                         }
                     })
         if sub == "BLU":
@@ -386,7 +386,7 @@ def after_load_region_file(region_table: dict) -> dict:
                     "BLU": {
                         "starting": False,
                         "connects_to": [],
-                        "requires": f"|BLU unlocked| AND (|1 PLD Level:40| OR |1 WAR Level:40| OR |1 DRG Level:40| OR |1 MNK Level:40| OR |1 BRD Level:40| OR |1 BLM Level:40| OR |1 WHM Level:40| OR |1 SMN/SCH Level:40| OR |1 NIN Level:40|)",
+                        "requires": "|BLU unlocked| AND {anyClassLevel(50)}",
                         }
                     })
         if sub in SHB_JOB:
@@ -395,7 +395,7 @@ def after_load_region_file(region_table: dict) -> dict:
                     f"{job}": {
                         "starting": False,
                         "connects_to": [],
-                        "requires": f"|{job} unlocked| AND (|1 PLD Level:50| OR |1 WAR Level:50| OR |1 DRG Level:50| OR |1 MNK Level:50| OR |1 BRD Level:50| OR |1 BLM Level:50| OR |1 WHM Level:50| OR |1 SMN/SCH Level:50| OR |1 NIN Level:50| OR |1 BLU Level:50| OR |1 DRK Level:20| OR |1 MCH Level:20| OR |1 AST Level:20| OR |1 SAM Level:10| OR |1 RDM Level:10|)",
+                        "requires": f"|{job} unlocked| AND " + "{anyClassLevel(60)}",
                         }
                     })
         if sub in EW_JOB:
@@ -404,7 +404,7 @@ def after_load_region_file(region_table: dict) -> dict:
                     f"{job}": {
                         "starting": False,
                         "connects_to": [],
-                        "requires": f"|{job} unlocked| AND (|1 PLD Level:60| OR |1 WAR Level:60| OR |1 DRG Level:60| OR |1 MNK Level:60| OR |1 BRD Level:60| OR |1 BLM Level:60| OR |1 WHM Level:60| OR |1 SMN/SCH Level:60| OR |1 NIN Level:60| OR |1 BLU Level:60| OR |1 DRK Level:30| OR |1 MCH Level:30| OR |1 AST Level:30| OR |1 SAM Level:20| OR |1 RDM Level:20| OR |1 GNB Level:10| OR |1 DNC Level:10|)",
+                        "requires": f"|{job} unlocked| AND " + "{anyClassLevel(70)}",
                         }
                     })
         if sub in DT_JOB:
@@ -413,7 +413,7 @@ def after_load_region_file(region_table: dict) -> dict:
                     f"{job}": {
                         "starting": False,
                         "connects_to": [],
-                        "requires": f"|{job} unlocked| AND (|1 PLD Level:70| OR |1 WAR Level:70| OR |1 DRG Level:70| OR |1 MNK Level:70| OR |1 BRD Level:70| OR |1 BLM Level:70| OR |1 WHM Level:70| OR |1 SMN/SCH Level:70| OR |1 NIN Level:70| OR |1 BLU Level:70| OR |1 DRK Level:40| OR |1 MCH Level:40| OR |1 AST Level:40| OR |1 SAM Level:30| OR |1 RDM Level:30| OR |1 GNB Level:20| OR |1 DNC Level:20| OR |1 RPR Level:10| OR |1 SGE Level:10|)",
+                        "requires": f"|{job} unlocked| AND " + "{anyClassLevel(80)}",
                         }
                     })
         if sub in DOH:
@@ -422,7 +422,7 @@ def after_load_region_file(region_table: dict) -> dict:
                     f"{job}": {
                         "starting": False,
                         "connects_to": [],
-                        "requires": f"|{job} unlocked| AND (|1 PLD Level:5| OR |1 WAR Level:5| OR |1 DRG Level:5| OR |1 MNK Level:5| OR |1 BRD Level:5| OR |1 BLM Level:5| OR |1 WHM Level:5| OR |1 SMN/SCH Level:5| OR |1 NIN Level:5|)",
+                        "requires": f"|{job} unlocked| AND " + "{anyClassLevel(15)}",
                         }
                     })
         if sub in DOL:
@@ -431,7 +431,7 @@ def after_load_region_file(region_table: dict) -> dict:
                     f"{job}": {
                         "starting": False,
                         "connects_to": [],
-                        "requires": f"|{job} unlocked| AND (|1 PLD Level:5| OR |1 WAR Level:5| OR |1 DRG Level:5| OR |1 MNK Level:5| OR |1 BRD Level:5| OR |1 BLM Level:5| OR |1 WHM Level:5| OR |1 SMN/SCH Level:5| OR |1 NIN Level:5|)",
+                        "requires": f"|{job} unlocked| AND " + "{anyClassLevel(15)}",
                         }
                     })
 
@@ -439,6 +439,71 @@ def after_load_region_file(region_table: dict) -> dict:
 
 # called after the categories.json file has been loaded
 def after_load_category_file(category_table: dict) -> dict:
+    category_table = {}
+    for sub in OVERALL_JOBS:
+        for job in ARR_JOB:
+            category_table.update({
+                f"{job}": {
+                    "hidden": True,
+                    "requires": f"|{job} unlocked (default cap 10)|",
+                    }
+                })
+        for job in HW_JOB:
+            category_table.update({
+                f"{job}": {
+                    "hidden": True,
+                    "requires": f"|{job} unlocked| AND " + "{anyClassLevel(50)}",
+                    }
+                })
+        for job in STB_JOB:
+            category_table.update({
+                f"{job}": {
+                    "hidden": True,
+                    "requires": f"|{job} unlocked| AND " + "{anyClassLevel(50)}",
+                    }
+                })
+        for job in SHB_JOB:
+            category_table.update({
+                f"{job}": {
+                    "hidden": True,
+                    "requires": f"|{job} unlocked| AND " + "{anyClassLevel(60)}",
+                    }
+                })
+        for job in EW_JOB:
+            category_table.update({
+                f"{job}": {
+                    "hidden": True,
+                    "requires": f"|{job} unlocked| AND " + "{anyClassLevel(70)}",
+                    }
+                })
+        for job in DT_JOB:
+            category_table.update({
+                f"{job}": {
+                    "hidden": True,
+                    "requires": f"|{job} unlocked| AND " + "{anyClassLevel(80)}",
+                    }
+                })
+        for job in DOH:
+            category_table.update({
+                f"{job}": {
+                    "hidden": True,
+                    "requires": f"|{job} unlocked| AND " + "{anyClassLevel(15)}",
+                    }
+                })
+        for job in DOL:
+            category_table.update({
+                f"{job}": {
+                    "hidden": True,
+                    "requires": f"|{job} unlocked| AND " + "{anyClassLevel(15)}",
+                    }
+                })
+        if sub == "BLU":
+            category_table.update({
+                "BLU": {
+                    "hidden": True,
+                    "requires": "|{BLU unlocked| AND " + "{anyClassLevel(50)}",
+                    }
+                })
     return category_table
 
 # called after the categories.json file has been loaded
