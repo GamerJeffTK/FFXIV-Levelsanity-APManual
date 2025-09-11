@@ -448,7 +448,7 @@ def after_load_location_file(location_table: list) -> list:
     for job in ARR_JOB:
         for level in range(1, 101):  # Every level from 1 to 100
             if level <= 10:
-                # Levels 2-10 are free with job crystal
+                # Levels 1-10 are free with job crystal
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
@@ -584,7 +584,7 @@ def after_load_location_file(location_table: list) -> list:
                 "requires": f"|BLU Job Crystal| and |Level 50 Access|"
             })
         else:
-            # Levels 52-60 require Level 60 Access
+            # Calculate items needed based on 5-level increments
             items_needed = level // 5
             location_table.append({
                 "name": f"BLU Level {level}",
@@ -606,7 +606,7 @@ def after_load_location_file(location_table: list) -> list:
                     "requires": f"|{job} Job Crystal| and |Level 15 Access|"
                 })
             else:
-                # Levels 52-60 require Level 50 Access
+                # Calculate items needed based on 5-level increments
                 items_needed = level // 5
                 location_table.append({
                     "name": f"{job} Level {level}",
@@ -629,7 +629,7 @@ def after_load_location_file(location_table: list) -> list:
                     "requires": f"|{job} Job Crystal| and |Level 15 Access|"
                 })
             else:
-                # Levels 52-60 require Level 50 Access
+                # Calculate items needed based on 5-level increments
                 items_needed = level // 5
                 location_table.append({
                     "name": f"{job} Level {level}",
