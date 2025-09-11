@@ -1,3 +1,5 @@
+# hooks/Data.py - Fixed version
+
 # called after the game.json file has been loaded
 def after_load_game_file(game_table: dict) -> dict:
     return game_table
@@ -51,7 +53,7 @@ def generate_level_list():
                 "name": f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM", f"{job}"],
                 "region": f"{job}",
-                "requires": f"|1 {job} Level:{i-1}| AND |{job} unlocked|"
+                "requires": f"|1 {job} Level:{i-30}| AND |{job} unlocked|"
             })
 
     # STB Jobs: Start at level 50
@@ -68,7 +70,7 @@ def generate_level_list():
                 "name": f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM", f"{job}"],
                 "region": f"{job}",
-                "requires": f"|1 {job} Level:{i-1}| AND |{job} unlocked|"
+                "requires": f"|1 {job} Level:{i-50}| AND |{job} unlocked|"
             })
 
     # SHB Jobs: Start at level 60
@@ -85,7 +87,7 @@ def generate_level_list():
                 "name": f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM", f"{job}"],
                 "region": f"{job}",
-                "requires": f"|1 {job} Level:{i-1}| AND |{job} unlocked|"
+                "requires": f"|1 {job} Level:{i-60}| AND |{job} unlocked|"
             })
 
     # EW Jobs: Start at level 70
@@ -102,7 +104,7 @@ def generate_level_list():
                 "name": f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM", f"{job}"],
                 "region": f"{job}",
-                "requires": f"|1 {job} Level:{i-1}| AND |{job} unlocked|"
+                "requires": f"|1 {job} Level:{i-70}| AND |{job} unlocked|"
             })
 
     # DT Jobs: Start at level 80
@@ -119,7 +121,7 @@ def generate_level_list():
                 "name": f"{job} level {i}",
                 "category": [f"{job} Level", "DOW/DOM", f"{job}"],
                 "region": f"{job}",
-                "requires": f"|1 {job} Level:{i-1}| AND |{job} unlocked|"
+                "requires": f"|1 {job} Level:{i-80}| AND |{job} unlocked|"
             })
     
     # BLU: Special case, starts at level 1, max 80
@@ -177,16 +179,15 @@ def generate_level_list():
 level_locations = generate_level_list()
 
 def after_load_item_file(item_table: list) -> list:
-    # FIXED: Use consistent max levels with generate_level_list()
     max_level = 100  
     max_blu = 80     
 
-    # ARR Jobs
+    # ARR Jobs - Level caps for levels 11-100
     for job in ARR_JOB:
         item_table.append({
            "name": f"1 {job} Level",
            "category": [f"{job} Level Cap", "DOW/DOM", f"{job}"],
-           "count": max_level - 10,  # Levels 11-100
+           "count": max_level - 10,  # 90 level increases (11-100)
            "progression": True,
         })
 
@@ -205,12 +206,12 @@ def after_load_item_file(item_table: list) -> list:
                 "progression": True,
             })
 
-    # HW Jobs
+    # HW Jobs - Level caps for levels 31-100
     for job in HW_JOB:
         item_table.append({
            "name": f"1 {job} Level",
            "category": [f"{job} Level Cap", "DOW/DOM", f"{job}"],
-           "count": max_level - 30,  # Levels 31-100
+           "count": max_level - 30,  # 70 level increases (31-100)
            "progression": True,
         })
 
@@ -221,12 +222,12 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
 
-    # STB Jobs
+    # STB Jobs - Level caps for levels 51-100
     for job in STB_JOB:
         item_table.append({
            "name": f"1 {job} Level",
            "category": [f"{job} Level Cap", "DOW/DOM", f"{job}"],
-           "count": max_level - 50,  # Levels 51-100
+           "count": max_level - 50,  # 50 level increases (51-100)
            "progression": True,
         })
 
@@ -237,12 +238,12 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
 
-    # SHB Jobs
+    # SHB Jobs - Level caps for levels 61-100
     for job in SHB_JOB:
         item_table.append({
            "name": f"1 {job} Level",
            "category": [f"{job} Level Cap", "DOW/DOM", f"{job}"],
-           "count": max_level - 60,  # Levels 61-100
+           "count": max_level - 60,  # 40 level increases (61-100)
            "progression": True,
         })
 
@@ -253,12 +254,12 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
 
-    # EW Jobs
+    # EW Jobs - Level caps for levels 71-100
     for job in EW_JOB:
         item_table.append({
            "name": f"1 {job} Level",
            "category": [f"{job} Level Cap", "DOW/DOM", f"{job}"],
-           "count": max_level - 70,  # Levels 71-100
+           "count": max_level - 70,  # 30 level increases (71-100)
            "progression": True,
         })
 
@@ -269,12 +270,12 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
 
-    # DT Jobs
+    # DT Jobs - Level caps for levels 81-100
     for job in DT_JOB:
         item_table.append({
            "name": f"1 {job} Level",
            "category": [f"{job} Level Cap", "DOW/DOM", f"{job}"],
-           "count": max_level - 80,  # Levels 81-100
+           "count": max_level - 80,  # 20 level increases (81-100)
            "progression": True,
         })
 
@@ -285,11 +286,11 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
 
-    # BLU
+    # BLU - Level caps for levels 2-80
     item_table.append({
         "name": "1 BLU Level",
         "category": ["BLU Level Cap", "DOW/DOM", "BLU"],
-        "count": max_blu - 1,  # Levels 2-80
+        "count": max_blu - 1,  # 79 level increases (2-80)
         "progression": True,
     })
 
@@ -300,12 +301,12 @@ def after_load_item_file(item_table: list) -> list:
         "progression": True,
     })
 
-    # DOH Jobs
+    # DOH Jobs - Level caps for levels 2-100
     for job in DOH:
         item_table.append({
             "name": f"1 {job} Level",
             "category": [f"{job} Level Cap", "DOH", f"{job}"],
-            "count": max_level - 1,  # Levels 2-100
+            "count": max_level - 1,  # 99 level increases (2-100)
             "progression": True,
         })
 
@@ -316,12 +317,12 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
 
-    # DOL Jobs
+    # DOL Jobs - Level caps for levels 2-100
     for job in DOL:
         item_table.append({
             "name": f"1 {job} Level",
             "category": [f"{job} Level Cap", "DOL", f"{job}"],
-            "count": max_level - 1,  # Levels 2-100
+            "count": max_level - 1,  # 99 level increases (2-100)
             "progression": True,
         })
 
@@ -351,7 +352,6 @@ def after_load_location_file(location_table: list) -> list:
 # if you need access to the locations after processing to add ids, etc., you should use the hooks in World.py
 def after_load_region_file(region_table: dict) -> dict:
 
-    
     # ARR Jobs - Starting jobs that connect to all other jobs
     for job in ARR_JOB:
         region_table[job] = {
@@ -360,7 +360,7 @@ def after_load_region_file(region_table: dict) -> dict:
             "requires": f"|{job} unlocked (default cap 10)|"
         }
 
-    # HW Jobs
+    # HW Jobs - Level 50 requirement
     for job in HW_JOB:
         region_table[job] = {
             "starting": False,
@@ -368,7 +368,7 @@ def after_load_region_file(region_table: dict) -> dict:
             "requires": f"|{job} unlocked| AND " + "{anyClassLevel(50)}"
         }
 
-    # STB Jobs
+    # STB Jobs - Level 50 requirement
     for job in STB_JOB:
         region_table[job] = {
             "starting": False,
@@ -376,14 +376,14 @@ def after_load_region_file(region_table: dict) -> dict:
             "requires": f"|{job} unlocked| AND " + "{anyClassLevel(50)}"
         }
 
-    # BLU
+    # BLU - Level 50 requirement
     region_table["BLU"] = {
         "starting": False,
         "connects_to": [],
         "requires": "|BLU unlocked| AND {anyClassLevel(50)}"
     }
 
-    # SHB Jobs
+    # SHB Jobs - Level 60 requirement
     for job in SHB_JOB:
         region_table[job] = {
             "starting": False,
@@ -391,7 +391,7 @@ def after_load_region_file(region_table: dict) -> dict:
             "requires": f"|{job} unlocked| AND " + "{anyClassLevel(60)}"
         }
 
-    # EW Jobs
+    # EW Jobs - Level 70 requirement
     for job in EW_JOB:
         region_table[job] = {
             "starting": False,
@@ -399,7 +399,7 @@ def after_load_region_file(region_table: dict) -> dict:
             "requires": f"|{job} unlocked| AND " + "{anyClassLevel(70)}"
         }
 
-    # DT Jobs
+    # DT Jobs - Level 80 requirement
     for job in DT_JOB:
         region_table[job] = {
             "starting": False,
@@ -407,7 +407,7 @@ def after_load_region_file(region_table: dict) -> dict:
             "requires": f"|{job} unlocked| AND " + "{anyClassLevel(80)}"
         }
 
-    # DOH Jobs
+    # DOH Jobs - Level 15 requirement
     for job in DOH:
         region_table[job] = {
             "starting": False,
@@ -415,7 +415,7 @@ def after_load_region_file(region_table: dict) -> dict:
             "requires": f"|{job} unlocked| AND " + "{anyClassLevel(15)}"
         }
 
-    # DOL Jobs
+    # DOL Jobs - Level 15 requirement
     for job in DOL:
         region_table[job] = {
             "starting": False,
@@ -484,10 +484,10 @@ def after_load_category_file(category_table: dict) -> dict:
             "requires": f"|{job} unlocked| AND " + "{anyClassLevel(15)}"
         }
 
-    # BLU - FIXED: Syntax error in requires string
+    # BLU
     category_table["BLU"] = {
         "hidden": True,
-        "requires": "|BLU unlocked| AND {anyClassLevel(50)}"  # Fixed missing opening brace
+        "requires": "|BLU unlocked| AND {anyClassLevel(50)}"
     }
 
     return category_table
