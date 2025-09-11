@@ -204,6 +204,206 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
     
+    # Dungeons and Trials from duties.csv
+    # ARR Dungeons
+    dungeons_arr = [
+        "Sastasha", "The Tam-Tara Deepcroft", "Copperbell Mines", "Halatali", 
+        "The Thousand Maws of Toto-Rak", "Haukke Manor", "Brayflox's Longstop", 
+        "The Sunken Temple of Qarn", "Cutter's Cry", "The Stone Vigil", 
+        "Dzemael Darkhold", "The Aurum Vale", "Castrum Meridianum", "The Praetorium",
+        "The Wanderer's Palace", "Amdapor Keep", "Pharos Sirius", "Copperbell Mines (Hard)",
+        "Haukke Manor (Hard)", "The Lost City of Amdapor", "Halatali (Hard)", 
+        "Brayflox's Longstop (Hard)", "Hullbreaker Isle", "The Tam-Tara Deepcroft (Hard)",
+        "The Stone Vigil (Hard)", "Snowcloak", "Sastasha (Hard)", 
+        "The Sunken Temple of Qarn (Hard)", "The Keeper of the Lake", 
+        "The Wanderer's Palace (Hard)", "Amdapor Keep (Hard)"
+    ]
+    
+    for dungeon in dungeons_arr:
+        item_table.append({
+            "name": dungeon,
+            "category": ["Dungeon", "ARR"],
+            "count": 1,
+        })
+
+    # ARR Trials
+    trials_arr = [
+        "The Bowl of Embers", "The Navel", "The Howling Eye", "The Porta Decumana",
+        "The Bowl of Embers (Hard)", "The Howling Eye (Hard)", "The Navel (Hard)",
+        "Thornmarch (Hard)", "A Relic Reborn: the Chimera", "A Relic Reborn: the Hydra",
+        "The Whorleater (Hard)", "Battle on the Big Bridge", "The Striking Tree (Hard)",
+        "The Akh Afah Amphitheatre (Hard)", "The Dragon's Neck", "The Chrysalis",
+        "Battle in the Big Keep", "Urth's Fount", "The Minstrel's Ballad: Ultima's Bane",
+        "The Howling Eye (Extreme)", "The Navel (Extreme)", "The Bowl of Embers (Extreme)",
+        "Thornmarch (Extreme)", "The Whorleater (Extreme)", "The Striking Tree (Extreme)",
+        "The Akh Afah Amphitheatre (Extreme)"
+    ]
+    
+    for trial in trials_arr:
+        item_table.append({
+            "name": trial,
+            "category": ["Trial", "ARR"],
+            "count": 1,
+        })
+
+    # HW Dungeons
+    dungeons_hw = [
+        "The Dusk Vigil", "Sohm Al", "The Aery", "The Vault", "The Great Gubal Library",
+        "The Aetherochemical Research Facility", "Neverreap", "The Fractal Continuum",
+        "Saint Mocianne's Arboretum", "Pharos Sirius (Hard)", "The Antitower",
+        "The Lost City of Amdapor (Hard)", "Sohr Khai", "Hullbreaker Isle (Hard)",
+        "Xelphatol", "The Great Gubal Library (Hard)", "Baelsar's Wall", "Sohm Al (Hard)"
+    ]
+    
+    for dungeon in dungeons_hw:
+        item_table.append({
+            "name": dungeon,
+            "category": ["Dungeon", "HW"],
+            "count": 1,
+        })
+
+    # HW Trials
+    trials_hw = [
+        "Thok ast Thok (Hard)", "The Limitless Blue (Hard)", "The Singularity Reactor",
+        "Containment Bay S1T7", "The Final Steps of Faith", "Containment Bay P1T6",
+        "Containment Bay Z1T9", "The Limitless Blue (Extreme)", "Thok ast Thok (Extreme)",
+        "The Minstrel's Ballad: Thordan's Reign", "Containment Bay S1T7 (Extreme)",
+        "The Minstrel's Ballad: Nidhogg's Rage", "Containment Bay P1T6 (Extreme)",
+        "Containment Bay Z1T9 (Extreme)"
+    ]
+    
+    for trial in trials_hw:
+        item_table.append({
+            "name": trial,
+            "category": ["Trial", "HW"],
+            "count": 1,
+        })
+
+    # StB Dungeons
+    dungeons_stb = [
+        "The Sirensong Sea", "Shisui of the Violet Tides", "Bardam's Mettle", "Doma Castle",
+        "Castrum Abania", "Ala Mhigo", "Kugane Castle", "The Temple of the Fist",
+        "The Drowned City of Skalla", "Hells' Lid", "The Fractal Continuum (Hard)",
+        "The Swallow's Compass", "The Burn", "Saint Mocianne's Arboretum (Hard)",
+        "The Ghimlyt Dark"
+    ]
+    
+    for dungeon in dungeons_stb:
+        item_table.append({
+            "name": dungeon,
+            "category": ["Dungeon", "StB"],
+            "count": 1,
+        })
+
+    # StB Trials
+    trials_stb = [
+        "The Pool of Tribute", "Emanation", "The Royal Menagerie", "The Jade Stoa",
+        "Castrum Fluminis", "The Great Hunt", "Hells' Kier", "The Wreath of Snakes",
+        "Kugane Ohashi", "The Pool of Tribute (Extreme)", "Emanation (Extreme)",
+        "The Minstrel's Ballad: Shinryu's Domain", "The Jade Stoa (Extreme)",
+        "The Minstrel's Ballad: Tsukuyomi's Pain", "The Great Hunt (Extreme)",
+        "Hells' Kier (Extreme)", "The Wreath of Snakes (Extreme)"
+    ]
+    
+    for trial in trials_stb:
+        item_table.append({
+            "name": trial,
+            "category": ["Trial", "StB"],
+            "count": 1,
+        })
+
+    # ShB Dungeons
+    dungeons_shb = [
+        "Holminster Switch", "Dohn Mheg", "The Qitana Ravel", "Malikah's Well",
+        "Mt. Gulg", "Amaurot", "The Twinning", "Akadaemia Anyder", "The Grand Cosmos",
+        "Anamnesis Anyder", "The Heroes' Gauntlet", "Matoya's Relict", "Paglth'an"
+    ]
+    
+    for dungeon in dungeons_shb:
+        item_table.append({
+            "name": dungeon,
+            "category": ["Dungeon", "ShB"],
+            "count": 1,
+        })
+
+    # ShB Trials
+    trials_shb = [
+        "The Dancing Plague", "The Crown of the Immaculate", "The Dying Gasp",
+        "Cinder Drift", "The Seat of Sacrifice", "Castrum Marinum", "The Cloud Deck",
+        "The Dancing Plague (Extreme)", "The Crown of the Immaculate (Extreme)",
+        "The Minstrel's Ballad: Hades's Elegy", "Cinder Drift (Extreme)",
+        "Memoria Misera (Extreme)", "The Seat of Sacrifice (Extreme)",
+        "Castrum Marinum (Extreme)", "The Cloud Deck (Extreme)"
+    ]
+    
+    for trial in trials_shb:
+        item_table.append({
+            "name": trial,
+            "category": ["Trial", "ShB"],
+            "count": 1,
+        })
+
+    # EW Dungeons
+    dungeons_ew = [
+        "The Tower of Zot", "The Tower of Babil", "Vanaspati", "Ktisis Hyperboreia",
+        "The Aitiascope", "The Dead Ends", "Smileton", "The Stigma Dreamscape",
+        "Alzadaal's Legacy", "The Fell Court of Troia", "Lapis Manalis",
+        "The Aetherfont", "The Lunar Subterrane"
+    ]
+    
+    for dungeon in dungeons_ew:
+        item_table.append({
+            "name": dungeon,
+            "category": ["Dungeon", "EW"],
+            "count": 1,
+        })
+
+    # EW Trials
+    trials_ew = [
+        "The Dark Inside", "The Mothercrystal", "The Final Day", "Storm's Crown",
+        "Mount Ordeals", "The Voidcast Dais", "The Abyssal Fracture", "The Gilded Araya",
+        "The Minstrel's Ballad: Zodiark's Fall", "The Minstrel's Ballad: Hydaelyn's Call",
+        "The Minstrel's Ballad: Endsinger's Aria", "Storm's Crown (Extreme)",
+        "Mount Ordeals (Extreme)", "The Voidcast Dais (Extreme)", "The Abyssal Fracture (Extreme)"
+    ]
+    
+    for trial in trials_ew:
+        item_table.append({
+            "name": trial,
+            "category": ["Trial", "EW"],
+            "count": 1,
+        })
+
+    # DT Dungeons
+    dungeons_dt = [
+        "Ihuykatumu", "Worqor Zormor", "The Skydeep Cenote", "Vanguard", "Origenics",
+        "Alexandria", "Tender Valley", "The Strayborough Deadwalk", "Yuweyawata Field Station",
+        "The Underkeep", "The Meso Terminal"
+    ]
+    
+    for dungeon in dungeons_dt:
+        item_table.append({
+            "name": dungeon,
+            "category": ["Dungeon", "DT"],
+            "count": 1,
+        })
+
+    # DT Trials
+    trials_dt = [
+        "Worqor Lar Dor", "Everkeep", "The Interphos", "Recollection", "The Ageless Necropolis",
+        "Worqor Lar Dor (Extreme)", "Everkeep (Extreme)", "The Minstrel's Ballad: Sphene's Burden",
+        "Recollection (Extreme)", "The Minstrel's Ballad: Necron's Embrace"
+    ]
+    
+    for trial in trials_dt:
+        item_table.append({
+            "name": trial,
+            "category": ["Trial", "DT"],
+            "count": 1,
+        })
+    
+    return item_table
+    
     return item_table
 
 def after_load_location_file(location_table: list) -> list:
