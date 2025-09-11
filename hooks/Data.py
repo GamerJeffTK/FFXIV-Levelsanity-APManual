@@ -444,9 +444,9 @@ def after_load_location_file(location_table: list) -> list:
         "place_item": ["Level 80 Access"]
     })
 
-    # Add level locations every 2 levels for each job
+    # Add level locations every level for each job
     for job in ARR_JOB:
-        for level in range(2, 101, 2):  # Every 2 levels from 2 to 100
+        for level in range(1, 101):  # Every level from 1 to 100
             if level <= 10:
                 # Levels 2-10 are free with job crystal
                 location_table.append({
@@ -466,57 +466,39 @@ def after_load_location_file(location_table: list) -> list:
                 })
 
     for job in HW_JOB:
-        for level in range(30, 101, 2):  # Every 2 levels from 30 to 100
-            if level <= 50:
-                # Levels 30-50 require Level 50 Access
+        for level in range(30, 101):  # Every  level from 30 to 100
+            if level <= 30:
+                # Levels 30-35 require Level 50 Access
+                items_needed = (level - 30) // 5 + 1
+                location_table.append({
+                    "name": f"{job} Level {level}",
+                    "category": [f"{job}", "DOW/DOM"],
+                    "region": f"{job}",
+                    "requires": f"|{job} Job Crystal| and |Level 50 Access|"
+                })
+            else:
+                # Calculate items needed based on 5-level increments
                 items_needed = (level - 30) // 5 + 1
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
                     "region": f"{job}",
                     "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 50 Access|"
-                })
-            elif level <= 60:
-                # Levels 52-60 require Level 60 Access
-                items_needed = (level - 30) // 5 + 1
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOW/DOM"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 60 Access|"
-                })
-            elif level <= 70:
-                # Levels 62-70 require Level 70 Access
-                items_needed = (level - 30) // 5 + 1
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOW/DOM"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 70 Access|"
-                })
-            elif level <= 80:
-                # Levels 72-80 require Level 80 Access
-                items_needed = (level - 30) // 5 + 1
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOW/DOM"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 80 Access|"
-                })
-            else:
-                # Levels 82-100 require Level 80 Access
-                items_needed = (level - 30) // 5 + 1
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOW/DOM"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 80 Access|"
                 })
 
     for job in STB_JOB:
-        for level in range(50, 101, 2):  # Every 2 levels from 50 to 100
-            if level <= 60:
-                # Levels 50-60 require Level 50 Access
+        for level in range(50, 101):  # Every level from 50 to 100
+            if level <= 50:
+                # Levels 50-55 require Level 50 Access
+                items_needed = (level - 50) // 5 + 1
+                location_table.append({
+                    "name": f"{job} Level {level}",
+                    "category": [f"{job}", "DOW/DOM"],
+                    "region": f"{job}",
+                    "requires": f"|{job} Job Crystal| and |Level 50 Access|"
+                })
+            else:
+                # Calculate items needed based on 5-level increments
                 items_needed = (level - 50) // 5 + 1
                 location_table.append({
                     "name": f"{job} Level {level}",
@@ -524,68 +506,42 @@ def after_load_location_file(location_table: list) -> list:
                     "region": f"{job}",
                     "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 50 Access|"
                 })
-            elif level <= 70:
-                # Levels 62-70 require Level 60 Access
-                items_needed = (level - 50) // 5 + 1
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOW/DOM"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 60 Access|"
-                })
-            elif level <= 80:
-                # Levels 72-80 require Level 70 Access
-                items_needed = (level - 50) // 5 + 1
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOW/DOM"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 70 Access|"
-                })
-            else:
-                # Levels 82-100 require Level 80 Access
-                items_needed = (level - 50) // 5 + 1
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOW/DOM"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 80 Access|"
-                })
+
 
     for job in SHB_JOB:
-        for level in range(60, 101, 2):  # Every 2 levels from 60 to 100
-            if level <= 70:
-                # Levels 60-70 require Level 60 Access
+        for level in range(60, 101):  # Every level from 60 to 100
+            if level <= 60:
+                # Levels 60-65 require Level 60 Access
+                items_needed = (level - 60) // 5 + 1
+                location_table.append({
+                    "name": f"{job} Level {level}",
+                    "category": [f"{job}", "DOW/DOM"],
+                    "region": f"{job}",
+                    "requires": f"|{job} Job Crystal| and |Level 60 Access|"
+                })
+            else:
+                # Calculate items needed based on 5-level increments
                 items_needed = (level - 60) // 5 + 1
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
                     "region": f"{job}",
                     "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 60 Access|"
-                })
-            elif level <= 80:
-                # Levels 72-80 require Level 70 Access
-                items_needed = (level - 60) // 5 + 1
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOW/DOM"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 70 Access|"
-                })
-            else:
-                # Levels 82-100 require Level 80 Access
-                items_needed = (level - 60) // 5 + 1
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOW/DOM"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 80 Access|"
                 })
 
     for job in EW_JOB:
-        for level in range(70, 101, 2):  # Every 2 levels from 70 to 100
-            if level <= 80:
-                # Levels 70-80 require Level 70 Access
+        for level in range(70, 101):  # Every level from 70 to 100
+            if level <= 70:
+                # Levels 70-75 require Level 70 Access
+                items_needed = (level - 70) // 5 + 1
+                location_table.append({
+                    "name": f"{job} Level {level}",
+                    "category": [f"{job}", "DOW/DOM"],
+                    "region": f"{job}",
+                    "requires": f"|{job} Job Crystal| and |Level 70 Access|"
+                })
+            else:
+                # Calculate items needed based on 5-level increments
                 items_needed = (level - 70) // 5 + 1
                 location_table.append({
                     "name": f"{job} Level {level}",
@@ -593,8 +549,20 @@ def after_load_location_file(location_table: list) -> list:
                     "region": f"{job}",
                     "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 70 Access|"
                 })
+
+    for job in DT_JOB:
+        for level in range(80, 101):  # Every level from 80 to 100
+            if level <= 80:
+            # All DT job levels require Level 80 Access
+                items_needed = (level - 80) // 5 + 1
+                location_table.append({
+                    "name": f"{job} Level {level}",
+                    "category": [f"{job}", "DOW/DOM"],
+                    "region": f"{job}",
+                    "requires": f"|{job} Job Crystal| and |Level 80 Access|"
+                })
             else:
-                # Levels 82-100 require Level 80 Access
+                # Calculate items needed based on 5-level increments
                 items_needed = (level - 70) // 5 + 1
                 location_table.append({
                     "name": f"{job} Level {level}",
@@ -603,21 +571,20 @@ def after_load_location_file(location_table: list) -> list:
                     "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 80 Access|"
                 })
 
-    for job in DT_JOB:
-        for level in range(80, 101, 2):  # Every 2 levels from 80 to 100
-            # All DT job levels require Level 80 Access
-            items_needed = (level - 80) // 5 + 1
-            location_table.append({
-                "name": f"{job} Level {level}",
-                "category": [f"{job}", "DOW/DOM"],
-                "region": f"{job}",
-                "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 80 Access|"
-            })
 
-    # BLU levels every 2 (max 80) - starts at level 1, requires Level 50 Access
-    for level in range(2, 81, 2):  # Every 2 levels from 2 to 80
-        if level <= 50:
-            # Levels 2-50 require Level 50 Access
+    # BLU levels (max 80) - starts at level 1, requires Level 50 Access
+    for level in range(1, 81):  # Every level from 1 to 80
+        if level <= 5:
+            # Levels 1-5 require Level 50 Access
+            items_needed = level // 5
+            location_table.append({
+                "name": f"BLU Level {level}",
+                "category": ["BLU", "DOW/DOM"],
+                "region": "BLU",
+                "requires": f"|BLU Job Crystal| and |Level 50 Access|"
+            })
+        else:
+            # Levels 52-60 require Level 60 Access
             items_needed = level // 5
             location_table.append({
                 "name": f"BLU Level {level}",
@@ -625,88 +592,44 @@ def after_load_location_file(location_table: list) -> list:
                 "region": "BLU",
                 "requires": f"|BLU Level Increased by 5:{items_needed}| and |BLU Job Crystal| and |Level 50 Access|"
             })
-        elif level <= 60:
-            # Levels 52-60 require Level 60 Access
-            items_needed = level // 5
-            location_table.append({
-                "name": f"BLU Level {level}",
-                "category": ["BLU", "DOW/DOM"],
-                "region": "BLU",
-                "requires": f"|BLU Level Increased by 5:{items_needed}| and |BLU Job Crystal| and |Level 60 Access|"
-            })
-        elif level <= 70:
-            # Levels 62-70 require Level 70 Access
-            items_needed = level // 5
-            location_table.append({
-                "name": f"BLU Level {level}",
-                "category": ["BLU", "DOW/DOM"],
-                "region": "BLU",
-                "requires": f"|BLU Level Increased by 5:{items_needed}| and |BLU Job Crystal| and |Level 70 Access|"
-            })
-        else:
-            # Levels 72-80 require Level 80 Access
-            items_needed = level // 5
-            location_table.append({
-                "name": f"BLU Level {level}",
-                "category": ["BLU", "DOW/DOM"],
-                "region": "BLU",
-                "requires": f"|BLU Level Increased by 5:{items_needed}| and |BLU Job Crystal| and |Level 80 Access|"
-            })
 
-    # DOH levels every 2 - starts at level 1, requires Level 15 Access
+    # DOH levels - starts at level 1, requires Level 15 Access
     for job in DOH:
-        for level in range(2, 101, 2):  # Every 2 levels from 2 to 100
-            if level <= 50:
-                # Levels 2-50 require Level 15 Access
+        for level in range(1, 101):  # Every level from 1 to 100
+            if level <= 5:
+                # Levels 1-5 require Level 15 Access
                 items_needed = level // 5
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOH"],
                     "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 15 Access|"
+                    "requires": f"|{job} Job Crystal| and |Level 15 Access|"
                 })
-            elif level <= 60:
+            else:
                 # Levels 52-60 require Level 50 Access
                 items_needed = level // 5
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOH"],
                     "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 50 Access|"
-                })
-            elif level <= 70:
-                # Levels 62-70 require Level 60 Access
-                items_needed = level // 5
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOH"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 60 Access|"
-                })
-            elif level <= 80:
-                # Levels 72-80 require Level 70 Access
-                items_needed = level // 5
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOH"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 70 Access|"
-                })
-            else:
-                # Levels 82-100 require Level 80 Access
-                items_needed = level // 5
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOH"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 80 Access|"
+                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 15 Access|"
                 })
 
-    # DOL levels every 2 - starts at level 1, requires Level 15 Access
+
+    # DOL levels - starts at level 1, requires Level 15 Access
     for job in DOL:
-        for level in range(2, 101, 2):  # Every 2 levels from 2 to 100
-            if level <= 50:
-                # Levels 2-50 require Level 15 Access
+        for level in range(1, 101):  # Every 2 levels from 2 to 100
+            if level <= 5:
+                # Levels 1-5 require Level 15 Access
+                items_needed = level // 5
+                location_table.append({
+                    "name": f"{job} Level {level}",
+                    "category": [f"{job}", "DOL"],
+                    "region": f"{job}",
+                    "requires": f"|{job} Job Crystal| and |Level 15 Access|"
+                })
+            else:
+                # Levels 52-60 require Level 50 Access
                 items_needed = level // 5
                 location_table.append({
                     "name": f"{job} Level {level}",
@@ -714,42 +637,7 @@ def after_load_location_file(location_table: list) -> list:
                     "region": f"{job}",
                     "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 15 Access|"
                 })
-            elif level <= 60:
-                # Levels 52-60 require Level 50 Access
-                items_needed = level // 5
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOL"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 50 Access|"
-                })
-            elif level <= 70:
-                # Levels 62-70 require Level 60 Access
-                items_needed = level // 5
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOL"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 60 Access|"
-                })
-            elif level <= 80:
-                # Levels 72-80 require Level 70 Access
-                items_needed = level // 5
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOL"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 70 Access|"
-                })
-            else:
-                # Levels 82-100 require Level 80 Access
-                items_needed = level // 5
-                location_table.append({
-                    "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOL"],
-                    "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 80 Access|"
-                })
+
 
     return location_table
 
