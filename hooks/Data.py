@@ -56,8 +56,9 @@ def after_load_item_file(item_table: list) -> list:
         # Level increases - using "Level Increased by 5" naming
         item_table.append({
            "name": f"{job} Level Increased by 5",
-           "category": [f"{job}", "DOW/DOM", "Level Progression"],
+           "category": [f"{job} Level Progression", "DOW/DOM", "Level Progression"],
            "count": 18,  # Each gives 5 levels, need 18 for levels 15-100 (85 levels / 5 = 17, +1 buffer)
+           "early": True,
            "progression": True,
         })
 
@@ -66,6 +67,7 @@ def after_load_item_file(item_table: list) -> list:
             "name": f"{job} Job Crystal",
             "category": ["Job Crystal", "DOW/DOM", "ARR Starter Job"],
             "count": 1,
+            "early": True,
             "progression": True,
         })
 
@@ -73,7 +75,7 @@ def after_load_item_file(item_table: list) -> list:
     for job in HW_JOB:
         item_table.append({
            "name": f"{job} Level Increased by 5",
-           "category": [f"{job}", "DOW/DOM", "Level Progression"],
+           "category": [f"{job} Level Progression", "DOW/DOM", "Level Progression"],
            "count": 14,  # Levels 35-100 (65 levels / 5 = 13, +1 buffer)
            "progression": True,
         })
@@ -89,7 +91,7 @@ def after_load_item_file(item_table: list) -> list:
     for job in STB_JOB:
         item_table.append({
            "name": f"{job} Level Increased by 5",
-           "category": [f"{job}", "DOW/DOM", "Level Progression"],
+           "category": [f"{job} Level Progression", "DOW/DOM", "Level Progression"],
            "count": 11,  # Levels 55-100 (45 levels / 5 = 9, +2 buffer)
            "progression": True,
         })
@@ -105,7 +107,7 @@ def after_load_item_file(item_table: list) -> list:
     for job in SHB_JOB:
         item_table.append({
            "name": f"{job} Level Increased by 5",
-           "category": [f"{job}", "DOW/DOM", "Level Progression"],
+           "category": [f"{job} Level Progression", "DOW/DOM", "Level Progression"],
            "count": 9,  # Levels 65-100 (35 levels / 5 = 7, +2 buffer)
            "progression": True,
         })
@@ -121,7 +123,7 @@ def after_load_item_file(item_table: list) -> list:
     for job in EW_JOB:
         item_table.append({
            "name": f"{job} Level Increased by 5",
-           "category": [f"{job}", "DOW/DOM", "Level Progression"],
+           "category": [f"{job} Level Progression", "DOW/DOM", "Level Progression"],
            "count": 7,  # Levels 75-100 (25 levels / 5 = 5, +2 buffer)
            "progression": True,
         })
@@ -137,7 +139,7 @@ def after_load_item_file(item_table: list) -> list:
     for job in DT_JOB:
         item_table.append({
            "name": f"{job} Level Increased by 5",
-           "category": [f"{job}", "DOW/DOM", "Level Progression"],
+           "category": [f"{job} Level Progression", "DOW/DOM", "Level Progression"],
            "count": 5,  # Levels 85-100 (15 levels / 5 = 3, +2 buffer)
            "progression": True,
         })
@@ -152,7 +154,7 @@ def after_load_item_file(item_table: list) -> list:
     # BLU
     item_table.append({
         "name": "BLU Level Increased by 5",
-        "category": ["BLU", "DOW/DOM", "Level Progression"],
+        "category": ["BLU Level Progression", "DOW/DOM", "Level Progression"],
         "count": 16,  # Levels 5-80 (75 levels / 5 = 15, +1 buffer)
         "progression": True,
     })
@@ -168,7 +170,7 @@ def after_load_item_file(item_table: list) -> list:
     for job in DOH:
         item_table.append({
             "name": f"{job} Level Increased by 5",
-            "category": [f"{job}", "DOH", "Level Progression"],
+            "category": [f"{job} Level Progression", "DOH", "Level Progression"],
             "count": 20,  # Levels 5-100 (95 levels / 5 = 19, +1 buffer)
             "progression": True,
         })
@@ -177,6 +179,7 @@ def after_load_item_file(item_table: list) -> list:
             "name": f"{job} Job Crystal",
             "category": ["DOH Job Crystal", "DOH"],
             "count": 1,
+            "early": True,
             "progression": True,
         })
 
@@ -184,7 +187,7 @@ def after_load_item_file(item_table: list) -> list:
     for job in DOL:
         item_table.append({
             "name": f"{job} Level Increased by 5",
-            "category": [f"{job}", "DOL", "Level Progression"],
+            "category": [f"{job} Level Progression", "DOL", "Level Progression"],
             "count": 20,  # Levels 5-100 (95 levels / 5 = 19, +1 buffer)
             "progression": True,
         })
@@ -193,6 +196,7 @@ def after_load_item_file(item_table: list) -> list:
             "name": f"{job} Job Crystal",
             "category": ["DOL Job Crystal", "DOL"],
             "count": 1,
+            "early": True,
             "progression": True,
         })
     
@@ -870,6 +874,10 @@ def after_load_category_file(category_table: dict) -> dict:
     for job in ARR_JOB + HW_JOB + STB_JOB + SHB_JOB + EW_JOB + DT_JOB + DOH + DOL + ["BLU"]:
         category_table[job] = {}
     
+    category_table["DOW/DOM"] = {"hidden": True}
+    category_table["DOL"] = {"hidden": True}
+    category_table["DOH"] = {"hidden": True}
+
     return category_table
 
 def after_load_progressive_item_file(progressive_item_table: list) -> list:
