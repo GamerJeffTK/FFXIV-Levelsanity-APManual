@@ -53,35 +53,27 @@ def after_load_item_file(item_table: list) -> list:
 
     # ARR Jobs
     for job in ARR_JOB:
-        # Level increases - FIXED: using "Level Increased by 5" naming
+        # Level increases - using "Level Increased by 5" naming
         item_table.append({
            "name": f"{job} Level Increased by 5",
-           "category": [f"{job}", "DOW/DOM"],
+           "category": [f"{job}", "DOW/DOM", "Level Progression"],
            "count": 18,  # Each gives 5 levels, need 18 for levels 15-100 (85 levels / 5 = 17, +1 buffer)
            "progression": True,
         })
 
-        # Job unlock
-        if job != "NIN":
-            item_table.append({
-                "name": f"{job} Job Crystal",
-                "category": ["Job Crystal", "DOW/DOM", "ARR Starter Job"],
-                "count": 1,
-                "progression": True,
-            })
-        else:
-            item_table.append({
-                "name": f"{job} Job Crystal",
-                "category": ["Job Crystal", "DOW/DOM"],
-                "count": 1,
-                "progression": True,
-            })
+        # Job unlock - All ARR jobs get "ARR Starter Job" category
+        item_table.append({
+            "name": f"{job} Job Crystal",
+            "category": ["Job Crystal", "DOW/DOM", "ARR Starter Job"],
+            "count": 1,
+            "progression": True,
+        })
 
     # HW Jobs
     for job in HW_JOB:
         item_table.append({
            "name": f"{job} Level Increased by 5",
-           "category": [f"{job}", "DOW/DOM"],
+           "category": [f"{job}", "DOW/DOM", "Level Progression"],
            "count": 14,  # Levels 35-100 (65 levels / 5 = 13, +1 buffer)
            "progression": True,
         })
@@ -97,7 +89,7 @@ def after_load_item_file(item_table: list) -> list:
     for job in STB_JOB:
         item_table.append({
            "name": f"{job} Level Increased by 5",
-           "category": [f"{job}", "DOW/DOM"],
+           "category": [f"{job}", "DOW/DOM", "Level Progression"],
            "count": 11,  # Levels 55-100 (45 levels / 5 = 9, +2 buffer)
            "progression": True,
         })
@@ -113,7 +105,7 @@ def after_load_item_file(item_table: list) -> list:
     for job in SHB_JOB:
         item_table.append({
            "name": f"{job} Level Increased by 5",
-           "category": [f"{job}", "DOW/DOM"],
+           "category": [f"{job}", "DOW/DOM", "Level Progression"],
            "count": 9,  # Levels 65-100 (35 levels / 5 = 7, +2 buffer)
            "progression": True,
         })
@@ -129,7 +121,7 @@ def after_load_item_file(item_table: list) -> list:
     for job in EW_JOB:
         item_table.append({
            "name": f"{job} Level Increased by 5",
-           "category": [f"{job}", "DOW/DOM"],
+           "category": [f"{job}", "DOW/DOM", "Level Progression"],
            "count": 7,  # Levels 75-100 (25 levels / 5 = 5, +2 buffer)
            "progression": True,
         })
@@ -145,7 +137,7 @@ def after_load_item_file(item_table: list) -> list:
     for job in DT_JOB:
         item_table.append({
            "name": f"{job} Level Increased by 5",
-           "category": [f"{job}", "DOW/DOM"],
+           "category": [f"{job}", "DOW/DOM", "Level Progression"],
            "count": 5,  # Levels 85-100 (15 levels / 5 = 3, +2 buffer)
            "progression": True,
         })
@@ -160,7 +152,7 @@ def after_load_item_file(item_table: list) -> list:
     # BLU
     item_table.append({
         "name": "BLU Level Increased by 5",
-        "category": ["BLU", "DOW/DOM"],
+        "category": ["BLU", "DOW/DOM", "Level Progression"],
         "count": 16,  # Levels 5-80 (75 levels / 5 = 15, +1 buffer)
         "progression": True,
     })
@@ -176,7 +168,7 @@ def after_load_item_file(item_table: list) -> list:
     for job in DOH:
         item_table.append({
             "name": f"{job} Level Increased by 5",
-            "category": [f"{job}", "DOH"],
+            "category": [f"{job}", "DOH", "Level Progression"],
             "count": 20,  # Levels 5-100 (95 levels / 5 = 19, +1 buffer)
             "progression": True,
         })
@@ -192,7 +184,7 @@ def after_load_item_file(item_table: list) -> list:
     for job in DOL:
         item_table.append({
             "name": f"{job} Level Increased by 5",
-            "category": [f"{job}", "DOL"],
+            "category": [f"{job}", "DOL", "Level Progression"],
             "count": 20,  # Levels 5-100 (95 levels / 5 = 19, +1 buffer)
             "progression": True,
         })
@@ -204,7 +196,7 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
     
-    # Dungeons and Trials from duties.csv
+    # Dungeons and Trials from duties.csv - ALL PROGRESSION ITEMS
     # ARR Dungeons
     dungeons_arr = [
         "Sastasha", "The Tam-Tara Deepcroft", "Copperbell Mines", "Halatali", 
@@ -222,8 +214,9 @@ def after_load_item_file(item_table: list) -> list:
     for dungeon in dungeons_arr:
         item_table.append({
             "name": dungeon,
-            "category": ["Dungeon", "ARR"],
+            "category": ["Dungeon", "ARR", "Duty"],
             "count": 1,
+            "progression": True,
         })
 
     # ARR Trials
@@ -242,8 +235,9 @@ def after_load_item_file(item_table: list) -> list:
     for trial in trials_arr:
         item_table.append({
             "name": trial,
-            "category": ["Trial", "ARR"],
+            "category": ["Trial", "ARR", "Duty"],
             "count": 1,
+            "progression": True,
         })
 
     # HW Dungeons
@@ -258,8 +252,9 @@ def after_load_item_file(item_table: list) -> list:
     for dungeon in dungeons_hw:
         item_table.append({
             "name": dungeon,
-            "category": ["Dungeon", "HW"],
+            "category": ["Dungeon", "HW", "Duty"],
             "count": 1,
+            "progression": True,
         })
 
     # HW Trials
@@ -275,8 +270,9 @@ def after_load_item_file(item_table: list) -> list:
     for trial in trials_hw:
         item_table.append({
             "name": trial,
-            "category": ["Trial", "HW"],
+            "category": ["Trial", "HW", "Duty"],
             "count": 1,
+            "progression": True,
         })
 
     # StB Dungeons
@@ -291,8 +287,9 @@ def after_load_item_file(item_table: list) -> list:
     for dungeon in dungeons_stb:
         item_table.append({
             "name": dungeon,
-            "category": ["Dungeon", "StB"],
+            "category": ["Dungeon", "StB", "Duty"],
             "count": 1,
+            "progression": True,
         })
 
     # StB Trials
@@ -308,8 +305,9 @@ def after_load_item_file(item_table: list) -> list:
     for trial in trials_stb:
         item_table.append({
             "name": trial,
-            "category": ["Trial", "StB"],
+            "category": ["Trial", "StB", "Duty"],
             "count": 1,
+            "progression": True,
         })
 
     # ShB Dungeons
@@ -322,8 +320,9 @@ def after_load_item_file(item_table: list) -> list:
     for dungeon in dungeons_shb:
         item_table.append({
             "name": dungeon,
-            "category": ["Dungeon", "ShB"],
+            "category": ["Dungeon", "ShB", "Duty"],
             "count": 1,
+            "progression": True,
         })
 
     # ShB Trials
@@ -339,8 +338,9 @@ def after_load_item_file(item_table: list) -> list:
     for trial in trials_shb:
         item_table.append({
             "name": trial,
-            "category": ["Trial", "ShB"],
+            "category": ["Trial", "ShB", "Duty"],
             "count": 1,
+            "progression": True,
         })
 
     # EW Dungeons
@@ -354,8 +354,9 @@ def after_load_item_file(item_table: list) -> list:
     for dungeon in dungeons_ew:
         item_table.append({
             "name": dungeon,
-            "category": ["Dungeon", "EW"],
+            "category": ["Dungeon", "EW", "Duty"],
             "count": 1,
+            "progression": True,
         })
 
     # EW Trials
@@ -370,8 +371,9 @@ def after_load_item_file(item_table: list) -> list:
     for trial in trials_ew:
         item_table.append({
             "name": trial,
-            "category": ["Trial", "EW"],
+            "category": ["Trial", "EW", "Duty"],
             "count": 1,
+            "progression": True,
         })
 
     # DT Dungeons
@@ -384,8 +386,9 @@ def after_load_item_file(item_table: list) -> list:
     for dungeon in dungeons_dt:
         item_table.append({
             "name": dungeon,
-            "category": ["Dungeon", "DT"],
+            "category": ["Dungeon", "DT", "Duty"],
             "count": 1,
+            "progression": True,
         })
 
     # DT Trials
@@ -398,17 +401,154 @@ def after_load_item_file(item_table: list) -> list:
     for trial in trials_dt:
         item_table.append({
             "name": trial,
-            "category": ["Trial", "DT"],
+            "category": ["Trial", "DT", "Duty"],
             "count": 1,
+            "progression": True,
         })
     
-    return item_table
+    # Alliance Raids - Major 24-player content
+    alliance_raids = [
+        # Crystal Tower (ARR)
+        "The Labyrinth of the Ancients", "Syrcus Tower", "The World of Darkness",
+        
+        # Shadow of Mhach (HW)
+        "The Void Ark", "The Weeping City of Mhach", "Dun Scaith",
+        
+        # Return to Ivalice (StB)
+        "The Royal City of Rabanastre", "The Ridorana Lighthouse", "The Orbonne Monastery",
+        
+        # YoRHa Dark Apocalypse (ShB)
+        "The Copied Factory", "The Puppets' Bunker", "The Tower at Paradigm's Breach",
+        
+        # Myths of the Realm (EW)
+        "Aglaia", "Euphrosyne", "Thaleia",
+        
+        # Jeuno Alliance (DT)
+        "Jeuno: The First Walk", "San d'Oria: The Second Walk"
+    ]
+    
+    for raid in alliance_raids:
+        item_table.append({
+            "name": raid,
+            "category": ["Alliance Raid", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # Normal Raids (8-player raid content)
+    normal_raids = [
+        # Binding Coil of Bahamut (ARR)
+        "The Binding Coil of Bahamut - Turn 1", "The Binding Coil of Bahamut - Turn 2",
+        "The Binding Coil of Bahamut - Turn 3", "The Binding Coil of Bahamut - Turn 4",
+        "The Binding Coil of Bahamut - Turn 5", "The Second Coil of Bahamut - Turn 1",
+        "The Second Coil of Bahamut - Turn 2", "The Second Coil of Bahamut - Turn 3",
+        "The Second Coil of Bahamut - Turn 4", "The Final Coil of Bahamut - Turn 1",
+        "The Final Coil of Bahamut - Turn 2", "The Final Coil of Bahamut - Turn 3",
+        "The Final Coil of Bahamut - Turn 4",
+        
+        # Alexander (HW)
+        "Alexander - The Fist of the Father", "Alexander - The Cuff of the Father",
+        "Alexander - The Arm of the Father", "Alexander - The Burden of the Father",
+        "Alexander - The Fist of the Son", "Alexander - The Cuff of the Son",
+        "Alexander - The Arm of the Son", "Alexander - The Burden of the Son",
+        "Alexander - The Eyes of the Creator", "Alexander - The Breath of the Creator",
+        "Alexander - The Heart of the Creator", "Alexander - The Soul of the Creator",
+        
+        # Omega (StB)
+        "Deltascape V1.0", "Deltascape V2.0", "Deltascape V3.0", "Deltascape V4.0",
+        "Sigmascape V1.0", "Sigmascape V2.0", "Sigmascape V3.0", "Sigmascape V4.0",
+        "Alphascape V1.0", "Alphascape V2.0", "Alphascape V3.0", "Alphascape V4.0",
+        
+        # Eden (ShB)
+        "Eden's Gate: Resurrection", "Eden's Gate: Descent", "Eden's Gate: Inundation", "Eden's Gate: Sepulture",
+        "Eden's Verse: Fulmination", "Eden's Verse: Furor", "Eden's Verse: Iconoclasm", "Eden's Verse: Refulgence",
+        "Eden's Promise: Umbra", "Eden's Promise: Litany", "Eden's Promise: Anamorphosis", "Eden's Promise: Eternity",
+        
+        # Pandaemonium (EW)
+        "Asphodelos: The First Circle", "Asphodelos: The Second Circle", "Asphodelos: The Third Circle", "Asphodelos: The Fourth Circle",
+        "Abyssos: The Fifth Circle", "Abyssos: The Sixth Circle", "Abyssos: The Seventh Circle", "Abyssos: The Eighth Circle",
+        "Anabaseios: The Ninth Circle", "Anabaseios: The Tenth Circle", "Anabaseios: The Eleventh Circle", "Anabaseios: The Twelfth Circle",
+        
+        # Arcadion (DT)
+        "AAC Light-heavyweight M1", "AAC Light-heavyweight M2", "AAC Light-heavyweight M3", "AAC Light-heavyweight M4",
+        "AAC Cruiserweight M1", "AAC Cruiserweight M2", "AAC Cruiserweight M3", "AAC Cruiserweight M4"
+    ]
+    
+    for raid in normal_raids:
+        item_table.append({
+            "name": raid,
+            "category": ["Normal Raid", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # Savage Raids - Extreme difficulty versions (subset to keep manageable)
+    savage_raids = [
+        # Second Coil Savage (ARR)
+        "The Second Coil of Bahamut (Savage) - Turn 1", "The Second Coil of Bahamut (Savage) - Turn 2",
+        "The Second Coil of Bahamut (Savage) - Turn 3", "The Second Coil of Bahamut (Savage) - Turn 4",
+        
+        # Alexander Savage (HW) - First tier only
+        "Alexander - The Fist of the Father (Savage)", "Alexander - The Cuff of the Father (Savage)",
+        "Alexander - The Arm of the Father (Savage)", "Alexander - The Burden of the Father (Savage)"
+    ]
+    
+    for raid in savage_raids:
+        item_table.append({
+            "name": raid,
+            "category": ["Savage Raid", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # Guildhests - Tutorial group content
+    guildhests = [
+        "Basic Training: Enemy Parties", "Under the Armor", "Basic Training: Enemy Strongholds",
+        "Hero on the Half Shell", "Pulling Poison Posies", "Stinging Back",
+        "All's Well that Ends in the Well", "Flicking Sticks and Taking Names",
+        "More than a Feeler", "Annoy the Void", "Shadow and Claw",
+        "Long Live the Queen", "Ward Up", "Solemn Trinity"
+    ]
+    
+    for guildhest in guildhests:
+        item_table.append({
+            "name": guildhest,
+            "category": ["Guildhest", "ARR", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # Variant Dungeons (EW) - Special solo/small group content
+    variant_dungeons = [
+        "The Sil'dihn Subterrane", "Mount Rokkon", "Aloalo Island"
+    ]
+    
+    for variant in variant_dungeons:
+        item_table.append({
+            "name": variant,
+            "category": ["Variant Dungeon", "EW", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # Bozja Content (ShB) - Special alliance raid series
+    bozja_content = [
+        "Castrum Lacus Litore", "Delubrum Reginae", "The Dalriada"
+    ]
+    
+    for bozja in bozja_content:
+        item_table.append({
+            "name": bozja,
+            "category": ["Bozja", "ShB", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
     
     return item_table
 
 def after_load_location_file(location_table: list) -> list:
     
-    # Simple level milestone locations
+    # Simple level milestone locations - now all require any job reaching that level
     location_table.append({
         "name": "Reach Level 15 on Any Job",
         "category": ["Level Milestone"],
@@ -457,7 +597,7 @@ def after_load_location_file(location_table: list) -> list:
                 })
             else:
                 # Calculate items needed based on 5-level increments
-                items_needed = (level - 10) // 5
+                items_needed = (level - 10 + 4) // 5  # Round up division
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
@@ -466,10 +606,9 @@ def after_load_location_file(location_table: list) -> list:
                 })
 
     for job in HW_JOB:
-        for level in range(30, 101):  # Every  level from 30 to 100
+        for level in range(30, 101):  # Every level from 30 to 100
             if level <= 30:
-                # Levels 30-35 require Level 50 Access
-                items_needed = (level - 30) // 5 + 1
+                # Level 30 requires Level 50 Access and job crystal
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
@@ -477,8 +616,8 @@ def after_load_location_file(location_table: list) -> list:
                     "requires": f"|{job} Job Crystal| and |Level 50 Access|"
                 })
             else:
-                # Calculate items needed based on 5-level increments
-                items_needed = (level - 30) // 5 + 1
+                # Calculate items needed based on 5-level increments from 30
+                items_needed = (level - 30 + 4) // 5  # Round up division
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
@@ -489,8 +628,7 @@ def after_load_location_file(location_table: list) -> list:
     for job in STB_JOB:
         for level in range(50, 101):  # Every level from 50 to 100
             if level <= 50:
-                # Levels 50-55 require Level 50 Access
-                items_needed = (level - 50) // 5 + 1
+                # Level 50 requires Level 50 Access and job crystal
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
@@ -498,8 +636,8 @@ def after_load_location_file(location_table: list) -> list:
                     "requires": f"|{job} Job Crystal| and |Level 50 Access|"
                 })
             else:
-                # Calculate items needed based on 5-level increments
-                items_needed = (level - 50) // 5 + 1
+                # Calculate items needed based on 5-level increments from 50
+                items_needed = (level - 50 + 4) // 5  # Round up division
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
@@ -507,12 +645,10 @@ def after_load_location_file(location_table: list) -> list:
                     "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 50 Access|"
                 })
 
-
     for job in SHB_JOB:
         for level in range(60, 101):  # Every level from 60 to 100
             if level <= 60:
-                # Levels 60-65 require Level 60 Access
-                items_needed = (level - 60) // 5 + 1
+                # Level 60 requires Level 60 Access and job crystal
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
@@ -520,8 +656,8 @@ def after_load_location_file(location_table: list) -> list:
                     "requires": f"|{job} Job Crystal| and |Level 60 Access|"
                 })
             else:
-                # Calculate items needed based on 5-level increments
-                items_needed = (level - 60) // 5 + 1
+                # Calculate items needed based on 5-level increments from 60
+                items_needed = (level - 60 + 4) // 5  # Round up division
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
@@ -532,8 +668,7 @@ def after_load_location_file(location_table: list) -> list:
     for job in EW_JOB:
         for level in range(70, 101):  # Every level from 70 to 100
             if level <= 70:
-                # Levels 70-75 require Level 70 Access
-                items_needed = (level - 70) // 5 + 1
+                # Level 70 requires Level 70 Access and job crystal
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
@@ -541,8 +676,8 @@ def after_load_location_file(location_table: list) -> list:
                     "requires": f"|{job} Job Crystal| and |Level 70 Access|"
                 })
             else:
-                # Calculate items needed based on 5-level increments
-                items_needed = (level - 70) // 5 + 1
+                # Calculate items needed based on 5-level increments from 70
+                items_needed = (level - 70 + 4) // 5  # Round up division
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
@@ -553,8 +688,7 @@ def after_load_location_file(location_table: list) -> list:
     for job in DT_JOB:
         for level in range(80, 101):  # Every level from 80 to 100
             if level <= 80:
-            # All DT job levels require Level 80 Access
-                items_needed = (level - 80) // 5 + 1
+                # Level 80 requires Level 80 Access and job crystal
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
@@ -562,8 +696,8 @@ def after_load_location_file(location_table: list) -> list:
                     "requires": f"|{job} Job Crystal| and |Level 80 Access|"
                 })
             else:
-                # Calculate items needed based on 5-level increments
-                items_needed = (level - 70) // 5 + 1
+                # Calculate items needed based on 5-level increments from 80
+                items_needed = (level - 80 + 4) // 5  # Round up division
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
@@ -571,12 +705,10 @@ def after_load_location_file(location_table: list) -> list:
                     "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 80 Access|"
                 })
 
-
     # BLU levels (max 80) - starts at level 1, requires Level 50 Access
     for level in range(1, 81):  # Every level from 1 to 80
         if level <= 5:
-            # Levels 1-5 require Level 50 Access
-            items_needed = level // 5
+            # Levels 1-5 require Level 50 Access and job crystal
             location_table.append({
                 "name": f"BLU Level {level}",
                 "category": ["BLU", "DOW/DOM"],
@@ -584,8 +716,8 @@ def after_load_location_file(location_table: list) -> list:
                 "requires": f"|BLU Job Crystal| and |Level 50 Access|"
             })
         else:
-            # Calculate items needed based on 5-level increments
-            items_needed = level // 5
+            # Calculate items needed based on 5-level increments from 5
+            items_needed = (level - 5 + 4) // 5  # Round up division
             location_table.append({
                 "name": f"BLU Level {level}",
                 "category": ["BLU", "DOW/DOM"],
@@ -597,8 +729,7 @@ def after_load_location_file(location_table: list) -> list:
     for job in DOH:
         for level in range(1, 101):  # Every level from 1 to 100
             if level <= 5:
-                # Levels 1-5 require Level 15 Access
-                items_needed = level // 5
+                # Levels 1-5 require Level 15 Access and job crystal
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOH"],
@@ -606,22 +737,20 @@ def after_load_location_file(location_table: list) -> list:
                     "requires": f"|{job} Job Crystal| and |Level 15 Access|"
                 })
             else:
-                # Calculate items needed based on 5-level increments
-                items_needed = level // 5
+                # Calculate items needed based on 5-level increments from 5
+                items_needed = (level - 5 + 4) // 5  # Round up division
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOH"],
                     "region": f"{job}",
                     "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 15 Access|"
                 })
-
 
     # DOL levels - starts at level 1, requires Level 15 Access
     for job in DOL:
-        for level in range(1, 101):  # Every 2 levels from 2 to 100
+        for level in range(1, 101):  # Every level from 1 to 100
             if level <= 5:
-                # Levels 1-5 require Level 15 Access
-                items_needed = level // 5
+                # Levels 1-5 require Level 15 Access and job crystal
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOL"],
@@ -629,8 +758,8 @@ def after_load_location_file(location_table: list) -> list:
                     "requires": f"|{job} Job Crystal| and |Level 15 Access|"
                 })
             else:
-                # Calculate items needed based on 5-level increments
-                items_needed = level // 5
+                # Calculate items needed based on 5-level increments from 5
+                items_needed = (level - 5 + 4) // 5  # Round up division
                 location_table.append({
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOL"],
@@ -638,6 +767,24 @@ def after_load_location_file(location_table: list) -> list:
                     "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 15 Access|"
                 })
 
+    # Simple duty completion locations - basic level requirements for key duties
+    key_duties = [
+        {"name": "Sastasha", "level": 18, "requires": "{anyClassLevel(18)}"},
+        {"name": "The Praetorium", "level": 50, "requires": "{anyClassLevel(50)}"},
+        {"name": "The Vault", "level": 58, "requires": "|Level 50 Access| and {anyClassLevel(58)}"},
+        {"name": "Ala Mhigo", "level": 70, "requires": "|Level 70 Access| and {anyClassLevel(70)}"},
+        {"name": "Amaurot", "level": 80, "requires": "|Level 80 Access| and {anyClassLevel(80)}"},
+        {"name": "The Dead Ends", "level": 90, "requires": "|Level 80 Access| and {anyClassLevel(90)}"},
+        {"name": "Alexandria", "level": 100, "requires": "|Level 80 Access| and {anyClassLevel(100)}"}
+    ]
+    
+    for duty in key_duties:
+        location_table.append({
+            "name": f"Complete {duty['name']}",
+            "category": ["Duty"],
+            "region": "Manual",
+            "requires": duty["requires"]
+        })
 
     return location_table
 

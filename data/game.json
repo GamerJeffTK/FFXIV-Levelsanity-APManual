@@ -5,8 +5,25 @@
   "filler_item_name": "Yet another trip to the Waking Sands",
   "starting_items": [
     {
-      "item_categories": ["ARR Starter Job"],
-      "random": 1
+      "_comment": "Give all ARR job crystals to start",
+      "items": [ "PLD Job Crystal", "WAR Job Crystal", "DRG Job Crystal", "MNK Job Crystal", "BRD Job Crystal", "BLM Job Crystal", "WHM Job Crystal", "SMN/SCH Job Crystal", "NIN Job Crystal" ]
+    },
+    {
+      "_comment": "Give all DOH job crystals to start",
+      "items": [ "CRP Job Crystal", "BSM Job Crystal", "ARM Job Crystal", "GSM Job Crystal", "LTW Job Crystal", "WVR Job Crystal", "ALC Job Crystal", "CUL Job Crystal" ]
+    },
+    {
+      "_comment": "Give all DOL job crystals to start",
+      "items": [ "MIN Job Crystal", "BTN Job Crystal", "FSH Job Crystal" ]
+    },
+    {
+      "_comment": "Give some initial level progression for different job types",
+      "item_categories": [ "Level Progression" ],
+      "random": 30
+    },
+    {
+      "_comment": "Ensure early level access",
+      "items": [ "Level 15 Access" ]
     }
   ]
 }
