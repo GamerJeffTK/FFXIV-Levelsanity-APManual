@@ -175,7 +175,7 @@ def after_load_item_file(item_table: list) -> list:
 
         item_table.append({
             "name": f"{job} Job Crystal",
-            "category": ["Job Crystal", "DOH"],
+            "category": ["DOH Job Crystal", "DOH"],
             "count": 1,
             "progression": True,
         })
@@ -191,7 +191,7 @@ def after_load_item_file(item_table: list) -> list:
 
         item_table.append({
             "name": f"{job} Job Crystal",
-            "category": ["Job Crystal", "DOL"],
+            "category": ["DOL Job Crystal", "DOL"],
             "count": 1,
             "progression": True,
         })
