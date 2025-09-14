@@ -62,9 +62,9 @@ def after_load_item_file(item_table: list) -> list:
            "progression": True,
         })
 
-        # Job unlock - All ARR jobs get "ARR Starter Job" category
+        # Job unlock - All ARR jobs get "ARR Starter Job" category with default cap
         item_table.append({
-            "name": f"{job} Job Crystal",
+            "name": f"{job} Job Crystal (default cap 10)",
             "category": ["Job Crystal", "DOW/DOM", "ARR Starter Job"],
             "count": 1,
             "early": True,
@@ -81,7 +81,7 @@ def after_load_item_file(item_table: list) -> list:
         })
 
         item_table.append({
-            "name": f"{job} Job Crystal",
+            "name": f"{job} Job Crystal (default cap 30)",
             "category": ["Job Crystal", "DOW/DOM"],
             "count": 1,
             "progression": True,
@@ -97,7 +97,7 @@ def after_load_item_file(item_table: list) -> list:
         })
 
         item_table.append({
-            "name": f"{job} Job Crystal",
+            "name": f"{job} Job Crystal (default cap 50)",
             "category": ["Job Crystal", "DOW/DOM"],
             "count": 1,
             "progression": True,
@@ -113,7 +113,7 @@ def after_load_item_file(item_table: list) -> list:
         })
 
         item_table.append({
-            "name": f"{job} Job Crystal",
+            "name": f"{job} Job Crystal (default cap 60)",
             "category": ["Job Crystal", "DOW/DOM"],
             "count": 1,
             "progression": True,
@@ -129,7 +129,7 @@ def after_load_item_file(item_table: list) -> list:
         })
 
         item_table.append({
-            "name": f"{job} Job Crystal",
+            "name": f"{job} Job Crystal (default cap 70)",
             "category": ["Job Crystal", "DOW/DOM"],
             "count": 1,
             "progression": True,
@@ -145,7 +145,7 @@ def after_load_item_file(item_table: list) -> list:
         })
 
         item_table.append({
-            "name": f"{job} Job Crystal",
+            "name": f"{job} Job Crystal (default cap 80)",
             "category": ["Job Crystal", "DOW/DOM"],
             "count": 1,
             "progression": True,
@@ -160,7 +160,7 @@ def after_load_item_file(item_table: list) -> list:
     })
 
     item_table.append({
-        "name": "BLU Job Crystal",
+        "name": "BLU Job Crystal (default cap 5)",
         "category": ["Job Crystal", "DOW/DOM"],
         "count": 1,
         "progression": True,
@@ -176,7 +176,7 @@ def after_load_item_file(item_table: list) -> list:
         })
 
         item_table.append({
-            "name": f"{job} Job Crystal",
+            "name": f"{job} Job Crystal (default cap 5)",
             "category": ["DOH Job Crystal", "DOH"],
             "count": 1,
             "early": True,
@@ -193,7 +193,7 @@ def after_load_item_file(item_table: list) -> list:
         })
 
         item_table.append({
-            "name": f"{job} Job Crystal",
+            "name": f"{job} Job Crystal (default cap 5)",
             "category": ["DOL Job Crystal", "DOL"],
             "count": 1,
             "early": True,
@@ -597,7 +597,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
                     "region": f"{job}",
-                    "requires": f"|{job} Job Crystal|"
+                    "requires": f"|{job} Job Crystal (default cap 10)|"
                 })
             else:
                 # Calculate items needed based on 5-level increments
@@ -606,7 +606,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
                     "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal|"
+                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal (default cap 10)|"
                 })
 
     for job in HW_JOB:
@@ -617,7 +617,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
                     "region": f"{job}",
-                    "requires": f"|{job} Job Crystal| and |Level 50 Access|"
+                    "requires": f"|{job} Job Crystal (default cap 30)| and |Level 50 Access|"
                 })
             else:
                 # Calculate items needed based on 5-level increments from 30
@@ -626,7 +626,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
                     "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 50 Access|"
+                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal (default cap 30)| and |Level 50 Access|"
                 })
 
     for job in STB_JOB:
@@ -637,7 +637,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
                     "region": f"{job}",
-                    "requires": f"|{job} Job Crystal| and |Level 50 Access|"
+                    "requires": f"|{job} Job Crystal (default cap 50)| and |Level 50 Access|"
                 })
             else:
                 # Calculate items needed based on 5-level increments from 50
@@ -646,7 +646,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
                     "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 50 Access|"
+                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal (default cap 50)| and |Level 50 Access|"
                 })
 
     for job in SHB_JOB:
@@ -657,7 +657,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
                     "region": f"{job}",
-                    "requires": f"|{job} Job Crystal| and |Level 60 Access|"
+                    "requires": f"|{job} Job Crystal (default cap 60)| and |Level 60 Access|"
                 })
             else:
                 # Calculate items needed based on 5-level increments from 60
@@ -666,7 +666,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
                     "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 60 Access|"
+                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal (default cap 60)| and |Level 60 Access|"
                 })
 
     for job in EW_JOB:
@@ -677,7 +677,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
                     "region": f"{job}",
-                    "requires": f"|{job} Job Crystal| and |Level 70 Access|"
+                    "requires": f"|{job} Job Crystal (default cap 70)| and |Level 70 Access|"
                 })
             else:
                 # Calculate items needed based on 5-level increments from 70
@@ -686,7 +686,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
                     "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 70 Access|"
+                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal (default cap 70)| and |Level 70 Access|"
                 })
 
     for job in DT_JOB:
@@ -697,7 +697,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
                     "region": f"{job}",
-                    "requires": f"|{job} Job Crystal| and |Level 80 Access|"
+                    "requires": f"|{job} Job Crystal (default cap 80)| and |Level 80 Access|"
                 })
             else:
                 # Calculate items needed based on 5-level increments from 80
@@ -706,7 +706,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOW/DOM"],
                     "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 80 Access|"
+                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal (default cap 80)| and |Level 80 Access|"
                 })
 
     # BLU levels (max 80) - starts at level 1, requires Level 50 Access
@@ -717,7 +717,7 @@ def after_load_location_file(location_table: list) -> list:
                 "name": f"BLU Level {level}",
                 "category": ["BLU", "DOW/DOM"],
                 "region": "BLU",
-                "requires": f"|BLU Job Crystal| and |Level 50 Access|"
+                "requires": f"|BLU Job Crystal (default cap 5)| and |Level 50 Access|"
             })
         else:
             # Calculate items needed based on 5-level increments from 5
@@ -726,7 +726,7 @@ def after_load_location_file(location_table: list) -> list:
                 "name": f"BLU Level {level}",
                 "category": ["BLU", "DOW/DOM"],
                 "region": "BLU",
-                "requires": f"|BLU Level Increased by 5:{items_needed}| and |BLU Job Crystal| and |Level 50 Access|"
+                "requires": f"|BLU Level Increased by 5:{items_needed}| and |BLU Job Crystal (default cap 5)| and |Level 50 Access|"
             })
 
     # DOH levels - starts at level 1, requires Level 15 Access
@@ -738,7 +738,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOH"],
                     "region": f"{job}",
-                    "requires": f"|{job} Job Crystal| and |Level 15 Access|"
+                    "requires": f"|{job} Job Crystal (default cap 5)| and |Level 15 Access|"
                 })
             else:
                 # Calculate items needed based on 5-level increments from 5
@@ -747,7 +747,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOH"],
                     "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 15 Access|"
+                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal (default cap 5)| and |Level 15 Access|"
                 })
 
     # DOL levels - starts at level 1, requires Level 15 Access
@@ -759,7 +759,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOL"],
                     "region": f"{job}",
-                    "requires": f"|{job} Job Crystal| and |Level 15 Access|"
+                    "requires": f"|{job} Job Crystal (default cap 5)| and |Level 15 Access|"
                 })
             else:
                 # Calculate items needed based on 5-level increments from 5
@@ -768,7 +768,7 @@ def after_load_location_file(location_table: list) -> list:
                     "name": f"{job} Level {level}",
                     "category": [f"{job}", "DOL"],
                     "region": f"{job}",
-                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal| and |Level 15 Access|"
+                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal (default cap 5)| and |Level 15 Access|"
                 })
 
     # Simple duty completion locations - basic level requirements for key duties
@@ -801,7 +801,7 @@ def after_load_region_file(region_table: dict) -> dict:
         region_table[job] = {
             "starting": True,
             "connects_to": all_other_jobs,
-            "requires": f"|{job} Job Crystal|"  # Require specific job crystal
+            "requires": f"|{job} Job Crystal (default cap 10)|"  # Require specific job crystal with cap
         }
 
     # DOH Jobs - Level 15 requirement + specific job crystal
@@ -809,7 +809,7 @@ def after_load_region_file(region_table: dict) -> dict:
         region_table[job] = {
             "starting": False,
             "connects_to": [],
-            "requires": f"|Level 15 Access| and |{job} Job Crystal|"
+            "requires": f"|Level 15 Access| and |{job} Job Crystal (default cap 5)|"
         }
 
     # DOL Jobs - Level 15 requirement + specific job crystal
@@ -817,7 +817,7 @@ def after_load_region_file(region_table: dict) -> dict:
         region_table[job] = {
             "starting": False,
             "connects_to": [],
-            "requires": f"|Level 15 Access| and |{job} Job Crystal|"
+            "requires": f"|Level 15 Access| and |{job} Job Crystal (default cap 5)|"
         }
 
     # HW Jobs - Level 50 requirement + specific job crystal
@@ -825,7 +825,7 @@ def after_load_region_file(region_table: dict) -> dict:
         region_table[job] = {
             "starting": False,
             "connects_to": [],
-            "requires": f"|Level 50 Access| and |{job} Job Crystal|"
+            "requires": f"|Level 50 Access| and |{job} Job Crystal (default cap 30)|"
         }
 
     # STB Jobs - Level 50 requirement + specific job crystal
@@ -833,14 +833,14 @@ def after_load_region_file(region_table: dict) -> dict:
         region_table[job] = {
             "starting": False,
             "connects_to": [],
-            "requires": f"|Level 50 Access| and |{job} Job Crystal|"
+            "requires": f"|Level 50 Access| and |{job} Job Crystal (default cap 50)|"
         }
 
     # BLU - Level 50 requirement + specific job crystal
     region_table["BLU"] = {
         "starting": False,
         "connects_to": [],
-        "requires": "|Level 50 Access| and |BLU Job Crystal|"
+        "requires": "|Level 50 Access| and |BLU Job Crystal (default cap 5)|"
     }
 
     # SHB Jobs - Level 60 requirement + specific job crystal
@@ -848,7 +848,7 @@ def after_load_region_file(region_table: dict) -> dict:
         region_table[job] = {
             "starting": False,
             "connects_to": [],
-            "requires": f"|Level 60 Access| and |{job} Job Crystal|"
+            "requires": f"|Level 60 Access| and |{job} Job Crystal (default cap 60)|"
         }
 
     # EW Jobs - Level 70 requirement + specific job crystal
@@ -856,7 +856,7 @@ def after_load_region_file(region_table: dict) -> dict:
         region_table[job] = {
             "starting": False,
             "connects_to": [],
-            "requires": f"|Level 70 Access| and |{job} Job Crystal|"
+            "requires": f"|Level 70 Access| and |{job} Job Crystal (default cap 70)|"
         }
 
     # DT Jobs - Level 80 requirement + specific job crystal
@@ -864,7 +864,7 @@ def after_load_region_file(region_table: dict) -> dict:
         region_table[job] = {
             "starting": False,
             "connects_to": [],
-            "requires": f"|Level 80 Access| and |{job} Job Crystal|"
+            "requires": f"|Level 80 Access| and |{job} Job Crystal (default cap 80)|"
         }
 
     return region_table
@@ -874,10 +874,13 @@ def after_load_category_file(category_table: dict) -> dict:
     for job in ARR_JOB + HW_JOB + STB_JOB + SHB_JOB + EW_JOB + DT_JOB + DOH + DOL + ["BLU"]:
         category_table[job] = {}
     
+    # Hide broad job type categories
     category_table["DOW/DOM"] = {"hidden": True}
     category_table["DOL"] = {"hidden": True}
     category_table["DOH"] = {"hidden": True}
-
+    category_table["Level Progression"] = {"hidden": True}
+    
+    
     return category_table
 
 def after_load_progressive_item_file(progressive_item_table: list) -> list:
