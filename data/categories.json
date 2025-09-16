@@ -1,1 +1,4 @@
-{}
+{} {
+  "$schema": "https://raw.githubusercontent.com/ManualForArchipelago/Manual/main/schemas/Manual.categories.schema.json",
+  "_comment": "Categories are handled by the hooks/Data.py file - this is just the schema placeholder"
+}

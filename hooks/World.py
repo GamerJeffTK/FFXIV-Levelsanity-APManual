@@ -29,8 +29,6 @@ import logging
 ## The fill_slot_data method will be used to send data to the Manual client for later use, like deathlink.
 ########################################################################################
 
-
-
 # Use this function to change the valid filler items to be created to replace item links or starting items.
 # Default value is the `filler_item_name` from game.json
 def hook_get_filler_item_name(world: World, multiworld: MultiWorld, player: int) -> str | bool:
@@ -45,8 +43,61 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to remove locations from the world
     locationNamesToRemove: list[str] = [] # List of location names
 
-    # Add your code here to calculate which locations to remove
+    # Add your code here to calculate which locations to remove based on options
+    # For example, remove content based on expansion selection
+    included_expansions = get_option_value(multiworld, player, "included_expansions")
+    
+    if included_expansions < 5:  # Not all expansions
+        expansions_to_remove = []
+        if included_expansions < 4:  # No EW
+            expansions_to_remove.extend(["EW", "DT"])
+        if included_expansions < 3:  # No ShB
+            expansions_to_remove.extend(["ShB"])
+        if included_expansions < 2:  # No StB
+            expansions_to_remove.extend(["StB"])
+        if included_expansions < 1:  # No HW
+            expansions_to_remove.extend(["HW"])
+            
+        for region in multiworld.regions:
+            if region.player == player:
+                for location in list(region.locations):
+                    # Check if location should be removed based on expansion
+                    location_data = world.location_name_to_location.get(location.name, {})
+                    location_categories = location_data.get("category", [])
+                    
+                    # Remove locations from excluded expansions
+                    for exp in expansions_to_remove:
+                        if exp in location_categories:
+                            locationNamesToRemove.append(location.name)
+                            break
 
+    # Update victory conditions based on YAML options
+    faded_crystals_required = get_option_value(multiworld, player, "faded_job_crystals_required")
+    total_levels_required = get_option_value(multiworld, player, "total_levels_required")
+    
+    # Find and update victory locations
+    for region in multiworld.regions:
+        if region.player == player:
+            for location in region.locations:
+                location_data = world.location_name_to_location.get(location.name, {})
+                
+                if location.name == "Complete Job Crystal Collection":
+                    if faded_crystals_required == 0:
+                        # Disable this victory condition
+                        locationNamesToRemove.append(location.name)
+                    else:
+                        # Update the requirement
+                        location_data["requires"] = f"|A Faded Job Crystal:{faded_crystals_required}|"
+                        
+                elif location.name == "Reach Sufficient Total Levels":
+                    if total_levels_required == 0:
+                        # Disable this victory condition  
+                        locationNamesToRemove.append(location.name)
+                    else:
+                        # Update the requirement
+                        location_data["requires"] = f"{{TotalLevelsReached({total_levels_required})}}"
+
+    # Remove disabled locations
     for region in multiworld.regions:
         if region.player == player:
             for location in list(region.locations):
@@ -62,10 +113,119 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
 #       will create 5 items that are the "useful trap" class
 # {"Item Name": {ItemClassification.useful: 5}} <- You can also use the classification directly
 def before_create_items_all(item_config: dict[str, int|dict], world: World, multiworld: MultiWorld, player: int) -> dict[str, int|dict]:
+    # Filter items based on options
+    include_extreme = get_option_value(multiworld, player, "include_extreme_difficulty")
+    include_dungeons = get_option_value(multiworld, player, "include_dungeons")
+    include_trials = get_option_value(multiworld, player, "include_trials")
+    include_raids = get_option_value(multiworld, player, "include_raids")
+    include_guildhests = get_option_value(multiworld, player, "include_guildhests")
+    include_variant = get_option_value(multiworld, player, "include_variant_dungeons")
+    include_bozja = get_option_value(multiworld, player, "include_bozja_content")
+    included_expansions = get_option_value(multiworld, player, "included_expansions")
+    
+    # Build list of items to remove based on options
+    items_to_remove = []
+    
+    # Filter by content type
+    for item_name, item_data in world.item_name_to_item.items():
+        if item_name in item_config:
+            categories = item_data.get("category", [])
+            
+            # Check extreme/savage content
+            if not include_extreme:
+                if any(cat in categories for cat in ["Savage Raid"]) or "(Extreme)" in item_name or "(Savage)" in item_name:
+                    items_to_remove.append(item_name)
+                    continue
+            
+            # Check content types
+            if not include_dungeons and "Dungeon" in categories:
+                items_to_remove.append(item_name)
+                continue
+            if not include_trials and "Trial" in categories:
+                items_to_remove.append(item_name)
+                continue
+            if not include_raids and any(cat in categories for cat in ["Normal Raid", "Alliance Raid", "Savage Raid"]):
+                items_to_remove.append(item_name)
+                continue
+            if not include_guildhests and "Guildhest" in categories:
+                items_to_remove.append(item_name)
+                continue
+            if not include_variant and "Variant Dungeon" in categories:
+                items_to_remove.append(item_name)
+                continue
+            if not include_bozja and "Bozja" in categories:
+                items_to_remove.append(item_name)
+                continue
+            
+            # Check expansion filtering
+            if included_expansions < 5:  # Not all expansions
+                expansion_categories = []
+                if included_expansions < 4:  # No EW/DT
+                    expansion_categories.extend(["EW", "DT"])
+                if included_expansions < 3:  # No ShB
+                    expansion_categories.extend(["ShB"])
+                if included_expansions < 2:  # No StB
+                    expansion_categories.extend(["StB"])
+                if included_expansions < 1:  # No HW
+                    expansion_categories.extend(["HW"])
+                
+                if any(exp in categories for exp in expansion_categories):
+                    items_to_remove.append(item_name)
+                    continue
+    
+    # Remove filtered items
+    for item_name in items_to_remove:
+        if item_name in item_config:
+            del item_config[item_name]
+    
     return item_config
 
 # The item pool before starting items are processed, in case you want to see the raw item pool at that stage
 def before_create_items_starting(item_pool: list, world: World, multiworld: MultiWorld, player: int) -> list:
+    # Handle YAML option-based starting items
+    # This integrates with the YAML configuration to override default starting items
+    
+    # Get option values
+    starting_arr_crystals = get_option_value(multiworld, player, "starting_arr_job_crystals")
+    starting_doh_crystals = get_option_value(multiworld, player, "starting_doh_job_crystals")
+    starting_dol_crystals = get_option_value(multiworld, player, "starting_dol_job_crystals")
+    starting_level_items = get_option_value(multiworld, player, "starting_level_increase_items")
+    starting_duties = get_option_value(multiworld, player, "starting_duties")
+    
+    # Helper function to add starting items
+    def add_starting_items_by_category(category: str, count: int):
+        if count <= 0:
+            return
+        available_items = [item for item in item_pool if category in world.item_name_to_item.get(item.name, {}).get("category", [])]
+        world.random.shuffle(available_items)
+        items_to_start = available_items[:count]
+        for item in items_to_start:
+            multiworld.push_precollected(item)
+            item_pool.remove(item)
+    
+    # Add starting items based on options
+    add_starting_items_by_category("ARR Starter Job", starting_arr_crystals)
+    add_starting_items_by_category("DOH Job Crystal", starting_doh_crystals)
+    add_starting_items_by_category("DOL Job Crystal", starting_dol_crystals)
+    add_starting_items_by_category("Level Progression", starting_level_items)
+    
+    # For duties, prioritize early duties
+    if starting_duties > 0:
+        # First try to get early duties
+        early_duty_items = [item for item in item_pool if "Early Duty" in world.item_name_to_item.get(item.name, {}).get("category", [])]
+        other_duty_items = [item for item in item_pool if "Duty" in world.item_name_to_item.get(item.name, {}).get("category", []) and "Early Duty" not in world.item_name_to_item.get(item.name, {}).get("category", [])]
+        
+        world.random.shuffle(early_duty_items)
+        world.random.shuffle(other_duty_items)
+        
+        # Combine with early duties first
+        all_duty_items = early_duty_items + other_duty_items
+        duties_to_start = all_duty_items[:starting_duties]
+        
+        for item in duties_to_start:
+            multiworld.push_precollected(item)
+            item_pool.remove(item)
+    
     return item_pool
 
 # The item pool after starting items are processed but before filler is added, in case you want to see the raw item pool at that stage

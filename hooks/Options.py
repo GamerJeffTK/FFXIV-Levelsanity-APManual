@@ -131,13 +131,23 @@ class IncludedExpansions(Choice):
     option_all_expansions = 5
     default = 0
 
+class DutyPrioritization(Choice):
+    """
+    How to prioritize duties in the item pool.
+    """
+    display_name = "Duty Prioritization"
+    option_all_equal = 0
+    option_main_scenario_priority = 1
+    option_early_duties_priority = 2
+    default = 2
+
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict) -> dict:
     # Victory Conditions
     options["faded_job_crystals_required"] = FadedJobCrystalsRequired
     options["total_levels_required"] = TotalLevelsRequired
     
-    # Starting Items
+    # Starting Items - These will override the game.json starting_items if set
     options["starting_arr_job_crystals"] = StartingARRJobCrystals
     options["starting_doh_job_crystals"] = StartingDOHJobCrystals
     options["starting_dol_job_crystals"] = StartingDOLJobCrystals
@@ -146,6 +156,7 @@ def before_options_defined(options: dict) -> dict:
     
     # Progression Settings
     options["include_extreme_difficulty"] = IncludeExtremeDifficulty
+    options["duty_prioritization"] = DutyPrioritization
     
     # Content Toggles
     options["include_dungeons"] = IncludeDungeons
@@ -174,7 +185,35 @@ def after_options_defined(options: Type[PerGameCommonOptions]) -> None:
 
 # Use this Hook if you want to add your Option to an Option group (existing or not)
 def before_option_groups_created(groups: dict[str, list[Option]]) -> dict[str, list[Option]]:
-    # Uses the format groups['GroupName'] = [TotalCharactersToWinWith]
+    # Create organized option groups
+    groups['Victory Conditions'] = [
+        FadedJobCrystalsRequired, 
+        TotalLevelsRequired
+    ]
+    
+    groups['Starting Items'] = [
+        StartingARRJobCrystals,
+        StartingDOHJobCrystals, 
+        StartingDOLJobCrystals,
+        StartingLevelIncreaseItems,
+        StartingDuties
+    ]
+    
+    groups['Content Selection'] = [
+        IncludedExpansions,
+        IncludeDungeons,
+        IncludeTrials, 
+        IncludeRaids,
+        IncludeGuildhests,
+        IncludeVariantDungeons,
+        IncludeBozjaContent
+    ]
+    
+    groups['Difficulty Options'] = [
+        IncludeExtremeDifficulty,
+        DutyPrioritization
+    ]
+    
     return groups
 
 def after_option_groups_created(groups: list[OptionGroup]) -> list[OptionGroup]:

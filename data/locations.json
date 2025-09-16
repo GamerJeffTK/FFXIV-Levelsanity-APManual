@@ -1,14 +1,14 @@
 [
   {
-    "name": "The Crystal of Completion",
+    "name": "Complete Job Crystal Collection",
     "victory": true,
-    "category": [],
-    "requires": "|A Faded Job Crystal:50|"
+    "category": [ "Victory" ],
+    "requires": "|A Faded Job Crystal:25|"
   },
   {
-    "name": "A certain amount of levels",
+    "name": "Reach Sufficient Total Levels",
     "victory": true,
-    "category": [],
-    "requires": "|@DOW/DOM:75%| and |@DOL:75%| and |@DOH:75%|"
+    "category": [ "Victory" ],
+    "requires": "{TotalLevelsReached(200)}"
   }
 ]

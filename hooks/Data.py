@@ -1,10 +1,11 @@
-# hooks/Data.py - Fixed version with consistent naming and proper connections
+# hooks/Data.py - Fixed version with early duties and proper logic
 
 # called after the game.json file has been loaded
 def after_load_game_file(game_table: dict) -> dict:
     return game_table
 
-ARR_JOB = ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN"]
+ARR_JOB = ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH"]
+ARR_NON_STARTER = ["NIN"]  # NIN is ARR but not a starter job
 HW_JOB = ["DRK","MCH","AST"]
 STB_JOB = ["SAM","RDM"]
 SHB_JOB = ["GNB","DNC"]
@@ -53,7 +54,7 @@ def after_load_item_file(item_table: list) -> list:
 
     # ARR Jobs
     for job in ARR_JOB:
-        # Level increases - using "Level Increased by 5" naming
+        # Level increases - back to all being early
         item_table.append({
            "name": f"{job} Level Increased by 5",
            "category": [f"{job} Level Progression", "DOW/DOM", "Level Progression"],
@@ -62,10 +63,30 @@ def after_load_item_file(item_table: list) -> list:
            "progression": True,
         })
 
-        # Job unlock - All ARR jobs get "ARR Starter Job" category with default cap
+        # Job unlock - All ARR jobs get "ARR Starter Job" category
         item_table.append({
             "name": f"{job} Job Crystal (default cap 10)",
             "category": ["Job Crystal", "DOW/DOM", "ARR Starter Job"],
+            "count": 1,
+            "early": True,
+            "progression": True,
+        })
+
+    # ARR Non-Starter Jobs (like NIN)
+    for job in ARR_NON_STARTER:
+        # Level increases
+        item_table.append({
+           "name": f"{job} Level Increased by 5",
+           "category": [f"{job} Level Progression", "DOW/DOM", "Level Progression"],
+           "count": 18,
+           "early": True,
+           "progression": True,
+        })
+
+        # Job unlock - ARR job but NOT starter job
+        item_table.append({
+            "name": f"{job} Job Crystal (default cap 10)",
+            "category": ["Job Crystal", "DOW/DOM"],  # No "ARR Starter Job" category
             "count": 1,
             "early": True,
             "progression": True,
@@ -175,6 +196,7 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
 
+        # All DOH job crystals are early again
         item_table.append({
             "name": f"{job} Job Crystal (default cap 5)",
             "category": ["DOH Job Crystal", "DOH"],
@@ -192,6 +214,7 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
 
+        # All DOL job crystals are early again
         item_table.append({
             "name": f"{job} Job Crystal (default cap 5)",
             "category": ["DOL Job Crystal", "DOL"],
@@ -201,10 +224,14 @@ def after_load_item_file(item_table: list) -> list:
         })
     
     # Dungeons and Trials from duties.csv - ALL PROGRESSION ITEMS
-    # ARR Dungeons
-    dungeons_arr = [
+    # ARR Dungeons - Early ones marked as early
+    dungeons_arr_early = [
+        # Level < 35 dungeons - these should be early
         "Sastasha", "The Tam-Tara Deepcroft", "Copperbell Mines", "Halatali", 
-        "The Thousand Maws of Toto-Rak", "Haukke Manor", "Brayflox's Longstop", 
+        "The Thousand Maws of Toto-Rak", "Haukke Manor", "Brayflox's Longstop"
+    ]
+    
+    dungeons_arr_regular = [
         "The Sunken Temple of Qarn", "Cutter's Cry", "The Stone Vigil", 
         "Dzemael Darkhold", "The Aurum Vale", "Castrum Meridianum", "The Praetorium",
         "The Wanderer's Palace", "Amdapor Keep", "Pharos Sirius", "Copperbell Mines (Hard)",
@@ -215,7 +242,18 @@ def after_load_item_file(item_table: list) -> list:
         "The Wanderer's Palace (Hard)", "Amdapor Keep (Hard)"
     ]
     
-    for dungeon in dungeons_arr:
+    # Early dungeons
+    for dungeon in dungeons_arr_early:
+        item_table.append({
+            "name": dungeon,
+            "category": ["Dungeon", "ARR", "Duty", "Early Duty"],
+            "count": 1,
+            "early": True,
+            "progression": True,
+        })
+    
+    # Regular ARR dungeons
+    for dungeon in dungeons_arr_regular:
         item_table.append({
             "name": dungeon,
             "category": ["Dungeon", "ARR", "Duty"],
@@ -223,9 +261,13 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
 
-    # ARR Trials
-    trials_arr = [
-        "The Bowl of Embers", "The Navel", "The Howling Eye", "The Porta Decumana",
+    # ARR Trials - Early ones marked as early
+    trials_arr_early = [
+        "The Bowl of Embers",  # Level 22
+    ]
+    
+    trials_arr_regular = [
+        "The Navel", "The Howling Eye", "The Porta Decumana",
         "The Bowl of Embers (Hard)", "The Howling Eye (Hard)", "The Navel (Hard)",
         "Thornmarch (Hard)", "A Relic Reborn: the Chimera", "A Relic Reborn: the Hydra",
         "The Whorleater (Hard)", "Battle on the Big Bridge", "The Striking Tree (Hard)",
@@ -236,7 +278,18 @@ def after_load_item_file(item_table: list) -> list:
         "The Akh Afah Amphitheatre (Extreme)"
     ]
     
-    for trial in trials_arr:
+    # Early trials
+    for trial in trials_arr_early:
+        item_table.append({
+            "name": trial,
+            "category": ["Trial", "ARR", "Duty", "Early Duty"],
+            "count": 1,
+            "early": True,
+            "progression": True,
+        })
+    
+    # Regular ARR trials
+    for trial in trials_arr_regular:
         item_table.append({
             "name": trial,
             "category": ["Trial", "ARR", "Duty"],
@@ -505,16 +558,31 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
 
-    # Guildhests - Tutorial group content
-    guildhests = [
+    # Guildhests - Tutorial group content - Early ones marked as early
+    guildhests_early = [
+        # Level < 35 guildhests
         "Basic Training: Enemy Parties", "Under the Armor", "Basic Training: Enemy Strongholds",
         "Hero on the Half Shell", "Pulling Poison Posies", "Stinging Back",
         "All's Well that Ends in the Well", "Flicking Sticks and Taking Names",
-        "More than a Feeler", "Annoy the Void", "Shadow and Claw",
-        "Long Live the Queen", "Ward Up", "Solemn Trinity"
+        "More than a Feeler", "Annoy the Void"
     ]
     
-    for guildhest in guildhests:
+    guildhests_regular = [
+        "Shadow and Claw", "Long Live the Queen", "Ward Up", "Solemn Trinity"
+    ]
+    
+    # Early guildhests
+    for guildhest in guildhests_early:
+        item_table.append({
+            "name": guildhest,
+            "category": ["Guildhest", "ARR", "Duty", "Early Duty"],
+            "count": 1,
+            "early": True,
+            "progression": True,
+        })
+    
+    # Regular guildhests
+    for guildhest in guildhests_regular:
         item_table.append({
             "name": guildhest,
             "category": ["Guildhest", "ARR", "Duty"],
@@ -555,7 +623,7 @@ def after_load_location_file(location_table: list) -> list:
     # Simple level milestone locations - now all require any job reaching that level
     location_table.append({
         "name": "Reach Level 15 on Any Job",
-        "category": ["Level Milestone"],
+        "category": ["Level Milestone", "Early Location"],
         "region": "Manual",
         "place_item": ["Level 15 Access"]
     })
@@ -588,8 +656,53 @@ def after_load_location_file(location_table: list) -> list:
         "place_item": ["Level 80 Access"]
     })
 
+    # Add more early milestone locations to accommodate early items
+    early_milestones = [
+        {"level": 5, "name": "First Steps: Reach Level 5"},
+        {"level": 10, "name": "Getting Started: Reach Level 10"},  
+        {"level": 20, "name": "Novice: Reach Level 20"},
+        {"level": 25, "name": "Apprentice: Reach Level 25"},
+        {"level": 30, "name": "Journeyman: Reach Level 30"},
+    ]
+    
+    for milestone in early_milestones:
+        location_table.append({
+            "name": milestone["name"],
+            "category": ["Level Milestone", "Early Location"],
+            "region": "Manual",
+            "requires": f"{{anyClassLevel({milestone['level']})}}"
+        })
+
     # Add level locations every level for each job
+    # ARR Starter Jobs
     for job in ARR_JOB:
+        for level in range(1, 101):  # Every level from 1 to 100
+            # Mark early job levels as early locations for key jobs
+            is_early_location = (job in ["PLD", "WAR", "WHM"] and level <= 20)
+            categories = [f"{job}", "DOW/DOM"]
+            if is_early_location:
+                categories.append("Early Location")
+                
+            if level <= 10:
+                # Levels 1-10 are free with job crystal
+                location_table.append({
+                    "name": f"{job} Level {level}",
+                    "category": categories,
+                    "region": f"{job}",
+                    "requires": f"|{job} Job Crystal (default cap 10)|"
+                })
+            else:
+                # Calculate items needed based on 5-level increments
+                items_needed = (level - 10 + 4) // 5  # Round up division
+                location_table.append({
+                    "name": f"{job} Level {level}",
+                    "category": categories,
+                    "region": f"{job}",
+                    "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal (default cap 10)|"
+                })
+
+    # ARR Non-Starter Jobs (like NIN)
+    for job in ARR_NON_STARTER:
         for level in range(1, 101):  # Every level from 1 to 100
             if level <= 10:
                 # Levels 1-10 are free with job crystal
@@ -732,11 +845,17 @@ def after_load_location_file(location_table: list) -> list:
     # DOH levels - starts at level 1, requires Level 15 Access
     for job in DOH:
         for level in range(1, 101):  # Every level from 1 to 100
+            # Mark early levels for key DOH jobs as early locations
+            is_early_location = (job in ["CRP", "BSM"] and level <= 15)  # CRP and BSM levels 1-15 are early
+            categories = [f"{job}", "DOH"]
+            if is_early_location:
+                categories.append("Early Location")
+                
             if level <= 5:
                 # Levels 1-5 require Level 15 Access and job crystal
                 location_table.append({
                     "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOH"],
+                    "category": categories,
                     "region": f"{job}",
                     "requires": f"|{job} Job Crystal (default cap 5)| and |Level 15 Access|"
                 })
@@ -745,7 +864,7 @@ def after_load_location_file(location_table: list) -> list:
                 items_needed = (level - 5 + 4) // 5  # Round up division
                 location_table.append({
                     "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOH"],
+                    "category": categories,
                     "region": f"{job}",
                     "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal (default cap 5)| and |Level 15 Access|"
                 })
@@ -753,11 +872,17 @@ def after_load_location_file(location_table: list) -> list:
     # DOL levels - starts at level 1, requires Level 15 Access
     for job in DOL:
         for level in range(1, 101):  # Every level from 1 to 100
+            # Mark early levels for key DOL jobs as early locations
+            is_early_location = (job in ["MIN", "BTN"] and level <= 15)  # MIN and BTN levels 1-15 are early
+            categories = [f"{job}", "DOL"]
+            if is_early_location:
+                categories.append("Early Location")
+                
             if level <= 5:
                 # Levels 1-5 require Level 15 Access and job crystal
                 location_table.append({
                     "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOL"],
+                    "category": categories,
                     "region": f"{job}",
                     "requires": f"|{job} Job Crystal (default cap 5)| and |Level 15 Access|"
                 })
@@ -766,7 +891,7 @@ def after_load_location_file(location_table: list) -> list:
                 items_needed = (level - 5 + 4) // 5  # Round up division
                 location_table.append({
                     "name": f"{job} Level {level}",
-                    "category": [f"{job}", "DOL"],
+                    "category": categories,
                     "region": f"{job}",
                     "requires": f"|{job} Level Increased by 5:{items_needed}| and |{job} Job Crystal (default cap 5)| and |Level 15 Access|"
                 })
@@ -774,7 +899,7 @@ def after_load_location_file(location_table: list) -> list:
     # Simple duty completion locations - basic level requirements for key duties
     key_duties = [
         {"name": "Sastasha", "level": 18, "requires": "{anyClassLevel(18)}"},
-        {"name": "The Praetorium", "level": 50, "requires": "{anyClassLevel(50)}"},
+        {"name": "The Praetorium", "level": 50, "requires": "|Level 50 Access| and {anyClassLevel(50)}"},
         {"name": "The Vault", "level": 58, "requires": "|Level 50 Access| and {anyClassLevel(58)}"},
         {"name": "Ala Mhigo", "level": 70, "requires": "|Level 70 Access| and {anyClassLevel(70)}"},
         {"name": "Amaurot", "level": 80, "requires": "|Level 80 Access| and {anyClassLevel(80)}"},
@@ -794,14 +919,22 @@ def after_load_location_file(location_table: list) -> list:
 
 def after_load_region_file(region_table: dict) -> dict:
     # All non-ARR job regions for connections
-    all_other_jobs = ["DRK", "MCH", "AST", "SAM", "RDM", "GNB", "DNC", "RPR", "SGE", "VPR", "PCT", "CRP", "BSM", "ARM", "GSM", "LTW", "WVR", "ALC", "CUL", "MIN", "BTN", "FSH", "BLU"]
+    all_other_jobs = ["DRK", "MCH", "AST", "SAM", "RDM", "GNB", "DNC", "RPR", "SGE", "VPR", "PCT", "CRP", "BSM", "ARM", "GSM", "LTW", "WVR", "ALC", "CUL", "MIN", "BTN", "FSH", "BLU", "NIN"]
 
-    # ARR Jobs - Starting regions that connect to ALL other job regions
+    # ARR Starter Jobs - Starting regions that connect to ALL other job regions
     for job in ARR_JOB:
         region_table[job] = {
             "starting": True,
             "connects_to": all_other_jobs,
             "requires": f"|{job} Job Crystal (default cap 10)|"  # Require specific job crystal with cap
+        }
+
+    # ARR Non-Starter Jobs (like NIN) - Starting regions but different crystal requirements
+    for job in ARR_NON_STARTER:
+        region_table[job] = {
+            "starting": True,  # Still starting, just not in starter category
+            "connects_to": all_other_jobs,
+            "requires": f"|{job} Job Crystal (default cap 10)|"  # Same crystal naming
         }
 
     # DOH Jobs - Level 15 requirement + specific job crystal
@@ -870,16 +1003,18 @@ def after_load_region_file(region_table: dict) -> dict:
     return region_table
 
 def after_load_category_file(category_table: dict) -> dict:
-    # Keep categories simple
-    for job in ARR_JOB + HW_JOB + STB_JOB + SHB_JOB + EW_JOB + DT_JOB + DOH + DOL + ["BLU"]:
+    # Keep categories simple - include all job types
+    all_jobs = ARR_JOB + ARR_NON_STARTER + HW_JOB + STB_JOB + SHB_JOB + EW_JOB + DT_JOB + DOH + DOL + ["BLU"]
+    for job in all_jobs:
         category_table[job] = {}
     
-    # Hide broad job type categories
+    # Hide broad job type categories and internal categories
     category_table["DOW/DOM"] = {"hidden": True}
     category_table["DOL"] = {"hidden": True}
     category_table["DOH"] = {"hidden": True}
     category_table["Level Progression"] = {"hidden": True}
-    
+    category_table["Early Duty"] = {"hidden": True}
+    category_table["Early Location"] = {"hidden": True}
     
     return category_table
 
