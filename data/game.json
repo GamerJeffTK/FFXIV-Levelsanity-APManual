@@ -2,5 +2,32 @@
   "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.game.schema.json",
   "game": "FFXIVLevelsanity",
   "creator": "PumpkinJackTR",
-  "filler_item_name": "Yet another trip to the Waking Sands"
+  "filler_item_name": "Yet another trip to the Waking Sands",
+  "starting_items": [
+    {
+      "_comment": "Give 3 random ARR job crystals to start",
+      "item_categories": [ "ARR Starter Job" ],
+      "random": 3
+    },
+    {
+      "_comment": "Give 1 DOH job crystal to start",
+      "item_categories": [ "DOH Job Crystal" ],
+      "random":  1
+    },
+    {
+      "_comment": "Give 1 DOL job crystal to start",
+      "item_categories": [ "DOL Job Crystal" ],
+      "random":  1
+    },
+    {
+      "_comment": "Give some initial level progression for different job types",
+      "item_categories": [ "Level Progression" ],
+      "random": 10
+    },
+    {
+      "_comment": "Give some starting duties to unlock content",
+      "item_categories": [ "Duty" ],
+      "random": 5
+    }
+  ]
 }

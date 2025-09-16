@@ -1,6 +1,4 @@
-# hooks/Data.py - Fixed version with option-based generation
-
-from ..Helpers import is_option_enabled, get_option_value
+# hooks/Data.py - Fixed version with consistent naming and proper connections
 
 # called after the game.json file has been loaded
 def after_load_game_file(game_table: dict) -> dict:
@@ -202,8 +200,354 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
     
-    # Now we need access to multiworld and player to check options
-    # This will be called from the main generation, so we can access options
+    # Dungeons and Trials from duties.csv - ALL PROGRESSION ITEMS
+    # ARR Dungeons
+    dungeons_arr = [
+        "Sastasha", "The Tam-Tara Deepcroft", "Copperbell Mines", "Halatali", 
+        "The Thousand Maws of Toto-Rak", "Haukke Manor", "Brayflox's Longstop", 
+        "The Sunken Temple of Qarn", "Cutter's Cry", "The Stone Vigil", 
+        "Dzemael Darkhold", "The Aurum Vale", "Castrum Meridianum", "The Praetorium",
+        "The Wanderer's Palace", "Amdapor Keep", "Pharos Sirius", "Copperbell Mines (Hard)",
+        "Haukke Manor (Hard)", "The Lost City of Amdapor", "Halatali (Hard)", 
+        "Brayflox's Longstop (Hard)", "Hullbreaker Isle", "The Tam-Tara Deepcroft (Hard)",
+        "The Stone Vigil (Hard)", "Snowcloak", "Sastasha (Hard)", 
+        "The Sunken Temple of Qarn (Hard)", "The Keeper of the Lake", 
+        "The Wanderer's Palace (Hard)", "Amdapor Keep (Hard)"
+    ]
+    
+    for dungeon in dungeons_arr:
+        item_table.append({
+            "name": dungeon,
+            "category": ["Dungeon", "ARR", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # ARR Trials
+    trials_arr = [
+        "The Bowl of Embers", "The Navel", "The Howling Eye", "The Porta Decumana",
+        "The Bowl of Embers (Hard)", "The Howling Eye (Hard)", "The Navel (Hard)",
+        "Thornmarch (Hard)", "A Relic Reborn: the Chimera", "A Relic Reborn: the Hydra",
+        "The Whorleater (Hard)", "Battle on the Big Bridge", "The Striking Tree (Hard)",
+        "The Akh Afah Amphitheatre (Hard)", "The Dragon's Neck", "The Chrysalis",
+        "Battle in the Big Keep", "Urth's Fount", "The Minstrel's Ballad: Ultima's Bane",
+        "The Howling Eye (Extreme)", "The Navel (Extreme)", "The Bowl of Embers (Extreme)",
+        "Thornmarch (Extreme)", "The Whorleater (Extreme)", "The Striking Tree (Extreme)",
+        "The Akh Afah Amphitheatre (Extreme)"
+    ]
+    
+    for trial in trials_arr:
+        item_table.append({
+            "name": trial,
+            "category": ["Trial", "ARR", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # HW Dungeons
+    dungeons_hw = [
+        "The Dusk Vigil", "Sohm Al", "The Aery", "The Vault", "The Great Gubal Library",
+        "The Aetherochemical Research Facility", "Neverreap", "The Fractal Continuum",
+        "Saint Mocianne's Arboretum", "Pharos Sirius (Hard)", "The Antitower",
+        "The Lost City of Amdapor (Hard)", "Sohr Khai", "Hullbreaker Isle (Hard)",
+        "Xelphatol", "The Great Gubal Library (Hard)", "Baelsar's Wall", "Sohm Al (Hard)"
+    ]
+    
+    for dungeon in dungeons_hw:
+        item_table.append({
+            "name": dungeon,
+            "category": ["Dungeon", "HW", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # HW Trials
+    trials_hw = [
+        "Thok ast Thok (Hard)", "The Limitless Blue (Hard)", "The Singularity Reactor",
+        "Containment Bay S1T7", "The Final Steps of Faith", "Containment Bay P1T6",
+        "Containment Bay Z1T9", "The Limitless Blue (Extreme)", "Thok ast Thok (Extreme)",
+        "The Minstrel's Ballad: Thordan's Reign", "Containment Bay S1T7 (Extreme)",
+        "The Minstrel's Ballad: Nidhogg's Rage", "Containment Bay P1T6 (Extreme)",
+        "Containment Bay Z1T9 (Extreme)"
+    ]
+    
+    for trial in trials_hw:
+        item_table.append({
+            "name": trial,
+            "category": ["Trial", "HW", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # StB Dungeons
+    dungeons_stb = [
+        "The Sirensong Sea", "Shisui of the Violet Tides", "Bardam's Mettle", "Doma Castle",
+        "Castrum Abania", "Ala Mhigo", "Kugane Castle", "The Temple of the Fist",
+        "The Drowned City of Skalla", "Hells' Lid", "The Fractal Continuum (Hard)",
+        "The Swallow's Compass", "The Burn", "Saint Mocianne's Arboretum (Hard)",
+        "The Ghimlyt Dark"
+    ]
+    
+    for dungeon in dungeons_stb:
+        item_table.append({
+            "name": dungeon,
+            "category": ["Dungeon", "StB", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # StB Trials
+    trials_stb = [
+        "The Pool of Tribute", "Emanation", "The Royal Menagerie", "The Jade Stoa",
+        "Castrum Fluminis", "The Great Hunt", "Hells' Kier", "The Wreath of Snakes",
+        "Kugane Ohashi", "The Pool of Tribute (Extreme)", "Emanation (Extreme)",
+        "The Minstrel's Ballad: Shinryu's Domain", "The Jade Stoa (Extreme)",
+        "The Minstrel's Ballad: Tsukuyomi's Pain", "The Great Hunt (Extreme)",
+        "Hells' Kier (Extreme)", "The Wreath of Snakes (Extreme)"
+    ]
+    
+    for trial in trials_stb:
+        item_table.append({
+            "name": trial,
+            "category": ["Trial", "StB", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # ShB Dungeons
+    dungeons_shb = [
+        "Holminster Switch", "Dohn Mheg", "The Qitana Ravel", "Malikah's Well",
+        "Mt. Gulg", "Amaurot", "The Twinning", "Akadaemia Anyder", "The Grand Cosmos",
+        "Anamnesis Anyder", "The Heroes' Gauntlet", "Matoya's Relict", "Paglth'an"
+    ]
+    
+    for dungeon in dungeons_shb:
+        item_table.append({
+            "name": dungeon,
+            "category": ["Dungeon", "ShB", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # ShB Trials
+    trials_shb = [
+        "The Dancing Plague", "The Crown of the Immaculate", "The Dying Gasp",
+        "Cinder Drift", "The Seat of Sacrifice", "Castrum Marinum", "The Cloud Deck",
+        "The Dancing Plague (Extreme)", "The Crown of the Immaculate (Extreme)",
+        "The Minstrel's Ballad: Hades's Elegy", "Cinder Drift (Extreme)",
+        "Memoria Misera (Extreme)", "The Seat of Sacrifice (Extreme)",
+        "Castrum Marinum (Extreme)", "The Cloud Deck (Extreme)"
+    ]
+    
+    for trial in trials_shb:
+        item_table.append({
+            "name": trial,
+            "category": ["Trial", "ShB", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # EW Dungeons
+    dungeons_ew = [
+        "The Tower of Zot", "The Tower of Babil", "Vanaspati", "Ktisis Hyperboreia",
+        "The Aitiascope", "The Dead Ends", "Smileton", "The Stigma Dreamscape",
+        "Alzadaal's Legacy", "The Fell Court of Troia", "Lapis Manalis",
+        "The Aetherfont", "The Lunar Subterrane"
+    ]
+    
+    for dungeon in dungeons_ew:
+        item_table.append({
+            "name": dungeon,
+            "category": ["Dungeon", "EW", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # EW Trials
+    trials_ew = [
+        "The Dark Inside", "The Mothercrystal", "The Final Day", "Storm's Crown",
+        "Mount Ordeals", "The Voidcast Dais", "The Abyssal Fracture", "The Gilded Araya",
+        "The Minstrel's Ballad: Zodiark's Fall", "The Minstrel's Ballad: Hydaelyn's Call",
+        "The Minstrel's Ballad: Endsinger's Aria", "Storm's Crown (Extreme)",
+        "Mount Ordeals (Extreme)", "The Voidcast Dais (Extreme)", "The Abyssal Fracture (Extreme)"
+    ]
+    
+    for trial in trials_ew:
+        item_table.append({
+            "name": trial,
+            "category": ["Trial", "EW", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # DT Dungeons
+    dungeons_dt = [
+        "Ihuykatumu", "Worqor Zormor", "The Skydeep Cenote", "Vanguard", "Origenics",
+        "Alexandria", "Tender Valley", "The Strayborough Deadwalk", "Yuweyawata Field Station",
+        "The Underkeep", "The Meso Terminal"
+    ]
+    
+    for dungeon in dungeons_dt:
+        item_table.append({
+            "name": dungeon,
+            "category": ["Dungeon", "DT", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # DT Trials
+    trials_dt = [
+        "Worqor Lar Dor", "Everkeep", "The Interphos", "Recollection", "The Ageless Necropolis",
+        "Worqor Lar Dor (Extreme)", "Everkeep (Extreme)", "The Minstrel's Ballad: Sphene's Burden",
+        "Recollection (Extreme)", "The Minstrel's Ballad: Necron's Embrace"
+    ]
+    
+    for trial in trials_dt:
+        item_table.append({
+            "name": trial,
+            "category": ["Trial", "DT", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+    
+    # Alliance Raids - Major 24-player content
+    alliance_raids = [
+        # Crystal Tower (ARR)
+        "The Labyrinth of the Ancients", "Syrcus Tower", "The World of Darkness",
+        
+        # Shadow of Mhach (HW)
+        "The Void Ark", "The Weeping City of Mhach", "Dun Scaith",
+        
+        # Return to Ivalice (StB)
+        "The Royal City of Rabanastre", "The Ridorana Lighthouse", "The Orbonne Monastery",
+        
+        # YoRHa Dark Apocalypse (ShB)
+        "The Copied Factory", "The Puppets' Bunker", "The Tower at Paradigm's Breach",
+        
+        # Myths of the Realm (EW)
+        "Aglaia", "Euphrosyne", "Thaleia",
+        
+        # Jeuno Alliance (DT)
+        "Jeuno: The First Walk", "San d'Oria: The Second Walk"
+    ]
+    
+    for raid in alliance_raids:
+        item_table.append({
+            "name": raid,
+            "category": ["Alliance Raid", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # Normal Raids (8-player raid content)
+    normal_raids = [
+        # Binding Coil of Bahamut (ARR)
+        "The Binding Coil of Bahamut - Turn 1", "The Binding Coil of Bahamut - Turn 2",
+        "The Binding Coil of Bahamut - Turn 3", "The Binding Coil of Bahamut - Turn 4",
+        "The Binding Coil of Bahamut - Turn 5", "The Second Coil of Bahamut - Turn 1",
+        "The Second Coil of Bahamut - Turn 2", "The Second Coil of Bahamut - Turn 3",
+        "The Second Coil of Bahamut - Turn 4", "The Final Coil of Bahamut - Turn 1",
+        "The Final Coil of Bahamut - Turn 2", "The Final Coil of Bahamut - Turn 3",
+        "The Final Coil of Bahamut - Turn 4",
+        
+        # Alexander (HW)
+        "Alexander - The Fist of the Father", "Alexander - The Cuff of the Father",
+        "Alexander - The Arm of the Father", "Alexander - The Burden of the Father",
+        "Alexander - The Fist of the Son", "Alexander - The Cuff of the Son",
+        "Alexander - The Arm of the Son", "Alexander - The Burden of the Son",
+        "Alexander - The Eyes of the Creator", "Alexander - The Breath of the Creator",
+        "Alexander - The Heart of the Creator", "Alexander - The Soul of the Creator",
+        
+        # Omega (StB)
+        "Deltascape V1.0", "Deltascape V2.0", "Deltascape V3.0", "Deltascape V4.0",
+        "Sigmascape V1.0", "Sigmascape V2.0", "Sigmascape V3.0", "Sigmascape V4.0",
+        "Alphascape V1.0", "Alphascape V2.0", "Alphascape V3.0", "Alphascape V4.0",
+        
+        # Eden (ShB)
+        "Eden's Gate: Resurrection", "Eden's Gate: Descent", "Eden's Gate: Inundation", "Eden's Gate: Sepulture",
+        "Eden's Verse: Fulmination", "Eden's Verse: Furor", "Eden's Verse: Iconoclasm", "Eden's Verse: Refulgence",
+        "Eden's Promise: Umbra", "Eden's Promise: Litany", "Eden's Promise: Anamorphosis", "Eden's Promise: Eternity",
+        
+        # Pandaemonium (EW)
+        "Asphodelos: The First Circle", "Asphodelos: The Second Circle", "Asphodelos: The Third Circle", "Asphodelos: The Fourth Circle",
+        "Abyssos: The Fifth Circle", "Abyssos: The Sixth Circle", "Abyssos: The Seventh Circle", "Abyssos: The Eighth Circle",
+        "Anabaseios: The Ninth Circle", "Anabaseios: The Tenth Circle", "Anabaseios: The Eleventh Circle", "Anabaseios: The Twelfth Circle",
+        
+        # Arcadion (DT)
+        "AAC Light-heavyweight M1", "AAC Light-heavyweight M2", "AAC Light-heavyweight M3", "AAC Light-heavyweight M4",
+        "AAC Cruiserweight M1", "AAC Cruiserweight M2", "AAC Cruiserweight M3", "AAC Cruiserweight M4"
+    ]
+    
+    for raid in normal_raids:
+        item_table.append({
+            "name": raid,
+            "category": ["Normal Raid", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # Savage Raids - Extreme difficulty versions (subset to keep manageable)
+    savage_raids = [
+        # Second Coil Savage (ARR)
+        "The Second Coil of Bahamut (Savage) - Turn 1", "The Second Coil of Bahamut (Savage) - Turn 2",
+        "The Second Coil of Bahamut (Savage) - Turn 3", "The Second Coil of Bahamut (Savage) - Turn 4",
+        
+        # Alexander Savage (HW) - First tier only
+        "Alexander - The Fist of the Father (Savage)", "Alexander - The Cuff of the Father (Savage)",
+        "Alexander - The Arm of the Father (Savage)", "Alexander - The Burden of the Father (Savage)"
+    ]
+    
+    for raid in savage_raids:
+        item_table.append({
+            "name": raid,
+            "category": ["Savage Raid", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # Guildhests - Tutorial group content
+    guildhests = [
+        "Basic Training: Enemy Parties", "Under the Armor", "Basic Training: Enemy Strongholds",
+        "Hero on the Half Shell", "Pulling Poison Posies", "Stinging Back",
+        "All's Well that Ends in the Well", "Flicking Sticks and Taking Names",
+        "More than a Feeler", "Annoy the Void", "Shadow and Claw",
+        "Long Live the Queen", "Ward Up", "Solemn Trinity"
+    ]
+    
+    for guildhest in guildhests:
+        item_table.append({
+            "name": guildhest,
+            "category": ["Guildhest", "ARR", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # Variant Dungeons (EW) - Special solo/small group content
+    variant_dungeons = [
+        "The Sil'dihn Subterrane", "Mount Rokkon", "Aloalo Island"
+    ]
+    
+    for variant in variant_dungeons:
+        item_table.append({
+            "name": variant,
+            "category": ["Variant Dungeon", "EW", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+
+    # Bozja Content (ShB) - Special alliance raid series
+    bozja_content = [
+        "Castrum Lacus Litore", "Delubrum Reginae", "The Dalriada"
+    ]
+    
+    for bozja in bozja_content:
+        item_table.append({
+            "name": bozja,
+            "category": ["Bozja", "ShB", "Duty"],
+            "count": 1,
+            "progression": True,
+        })
+    
     return item_table
 
 def after_load_location_file(location_table: list) -> list:
@@ -448,416 +792,6 @@ def after_load_location_file(location_table: list) -> list:
 
     return location_table
 
-# New function to add duty items based on options
-def add_duty_items_based_on_options(item_table: list, multiworld, player: int) -> list:
-    """Add duty items based on player options"""
-    
-    # Get expansion setting
-    included_expansions = get_option_value(multiworld, player, "included_expansions")
-    
-    # Get content type settings
-    include_dungeons = is_option_enabled(multiworld, player, "include_dungeons")
-    include_trials = is_option_enabled(multiworld, player, "include_trials") 
-    include_raids = is_option_enabled(multiworld, player, "include_raids")
-    include_guildhests = is_option_enabled(multiworld, player, "include_guildhests")
-    include_variant_dungeons = is_option_enabled(multiworld, player, "include_variant_dungeons")
-    include_bozja_content = is_option_enabled(multiworld, player, "include_bozja_content")
-    include_extreme_difficulty = is_option_enabled(multiworld, player, "include_extreme_difficulty")
-    
-    # Expansion mappings (0=ARR only, 1=ARR+HW, 2=ARR+HW+StB, etc.)
-    expansion_names = ["ARR", "HW", "StB", "ShB", "EW", "DT"]
-    included_exp_names = expansion_names[:included_expansions + 1]
-    
-    # Define all duty data with expansion tags and progression info
-    duty_data = {
-        # ARR Dungeons - with story progression marking
-        "ARR": {
-            "dungeons": [
-                # Early story dungeons (levels 15-30) - marked as early
-                {"name": "Sastasha", "level": 18, "early": True, "story": True},
-                {"name": "The Tam-Tara Deepcroft", "level": 19, "early": True, "story": True},
-                {"name": "Copperbell Mines", "level": 20, "early": True, "story": True},
-                {"name": "Halatali", "level": 23, "early": True, "story": True},
-                {"name": "The Thousand Maws of Toto-Rak", "level": 27, "early": True, "story": True},
-                {"name": "Haukke Manor", "level": 31, "early": True, "story": True},
-                {"name": "Brayflox's Longstop", "level": 34, "early": True, "story": True},
-                # Mid-story dungeons (levels 35-50)
-                {"name": "The Sunken Temple of Qarn", "level": 37, "story": True},
-                {"name": "Cutter's Cry", "level": 40, "story": True},
-                {"name": "The Stone Vigil", "level": 43, "story": True},
-                {"name": "Dzemael Darkhold", "level": 46, "story": True},
-                {"name": "The Aurum Vale", "level": 49, "story": True},
-                {"name": "Castrum Meridianum", "level": 50, "story": True},
-                {"name": "The Praetorium", "level": 50, "story": True},
-                # Post-story dungeons (optional content)
-                {"name": "The Wanderer's Palace", "level": 50},
-                {"name": "Amdapor Keep", "level": 50},
-                {"name": "Pharos Sirius", "level": 50},
-                {"name": "Copperbell Mines (Hard)", "level": 50},
-                {"name": "Haukke Manor (Hard)", "level": 50},
-                {"name": "The Lost City of Amdapor", "level": 50},
-                {"name": "Halatali (Hard)", "level": 50},
-                {"name": "Brayflox's Longstop (Hard)", "level": 50},
-                {"name": "Hullbreaker Isle", "level": 50},
-                {"name": "The Tam-Tara Deepcroft (Hard)", "level": 50},
-                {"name": "The Stone Vigil (Hard)", "level": 50},
-                {"name": "Snowcloak", "level": 50},
-                {"name": "Sastasha (Hard)", "level": 50},
-                {"name": "The Sunken Temple of Qarn (Hard)", "level": 50},
-                {"name": "The Keeper of the Lake", "level": 50},
-                {"name": "The Wanderer's Palace (Hard)", "level": 50},
-                {"name": "Amdapor Keep (Hard)", "level": 50}
-            ],
-            "trials": [
-                # Early story trials
-                {"name": "The Bowl of Embers", "level": 22, "early": True, "story": True},
-                {"name": "The Navel", "level": 36, "early": True, "story": True},
-                {"name": "The Howling Eye", "level": 46, "early": True, "story": True},
-                {"name": "The Porta Decumana", "level": 50, "story": True},
-                # Post-story trials
-                {"name": "The Bowl of Embers (Hard)", "level": 50, "story": True},
-                {"name": "The Howling Eye (Hard)", "level": 50, "story": True},
-                {"name": "The Navel (Hard)", "level": 50, "story": True},
-                {"name": "Thornmarch (Hard)", "level": 50},
-                {"name": "A Relic Reborn: the Chimera", "level": 50},
-                {"name": "A Relic Reborn: the Hydra", "level": 50},
-                {"name": "The Whorleater (Hard)", "level": 50},
-                {"name": "Battle on the Big Bridge", "level": 50},
-                {"name": "The Striking Tree (Hard)", "level": 50},
-                {"name": "The Akh Afah Amphitheatre (Hard)", "level": 50},
-                {"name": "The Dragon's Neck", "level": 50},
-                {"name": "The Chrysalis", "level": 50},
-                {"name": "Battle in the Big Keep", "level": 50},
-                {"name": "Urth's Fount", "level": 50}
-            ],
-            "trials_extreme": [
-                {"name": "The Minstrel's Ballad: Ultima's Bane", "level": 50},
-                {"name": "The Howling Eye (Extreme)", "level": 50},
-                {"name": "The Navel (Extreme)", "level": 50},
-                {"name": "The Bowl of Embers (Extreme)", "level": 50},
-                {"name": "Thornmarch (Extreme)", "level": 50},
-                {"name": "The Whorleater (Extreme)", "level": 50},
-                {"name": "The Striking Tree (Extreme)", "level": 50},
-                {"name": "The Akh Afah Amphitheatre (Extreme)", "level": 50}
-            ],
-            "normal_raids": [
-                {"name": "The Binding Coil of Bahamut - Turn 1", "level": 50},
-                {"name": "The Binding Coil of Bahamut - Turn 2", "level": 50},
-                {"name": "The Binding Coil of Bahamut - Turn 3", "level": 50},
-                {"name": "The Binding Coil of Bahamut - Turn 4", "level": 50},
-                {"name": "The Binding Coil of Bahamut - Turn 5", "level": 50},
-                {"name": "The Second Coil of Bahamut - Turn 1", "level": 50},
-                {"name": "The Second Coil of Bahamut - Turn 2", "level": 50},
-                {"name": "The Second Coil of Bahamut - Turn 3", "level": 50},
-                {"name": "The Second Coil of Bahamut - Turn 4", "level": 50},
-                {"name": "The Final Coil of Bahamut - Turn 1", "level": 50},
-                {"name": "The Final Coil of Bahamut - Turn 2", "level": 50},
-                {"name": "The Final Coil of Bahamut - Turn 3", "level": 50},
-                {"name": "The Final Coil of Bahamut - Turn 4", "level": 50}
-            ],
-            "savage_raids": [
-                {"name": "The Second Coil of Bahamut (Savage) - Turn 1", "level": 50},
-                {"name": "The Second Coil of Bahamut (Savage) - Turn 2", "level": 50},
-                {"name": "The Second Coil of Bahamut (Savage) - Turn 3", "level": 50},
-                {"name": "The Second Coil of Bahamut (Savage) - Turn 4", "level": 50}
-            ],
-            "alliance_raids": [
-                {"name": "The Labyrinth of the Ancients", "level": 50},
-                {"name": "Syrcus Tower", "level": 50},
-                {"name": "The World of Darkness", "level": 50}
-            ],
-            "guildhests": [
-                {"name": "Basic Training: Enemy Parties", "level": 10, "early": True},
-                {"name": "Under the Armor", "level": 10, "early": True},
-                {"name": "Basic Training: Enemy Strongholds", "level": 15, "early": True},
-                {"name": "Hero on the Half Shell", "level": 15, "early": True},
-                {"name": "Pulling Poison Posies", "level": 20, "early": True},
-                {"name": "Stinging Back", "level": 20, "early": True},
-                {"name": "All's Well that Ends in the Well", "level": 25, "early": True},
-                {"name": "Flicking Sticks and Taking Names", "level": 25, "early": True},
-                {"name": "More than a Feeler", "level": 30, "early": True},
-                {"name": "Annoy the Void", "level": 30, "early": True},
-                {"name": "Shadow and Claw", "level": 35},
-                {"name": "Long Live the Queen", "level": 35},
-                {"name": "Ward Up", "level": 40},
-                {"name": "Solemn Trinity", "level": 40}
-            ]
-        },
-        
-        "HW": {
-            "dungeons": [
-                # HW story dungeons
-                {"name": "The Dusk Vigil", "level": 52, "story": True},
-                {"name": "Sohm Al", "level": 54, "story": True},
-                {"name": "The Aery", "level": 56, "story": True},
-                {"name": "The Vault", "level": 58, "story": True},
-                {"name": "The Great Gubal Library", "level": 60, "story": True},
-                {"name": "The Aetherochemical Research Facility", "level": 60, "story": True},
-                # HW optional dungeons
-                {"name": "Neverreap", "level": 60},
-                {"name": "The Fractal Continuum", "level": 60},
-                {"name": "Saint Mocianne's Arboretum", "level": 60},
-                {"name": "Pharos Sirius (Hard)", "level": 60},
-                {"name": "The Antitower", "level": 60},
-                {"name": "The Lost City of Amdapor (Hard)", "level": 60},
-                {"name": "Sohr Khai", "level": 60},
-                {"name": "Hullbreaker Isle (Hard)", "level": 60},
-                {"name": "Xelphatol", "level": 60},
-                {"name": "The Great Gubal Library (Hard)", "level": 60},
-                {"name": "Baelsar's Wall", "level": 60},
-                {"name": "Sohm Al (Hard)", "level": 60}
-            ],
-            "trials": [
-                {"name": "Thok ast Thok (Hard)", "level": 54, "story": True},
-                {"name": "The Limitless Blue (Hard)", "level": 58, "story": True},
-                {"name": "The Singularity Reactor", "level": 60, "story": True},
-                {"name": "Containment Bay S1T7", "level": 60},
-                {"name": "The Final Steps of Faith", "level": 60, "story": True},
-                {"name": "Containment Bay P1T6", "level": 60},
-                {"name": "Containment Bay Z1T9", "level": 60}
-            ],
-            "trials_extreme": [
-                {"name": "The Limitless Blue (Extreme)", "level": 60},
-                {"name": "Thok ast Thok (Extreme)", "level": 60},
-                {"name": "The Minstrel's Ballad: Thordan's Reign", "level": 60},
-                {"name": "Containment Bay S1T7 (Extreme)", "level": 60},
-                {"name": "The Minstrel's Ballad: Nidhogg's Rage", "level": 60},
-                {"name": "Containment Bay P1T6 (Extreme)", "level": 60},
-                {"name": "Containment Bay Z1T9 (Extreme)", "level": 60}
-            ],
-            "normal_raids": [
-                {"name": "Alexander - The Fist of the Father", "level": 60},
-                {"name": "Alexander - The Cuff of the Father", "level": 60},
-                {"name": "Alexander - The Arm of the Father", "level": 60},
-                {"name": "Alexander - The Burden of the Father", "level": 60},
-                {"name": "Alexander - The Fist of the Son", "level": 60},
-                {"name": "Alexander - The Cuff of the Son", "level": 60},
-                {"name": "Alexander - The Arm of the Son", "level": 60},
-                {"name": "Alexander - The Burden of the Son", "level": 60},
-                {"name": "Alexander - The Eyes of the Creator", "level": 60},
-                {"name": "Alexander - The Breath of the Creator", "level": 60},
-                {"name": "Alexander - The Heart of the Creator", "level": 60},
-                {"name": "Alexander - The Soul of the Creator", "level": 60}
-            ],
-            "savage_raids": [
-                {"name": "Alexander - The Fist of the Father (Savage)", "level": 60},
-                {"name": "Alexander - The Cuff of the Father (Savage)", "level": 60},
-                {"name": "Alexander - The Arm of the Father (Savage)", "level": 60},
-                {"name": "Alexander - The Burden of the Father (Savage)", "level": 60}
-            ],
-            "alliance_raids": [
-                {"name": "The Void Ark", "level": 60},
-                {"name": "The Weeping City of Mhach", "level": 60},
-                {"name": "Dun Scaith", "level": 60}
-            ]
-        },
-        
-        # I'll abbreviate the rest for space, but they follow the same pattern
-        "StB": {
-            "dungeons": [
-                {"name": "The Sirensong Sea", "level": 61, "story": True},
-                {"name": "Shisui of the Violet Tides", "level": 63, "story": True},
-                {"name": "Bardam's Mettle", "level": 65, "story": True},
-                {"name": "Doma Castle", "level": 67, "story": True},
-                {"name": "Castrum Abania", "level": 69, "story": True},
-                {"name": "Ala Mhigo", "level": 70, "story": True},
-                # ... rest of StB dungeons
-            ],
-            # ... other StB content
-        },
-        
-        "ShB": {
-            "dungeons": [
-                {"name": "Holminster Switch", "level": 71, "story": True},
-                {"name": "Dohn Mheg", "level": 73, "story": True},
-                {"name": "The Qitana Ravel", "level": 75, "story": True},
-                {"name": "Malikah's Well", "level": 77, "story": True},
-                {"name": "Mt. Gulg", "level": 79, "story": True},
-                {"name": "Amaurot", "level": 80, "story": True},
-                # ... rest of ShB dungeons
-            ],
-            # ... other ShB content
-            "bozja_content": [
-                {"name": "Castrum Lacus Litore", "level": 80},
-                {"name": "Delubrum Reginae", "level": 80},
-                {"name": "The Dalriada", "level": 80}
-            ]
-        },
-        
-        "EW": {
-            "dungeons": [
-                {"name": "The Tower of Zot", "level": 81, "story": True},
-                {"name": "The Tower of Babil", "level": 83, "story": True},
-                {"name": "Vanaspati", "level": 85, "story": True},
-                {"name": "Ktisis Hyperboreia", "level": 87, "story": True},
-                {"name": "The Aitiascope", "level": 89, "story": True},
-                {"name": "The Dead Ends", "level": 90, "story": True},
-                # ... rest of EW dungeons
-            ],
-            # ... other EW content
-            "variant_dungeons": [
-                {"name": "The Sil'dihn Subterrane", "level": 90},
-                {"name": "Mount Rokkon", "level": 90},
-                {"name": "Aloalo Island", "level": 90}
-            ]
-        },
-        
-        "DT": {
-            "dungeons": [
-                {"name": "Ihuykatumu", "level": 91, "story": True},
-                {"name": "Worqor Zormor", "level": 93, "story": True},
-                {"name": "The Skydeep Cenote", "level": 95, "story": True},
-                {"name": "Vanguard", "level": 97, "story": True},
-                {"name": "Origenics", "level": 99, "story": True},
-                {"name": "Alexandria", "level": 100, "story": True},
-                # ... rest of DT dungeons
-            ],
-            # ... other DT content
-        }
-    }
-    
-    # Add items based on settings
-    for expansion in included_exp_names:
-        exp_data = duty_data.get(expansion, {})
-        
-        # Add dungeons
-        if include_dungeons and "dungeons" in exp_data:
-            for dungeon_data in exp_data["dungeons"]:
-                if isinstance(dungeon_data, dict):
-                    item_entry = {
-                        "name": dungeon_data["name"],
-                        "category": ["Dungeon", expansion, "Duty"],
-                        "count": 1,
-                        "progression": True,
-                    }
-                    # Mark early story dungeons as early items
-                    if dungeon_data.get("early", False):
-                        item_entry["early"] = True
-                    # Mark story dungeons for special handling
-                    if dungeon_data.get("story", False):
-                        item_entry["category"].append("Story")
-                else:
-                    # Fallback for simple string entries
-                    item_entry = {
-                        "name": dungeon_data,
-                        "category": ["Dungeon", expansion, "Duty"],
-                        "count": 1,
-                        "progression": True,
-                    }
-                item_table.append(item_entry)
-        
-        # Add trials (normal)
-        if include_trials and "trials" in exp_data:
-            for trial_data in exp_data["trials"]:
-                if isinstance(trial_data, dict):
-                    item_entry = {
-                        "name": trial_data["name"],
-                        "category": ["Trial", expansion, "Duty"],
-                        "count": 1,
-                        "progression": True,
-                    }
-                    if trial_data.get("early", False):
-                        item_entry["early"] = True
-                    if trial_data.get("story", False):
-                        item_entry["category"].append("Story")
-                else:
-                    item_entry = {
-                        "name": trial_data,
-                        "category": ["Trial", expansion, "Duty"],
-                        "count": 1,
-                        "progression": True,
-                    }
-                item_table.append(item_entry)
-        
-        # Add extreme trials (if enabled)
-        if include_trials and include_extreme_difficulty and "trials_extreme" in exp_data:
-            for trial_data in exp_data["trials_extreme"]:
-                name = trial_data["name"] if isinstance(trial_data, dict) else trial_data
-                item_table.append({
-                    "name": name,
-                    "category": ["Trial", expansion, "Duty", "Extreme"],
-                    "count": 1,
-                    "progression": True,
-                })
-        
-        # Add normal raids
-        if include_raids and "normal_raids" in exp_data:
-            for raid_data in exp_data["normal_raids"]:
-                name = raid_data["name"] if isinstance(raid_data, dict) else raid_data
-                item_table.append({
-                    "name": name,
-                    "category": ["Normal Raid", expansion, "Duty"],
-                    "count": 1,
-                    "progression": True,
-                })
-        
-        # Add savage raids (if enabled)
-        if include_raids and include_extreme_difficulty and "savage_raids" in exp_data:
-            for raid_data in exp_data["savage_raids"]:
-                name = raid_data["name"] if isinstance(raid_data, dict) else raid_data
-                item_table.append({
-                    "name": name,
-                    "category": ["Savage Raid", expansion, "Duty"],
-                    "count": 1,
-                    "progression": True,
-                })
-        
-        # Add alliance raids
-        if include_raids and "alliance_raids" in exp_data:
-            for raid_data in exp_data["alliance_raids"]:
-                name = raid_data["name"] if isinstance(raid_data, dict) else raid_data
-                item_table.append({
-                    "name": name,
-                    "category": ["Alliance Raid", expansion, "Duty"],
-                    "count": 1,
-                    "progression": True,
-                })
-        
-        # Add guildhests (ARR only)
-        if include_guildhests and expansion == "ARR" and "guildhests" in exp_data:
-            for guildhest_data in exp_data["guildhests"]:
-                if isinstance(guildhest_data, dict):
-                    item_entry = {
-                        "name": guildhest_data["name"],
-                        "category": ["Guildhest", expansion, "Duty"],
-                        "count": 1,
-                        "progression": True,
-                    }
-                    if guildhest_data.get("early", False):
-                        item_entry["early"] = True
-                else:
-                    item_entry = {
-                        "name": guildhest_data,
-                        "category": ["Guildhest", expansion, "Duty"],
-                        "count": 1,
-                        "progression": True,
-                    }
-                item_table.append(item_entry)
-        
-        # Add variant dungeons (EW only)
-        if include_variant_dungeons and expansion == "EW" and "variant_dungeons" in exp_data:
-            for variant_data in exp_data["variant_dungeons"]:
-                name = variant_data["name"] if isinstance(variant_data, dict) else variant_data
-                item_table.append({
-                    "name": name,
-                    "category": ["Variant Dungeon", expansion, "Duty"],
-                    "count": 1,
-                    "progression": True,
-                })
-        
-        # Add Bozja content (ShB only)
-        if include_bozja_content and expansion == "ShB" and "bozja_content" in exp_data:
-            for bozja_data in exp_data["bozja_content"]:
-                name = bozja_data["name"] if isinstance(bozja_data, dict) else bozja_data
-                item_table.append({
-                    "name": name,
-                    "category": ["Bozja", expansion, "Duty"],
-                    "count": 1,
-                    "progression": True,
-                })
-    
-    return item_table
-
 def after_load_region_file(region_table: dict) -> dict:
     # All non-ARR job regions for connections
     all_other_jobs = ["DRK", "MCH", "AST", "SAM", "RDM", "GNB", "DNC", "RPR", "SGE", "VPR", "PCT", "CRP", "BSM", "ARM", "GSM", "LTW", "WVR", "ALC", "CUL", "MIN", "BTN", "FSH", "BLU"]
@@ -945,6 +879,7 @@ def after_load_category_file(category_table: dict) -> dict:
     category_table["DOL"] = {"hidden": True}
     category_table["DOH"] = {"hidden": True}
     category_table["Level Progression"] = {"hidden": True}
+    
     
     return category_table
 
