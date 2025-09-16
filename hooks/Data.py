@@ -54,12 +54,11 @@ def after_load_item_file(item_table: list) -> list:
 
     # ARR Jobs
     for job in ARR_JOB:
-        # Level increases - back to all being early
+        # Level increases
         item_table.append({
            "name": f"{job} Level Increased by 5",
            "category": [f"{job} Level Progression", "DOW/DOM", "Level Progression"],
            "count": 18,  # Each gives 5 levels, need 18 for levels 15-100 (85 levels / 5 = 17, +1 buffer)
-           "early": True,
            "progression": True,
         })
 
@@ -79,7 +78,6 @@ def after_load_item_file(item_table: list) -> list:
            "name": f"{job} Level Increased by 5",
            "category": [f"{job} Level Progression", "DOW/DOM", "Level Progression"],
            "count": 18,
-           "early": True,
            "progression": True,
         })
 
@@ -196,12 +194,11 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
 
-        # All DOH job crystals are early again
+        # All DOH job crystals
         item_table.append({
             "name": f"{job} Job Crystal (default cap 5)",
             "category": ["DOH Job Crystal", "DOH"],
             "count": 1,
-            "early": True,
             "progression": True,
         })
 
@@ -214,24 +211,19 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
 
-        # All DOL job crystals are early again
+        # All DOL job crystals
         item_table.append({
             "name": f"{job} Job Crystal (default cap 5)",
             "category": ["DOL Job Crystal", "DOL"],
             "count": 1,
-            "early": True,
             "progression": True,
         })
     
-    # Dungeons and Trials from duties.csv - ALL PROGRESSION ITEMS
-    # ARR Dungeons - Early ones marked as early
-    dungeons_arr_early = [
-        # Level < 35 dungeons - these should be early
+# Dungeons and Trials from duties.csv - ALL PROGRESSION ITEMS
+    # ARR Dungeons
+    dungeons_arr = [
         "Sastasha", "The Tam-Tara Deepcroft", "Copperbell Mines", "Halatali", 
-        "The Thousand Maws of Toto-Rak", "Haukke Manor", "Brayflox's Longstop"
-    ]
-    
-    dungeons_arr_regular = [
+        "The Thousand Maws of Toto-Rak", "Haukke Manor", "Brayflox's Longstop", 
         "The Sunken Temple of Qarn", "Cutter's Cry", "The Stone Vigil", 
         "Dzemael Darkhold", "The Aurum Vale", "Castrum Meridianum", "The Praetorium",
         "The Wanderer's Palace", "Amdapor Keep", "Pharos Sirius", "Copperbell Mines (Hard)",
@@ -241,33 +233,31 @@ def after_load_item_file(item_table: list) -> list:
         "The Sunken Temple of Qarn (Hard)", "The Keeper of the Lake", 
         "The Wanderer's Palace (Hard)", "Amdapor Keep (Hard)"
     ]
+
+    # Define level requirements for early dungeons (level 20 or under)
+    early_dungeons = {
+        "Sastasha": 18,
+        "The Tam-Tara Deepcroft": 19, 
+        "Copperbell Mines": 20
+    }
     
-    # Early dungeons
-    for dungeon in dungeons_arr_early:
-        item_table.append({
-            "name": dungeon,
-            "category": ["Dungeon", "ARR", "Duty", "Early Duty"],
-            "count": 1,
-            "early": True,
-            "progression": True,
-        })
-    
-    # Regular ARR dungeons
-    for dungeon in dungeons_arr_regular:
-        item_table.append({
+    for dungeon in dungeons_arr:
+        dungeon_data = {
             "name": dungeon,
             "category": ["Dungeon", "ARR", "Duty"],
             "count": 1,
             "progression": True,
-        })
+        }
+        
+        # Mark dungeons level 20 or under as early
+        if dungeon in early_dungeons:
+            dungeon_data["early"] = True
+        
+        item_table.append(dungeon_data)
 
-    # ARR Trials - Early ones marked as early
-    trials_arr_early = [
-        "The Bowl of Embers",  # Level 22
-    ]
-    
-    trials_arr_regular = [
-        "The Navel", "The Howling Eye", "The Porta Decumana",
+    # ARR Trials
+    trials_arr = [
+        "The Bowl of Embers", "The Navel", "The Howling Eye", "The Porta Decumana",
         "The Bowl of Embers (Hard)", "The Howling Eye (Hard)", "The Navel (Hard)",
         "Thornmarch (Hard)", "A Relic Reborn: the Chimera", "A Relic Reborn: the Hydra",
         "The Whorleater (Hard)", "Battle on the Big Bridge", "The Striking Tree (Hard)",
@@ -277,25 +267,25 @@ def after_load_item_file(item_table: list) -> list:
         "Thornmarch (Extreme)", "The Whorleater (Extreme)", "The Striking Tree (Extreme)",
         "The Akh Afah Amphitheatre (Extreme)"
     ]
+
+    # Define level requirements for early trials (level 20 or under)
+    early_trials = {
+        # No trials are level 20 or under
+    }
     
-    # Early trials
-    for trial in trials_arr_early:
-        item_table.append({
-            "name": trial,
-            "category": ["Trial", "ARR", "Duty", "Early Duty"],
-            "count": 1,
-            "early": True,
-            "progression": True,
-        })
-    
-    # Regular ARR trials
-    for trial in trials_arr_regular:
-        item_table.append({
+    for trial in trials_arr:
+        trial_data = {
             "name": trial,
             "category": ["Trial", "ARR", "Duty"],
             "count": 1,
             "progression": True,
-        })
+        }
+        
+        # Mark trials level 20 or under as early
+        if trial in early_trials:
+            trial_data["early"] = True
+        
+        item_table.append(trial_data)
 
     # HW Dungeons
     dungeons_hw = [
