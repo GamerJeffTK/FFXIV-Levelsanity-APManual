@@ -368,30 +368,6 @@ def hook_get_filler_item_name(world: World, multiworld: MultiWorld, player: int)
 
 # Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
-    # Update category table based on expansion settings
-    expansions = get_option_value(multiworld, player, "included_expansions")
-    enabled_jobs = get_enabled_jobs(expansions)
-    dow_dom_jobs, doh_jobs, dol_jobs, blu_enabled = enabled_jobs
-    
-    # Hide job categories for disabled jobs
-    all_jobs = ARR_JOB + HW_JOB + STB_JOB + SHB_JOB + EW_JOB + DT_JOB + DOH + DOL + ["BLU"]
-    enabled_job_names = dow_dom_jobs + doh_jobs + dol_jobs
-    if blu_enabled:
-        enabled_job_names.append("BLU")
-    
-    from ..Data import category_table
-    for job in all_jobs:
-        if job not in enabled_job_names:
-            category_table[job] = {"hidden": True}
-    
-    # Hide expansion categories for disabled expansions
-    enabled_expansion_tags = get_enabled_expansion_tags(expansions)
-    expansion_tags = ["ARR", "HW", "StB", "ShB", "EW", "DT"]
-    
-    for expansion in expansion_tags:
-        if expansion not in enabled_expansion_tags:
-            category_table[expansion] = {"hidden": True}
-    
     pass
 
 # Called after regions and locations are created, in case you want to see or modify that information. Victory location is included.
@@ -614,3 +590,38 @@ def before_extend_hint_information(hint_data: dict[int, dict[int, str]], world: 
 
 def after_extend_hint_information(hint_data: dict[int, dict[int, str]], world: World, multiworld: MultiWorld, player: int) -> None:
     pass
+
+# Custom client_data override to dynamically filter categories based on expansion settings
+def get_filtered_categories(world: World, multiworld: MultiWorld, player: int) -> dict:
+    """Return a filtered category table based on the player's expansion settings"""
+    from ..Data import category_table
+    
+    # Get expansion settings
+    expansions = get_option_value(multiworld, player, "included_expansions")
+    enabled_jobs = get_enabled_jobs(expansions)
+    dow_dom_jobs, doh_jobs, dol_jobs, blu_enabled = enabled_jobs
+    
+    # Create a copy of the category table to modify
+    filtered_categories = category_table.copy()
+    
+    # Hide job categories for disabled jobs
+    all_jobs = ARR_JOB + HW_JOB + STB_JOB + SHB_JOB + EW_JOB + DT_JOB + DOH + DOL + ["BLU"]
+    enabled_job_names = dow_dom_jobs + doh_jobs + dol_jobs
+    if blu_enabled:
+        enabled_job_names.append("BLU")
+    
+    for job in all_jobs:
+        if job not in enabled_job_names:
+            filtered_categories[job] = {"hidden": True}
+            # Also hide the level progression category for this job
+            filtered_categories[f"{job} Level Progression"] = {"hidden": True}
+    
+    # Hide expansion-based categories
+    enabled_expansion_tags = get_enabled_expansion_tags(expansions)
+    expansion_tags = ["ARR", "HW", "StB", "ShB", "EW", "DT"]
+    
+    for expansion in expansion_tags:
+        if expansion not in enabled_expansion_tags:
+            filtered_categories[expansion] = {"hidden": True}
+    
+    return filtered_categories

@@ -34,7 +34,7 @@ from .hooks.World import \
     before_generate_basic, after_generate_basic, \
     before_fill_slot_data, after_fill_slot_data, before_write_spoiler, \
     before_extend_hint_information, after_extend_hint_information, \
-    after_collect_item, after_remove_item
+    after_collect_item, after_remove_item, get_filtered_categories
 from .hooks.Data import hook_interpret_slot_data
 
 class ManualWorld(World):
@@ -509,7 +509,7 @@ class ManualWorld(World):
             'locations': self.location_name_to_location,
             # todo: extract connections out of multiworld.get_regions() instead, in case hooks have modified the regions.
             'regions': region_table,
-            'categories': category_table
+            'categories': get_filtered_categories(self, self.multiworld, self.player)
         }
 
 ###
