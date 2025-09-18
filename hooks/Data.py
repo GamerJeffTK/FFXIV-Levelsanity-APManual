@@ -24,7 +24,6 @@ def after_load_item_file(item_table: list) -> list:
            "name": f"{job} Level Increased by 5",
            "category": [f"{job} Level Progression", "DOW/DOM", "Level Progression"],
            "count": 18,  # Each gives 5 levels, need 18 for levels 15-100 (85 levels / 5 = 17, +1 buffer)
-           "early": True,
            "progression": True,
         })
 
@@ -145,7 +144,6 @@ def after_load_item_file(item_table: list) -> list:
             "name": f"{job} Job Crystal (default cap 5)",
             "category": ["DOH Job Crystal", "DOH"],
             "count": 1,
-            "early": True,
             "progression": True,
         })
 
@@ -162,7 +160,6 @@ def after_load_item_file(item_table: list) -> list:
             "name": f"{job} Job Crystal (default cap 5)",
             "category": ["DOL Job Crystal", "DOL"],
             "count": 1,
-            "early": True,
             "progression": True,
         })
     
