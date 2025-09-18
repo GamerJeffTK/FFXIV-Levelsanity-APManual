@@ -14,6 +14,16 @@ from ..Data import game_table, item_table, location_table, region_table
 # These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
 from ..Helpers import is_option_enabled, get_option_value, format_state_prog_items_key, ProgItemsCat
 
+# Import job lists from Data hooks
+ARR_JOB = ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN"]
+HW_JOB = ["DRK","MCH","AST"]
+STB_JOB = ["SAM","RDM"]
+SHB_JOB = ["GNB","DNC"]
+EW_JOB = ["RPR","SGE"]
+DT_JOB = ["VPR","PCT"]
+DOH = ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"]
+DOL = ["MIN","BTN","FSH"]
+
 # calling logging.info("message") anywhere below in this file will output the message to both console and log file
 import logging
 
@@ -29,29 +39,347 @@ import logging
 ## The fill_slot_data method will be used to send data to the Manual client for later use, like deathlink.
 ########################################################################################
 
-def get_expansion_limits(expansion_choice):
-    """Returns the jobs, max level, and available expansions for the chosen expansion setting"""
-    ARR_JOB = ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN"]
-    HW_JOB = ["DRK","MCH","AST"]
-    STB_JOB = ["SAM","RDM","BLU"]  # BLU is a StB job
-    SHB_JOB = ["GNB","DNC"]
-    EW_JOB = ["RPR","SGE"]
-    DT_JOB = ["VPR","PCT"]
-    DOH = ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"]
-    DOL = ["MIN","BTN","FSH"]
+# Helper functions for expansion filtering
+def get_max_level(expansions: int) -> int:
+    """Get the maximum level based on enabled expansions"""
+    if expansions == 0:  # ARR only
+        return 50
+    elif expansions == 1:  # ARR + HW
+        return 60
+    elif expansions == 2:  # ARR + HW + StB
+        return 70
+    elif expansions == 3:  # ARR + HW + StB + ShB
+        return 80
+    elif expansions == 4:  # ARR + HW + StB + ShB + EW
+        return 90
+    else:  # All expansions
+        return 100
+
+def get_blu_max_level(expansions: int) -> int:
+    """Get BLU's maximum level based on enabled expansions"""
+    if expansions < 2:  # BLU not available before StB
+        return 0
+    elif expansions == 2:  # StB
+        return 50
+    elif expansions == 3:  # ShB
+        return 70
+    else:  # EW and beyond - BLU caps at 80
+        return 80
+
+def get_enabled_jobs(expansions: int) -> tuple[list[str], list[str], list[str], list[str]]:
+    """Get enabled jobs by expansion, returns (dow_dom_jobs, doh_jobs, dol_jobs, blu_enabled)"""
+    dow_dom_jobs = ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN"]  # ARR
+    doh_jobs = ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"]
+    dol_jobs = ["MIN","BTN","FSH"]
     
-    if expansion_choice == 0:  # ARR only
-        return ARR_JOB + DOH + DOL, 50, ["ARR"]
-    elif expansion_choice == 1:  # ARR + HW  
-        return ARR_JOB + HW_JOB + DOH + DOL, 60, ["ARR", "HW"]
-    elif expansion_choice == 2:  # ARR + HW + StB
-        return ARR_JOB + HW_JOB + STB_JOB + DOH + DOL, 70, ["ARR", "HW", "StB"]
-    elif expansion_choice == 3:  # ARR + HW + StB + ShB
-        return ARR_JOB + HW_JOB + STB_JOB + SHB_JOB + DOH + DOL, 80, ["ARR", "HW", "StB", "ShB"]
-    elif expansion_choice == 4:  # ARR + HW + StB + ShB + EW
-        return ARR_JOB + HW_JOB + STB_JOB + SHB_JOB + EW_JOB + DOH + DOL, 90, ["ARR", "HW", "StB", "ShB", "EW"]
-    else:  # All expansions (5)
-        return ARR_JOB + HW_JOB + STB_JOB + SHB_JOB + EW_JOB + DT_JOB + DOH + DOL, 100, ["ARR", "HW", "StB", "ShB", "EW", "DT"]
+    if expansions >= 1:  # HW
+        dow_dom_jobs.extend(["DRK","MCH","AST"])
+    if expansions >= 2:  # StB
+        dow_dom_jobs.extend(["SAM","RDM"])
+    if expansions >= 3:  # ShB
+        dow_dom_jobs.extend(["GNB","DNC"])
+    if expansions >= 4:  # EW
+        dow_dom_jobs.extend(["RPR","SGE"])
+    if expansions >= 5:  # DT
+        dow_dom_jobs.extend(["VPR","PCT"])
+    
+    # BLU is available from StB onwards
+    blu_enabled = expansions >= 2
+    
+    return dow_dom_jobs, doh_jobs, dol_jobs, blu_enabled
+
+def get_enabled_expansion_tags(expansions: int) -> list[str]:
+    """Get enabled expansion tags for duties"""
+    tags = ["ARR"]
+    if expansions >= 1:
+        tags.append("HW")
+    if expansions >= 2:
+        tags.append("StB")
+    if expansions >= 3:
+        tags.append("ShB")
+    if expansions >= 4:
+        tags.append("EW")
+    if expansions >= 5:
+        tags.append("DT")
+    return tags
+
+def get_duty_expansion_mapping() -> dict[str, str]:
+    """Get the mapping of duties to their expansions"""
+    return {
+        # ARR Dungeons
+        "Sastasha": "ARR", "The Tam-Tara Deepcroft": "ARR", "Copperbell Mines": "ARR", "Halatali": "ARR",
+        "The Thousand Maws of Toto-Rak": "ARR", "Haukke Manor": "ARR", "Brayflox's Longstop": "ARR",
+        "The Sunken Temple of Qarn": "ARR", "Cutter's Cry": "ARR", "The Stone Vigil": "ARR",
+        "Dzemael Darkhold": "ARR", "The Aurum Vale": "ARR", "Castrum Meridianum": "ARR", "The Praetorium": "ARR",
+        "The Wanderer's Palace": "ARR", "Amdapor Keep": "ARR", "Pharos Sirius": "ARR", "Copperbell Mines (Hard)": "ARR",
+        "Haukke Manor (Hard)": "ARR", "The Lost City of Amdapor": "ARR", "Halatali (Hard)": "ARR",
+        "Brayflox's Longstop (Hard)": "ARR", "Hullbreaker Isle": "ARR", "The Tam-Tara Deepcroft (Hard)": "ARR",
+        "The Stone Vigil (Hard)": "ARR", "Snowcloak": "ARR", "Sastasha (Hard)": "ARR",
+        "The Sunken Temple of Qarn (Hard)": "ARR", "The Keeper of the Lake": "ARR",
+        "The Wanderer's Palace (Hard)": "ARR", "Amdapor Keep (Hard)": "ARR",
+        
+        # ARR Trials
+        "The Bowl of Embers": "ARR", "The Navel": "ARR", "The Howling Eye": "ARR", "The Porta Decumana": "ARR",
+        "The Bowl of Embers (Hard)": "ARR", "The Howling Eye (Hard)": "ARR", "The Navel (Hard)": "ARR",
+        "Thornmarch (Hard)": "ARR", "A Relic Reborn: the Chimera": "ARR", "A Relic Reborn: the Hydra": "ARR",
+        "The Whorleater (Hard)": "ARR", "Battle on the Big Bridge": "ARR", "The Striking Tree (Hard)": "ARR",
+        "The Akh Afah Amphitheatre (Hard)": "ARR", "The Dragon's Neck": "ARR", "The Chrysalis": "ARR",
+        "Battle in the Big Keep": "ARR", "Urth's Fount": "ARR", "The Minstrel's Ballad: Ultima's Bane": "ARR",
+        "The Howling Eye (Extreme)": "ARR", "The Navel (Extreme)": "ARR", "The Bowl of Embers (Extreme)": "ARR",
+        "Thornmarch (Extreme)": "ARR", "The Whorleater (Extreme)": "ARR", "The Striking Tree (Extreme)": "ARR",
+        "The Akh Afah Amphitheatre (Extreme)": "ARR",
+        
+        # ARR Raids
+        "The Binding Coil of Bahamut - Turn 1": "ARR", "The Binding Coil of Bahamut - Turn 2": "ARR",
+        "The Binding Coil of Bahamut - Turn 3": "ARR", "The Binding Coil of Bahamut - Turn 4": "ARR",
+        "The Binding Coil of Bahamut - Turn 5": "ARR", "The Second Coil of Bahamut - Turn 1": "ARR",
+        "The Second Coil of Bahamut - Turn 2": "ARR", "The Second Coil of Bahamut - Turn 3": "ARR",
+        "The Second Coil of Bahamut - Turn 4": "ARR", "The Final Coil of Bahamut - Turn 1": "ARR",
+        "The Final Coil of Bahamut - Turn 2": "ARR", "The Final Coil of Bahamut - Turn 3": "ARR",
+        "The Final Coil of Bahamut - Turn 4": "ARR", "The Second Coil of Bahamut (Savage) - Turn 1": "ARR",
+        "The Second Coil of Bahamut (Savage) - Turn 2": "ARR", "The Second Coil of Bahamut (Savage) - Turn 3": "ARR",
+        "The Second Coil of Bahamut (Savage) - Turn 4": "ARR", "The Labyrinth of the Ancients": "ARR",
+        "Syrcus Tower": "ARR", "The World of Darkness": "ARR",
+        
+        # ARR Guildhests
+        "Basic Training: Enemy Parties": "ARR", "Under the Armor": "ARR", "Basic Training: Enemy Strongholds": "ARR",
+        "Hero on the Half Shell": "ARR", "Pulling Poison Posies": "ARR", "Stinging Back": "ARR",
+        "All's Well that Ends in the Well": "ARR", "Flicking Sticks and Taking Names": "ARR",
+        "More than a Feeler": "ARR", "Annoy the Void": "ARR", "Shadow and Claw": "ARR",
+        "Long Live the Queen": "ARR", "Ward Up": "ARR", "Solemn Trinity": "ARR",
+        
+        # HW Dungeons
+        "The Dusk Vigil": "HW", "Sohm Al": "HW", "The Aery": "HW", "The Vault": "HW", "The Great Gubal Library": "HW",
+        "The Aetherochemical Research Facility": "HW", "Neverreap": "HW", "The Fractal Continuum": "HW",
+        "Saint Mocianne's Arboretum": "HW", "Pharos Sirius (Hard)": "HW", "The Antitower": "HW",
+        "The Lost City of Amdapor (Hard)": "HW", "Sohr Khai": "HW", "Hullbreaker Isle (Hard)": "HW",
+        "Xelphatol": "HW", "The Great Gubal Library (Hard)": "HW", "Baelsar's Wall": "HW", "Sohm Al (Hard)": "HW",
+        
+        # HW Trials  
+        "Thok ast Thok (Hard)": "HW", "The Limitless Blue (Hard)": "HW", "The Singularity Reactor": "HW",
+        "Containment Bay S1T7": "HW", "The Final Steps of Faith": "HW", "Containment Bay P1T6": "HW",
+        "Containment Bay Z1T9": "HW", "The Limitless Blue (Extreme)": "HW", "Thok ast Thok (Extreme)": "HW",
+        "The Minstrel's Ballad: Thordan's Reign": "HW", "Containment Bay S1T7 (Extreme)": "HW",
+        "The Minstrel's Ballad: Nidhogg's Rage": "HW", "Containment Bay P1T6 (Extreme)": "HW",
+        "Containment Bay Z1T9 (Extreme)": "HW",
+        
+        # HW Raids
+        "Alexander - The Fist of the Father": "HW", "Alexander - The Cuff of the Father": "HW",
+        "Alexander - The Arm of the Father": "HW", "Alexander - The Burden of the Father": "HW",
+        "Alexander - The Fist of the Son": "HW", "Alexander - The Cuff of the Son": "HW",
+        "Alexander - The Arm of the Son": "HW", "Alexander - The Burden of the Son": "HW",
+        "Alexander - The Eyes of the Creator": "HW", "Alexander - The Breath of the Creator": "HW",
+        "Alexander - The Heart of the Creator": "HW", "Alexander - The Soul of the Creator": "HW",
+        "Alexander - The Fist of the Father (Savage)": "HW", "Alexander - The Cuff of the Father (Savage)": "HW",
+        "Alexander - The Arm of the Father (Savage)": "HW", "Alexander - The Burden of the Father (Savage)": "HW",
+        "The Void Ark": "HW", "The Weeping City of Mhach": "HW", "Dun Scaith": "HW",
+        
+        # StB Dungeons
+        "The Sirensong Sea": "StB", "Shisui of the Violet Tides": "StB", "Bardam's Mettle": "StB", "Doma Castle": "StB",
+        "Castrum Abania": "StB", "Ala Mhigo": "StB", "Kugane Castle": "StB", "The Temple of the Fist": "StB",
+        "The Drowned City of Skalla": "StB", "Hells' Lid": "StB", "The Fractal Continuum (Hard)": "StB",
+        "The Swallow's Compass": "StB", "The Burn": "StB", "Saint Mocianne's Arboretum (Hard)": "StB",
+        "The Ghimlyt Dark": "StB",
+        
+        # StB Trials
+        "The Pool of Tribute": "StB", "Emanation": "StB", "The Royal Menagerie": "StB", "The Jade Stoa": "StB",
+        "Castrum Fluminis": "StB", "The Great Hunt": "StB", "Hells' Kier": "StB", "The Wreath of Snakes": "StB",
+        "Kugane Ohashi": "StB", "The Pool of Tribute (Extreme)": "StB", "Emanation (Extreme)": "StB",
+        "The Minstrel's Ballad: Shinryu's Domain": "StB", "The Jade Stoa (Extreme)": "StB",
+        "The Minstrel's Ballad: Tsukuyomi's Pain": "StB", "The Great Hunt (Extreme)": "StB",
+        "Hells' Kier (Extreme)": "StB", "The Wreath of Snakes (Extreme)": "StB",
+        
+        # StB Raids
+        "Deltascape V1.0": "StB", "Deltascape V2.0": "StB", "Deltascape V3.0": "StB", "Deltascape V4.0": "StB",
+        "Sigmascape V1.0": "StB", "Sigmascape V2.0": "StB", "Sigmascape V3.0": "StB", "Sigmascape V4.0": "StB",
+        "Alphascape V1.0": "StB", "Alphascape V2.0": "StB", "Alphascape V3.0": "StB", "Alphascape V4.0": "StB",
+        "The Royal City of Rabanastre": "StB", "The Ridorana Lighthouse": "StB", "The Orbonne Monastery": "StB",
+        
+        # ShB Dungeons  
+        "Holminster Switch": "ShB", "Dohn Mheg": "ShB", "The Qitana Ravel": "ShB", "Malikah's Well": "ShB",
+        "Mt. Gulg": "ShB", "Amaurot": "ShB", "The Twinning": "ShB", "Akadaemia Anyder": "ShB",
+        "The Grand Cosmos": "ShB", "Anamnesis Anyder": "ShB", "The Heroes' Gauntlet": "ShB",
+        "Matoya's Relict": "ShB", "Paglth'an": "ShB",
+        
+        # ShB Trials
+        "The Dancing Plague": "ShB", "The Crown of the Immaculate": "ShB", "The Dying Gasp": "ShB",
+        "Cinder Drift": "ShB", "The Seat of Sacrifice": "ShB", "Castrum Marinum": "ShB", "The Cloud Deck": "ShB",
+        "The Dancing Plague (Extreme)": "ShB", "The Crown of the Immaculate (Extreme)": "ShB",
+        "The Minstrel's Ballad: Hades's Elegy": "ShB", "Cinder Drift (Extreme)": "ShB",
+        "Memoria Misera (Extreme)": "ShB", "The Seat of Sacrifice (Extreme)": "ShB",
+        "Castrum Marinum (Extreme)": "ShB", "The Cloud Deck (Extreme)": "ShB",
+        
+        # ShB Raids
+        "Eden's Gate: Resurrection": "ShB", "Eden's Gate: Descent": "ShB", "Eden's Gate: Inundation": "ShB", 
+        "Eden's Gate: Sepulture": "ShB", "Eden's Verse: Fulmination": "ShB", "Eden's Verse: Furor": "ShB", 
+        "Eden's Verse: Iconoclasm": "ShB", "Eden's Verse: Refulgence": "ShB", "Eden's Promise: Umbra": "ShB", 
+        "Eden's Promise: Litany": "ShB", "Eden's Promise: Anamorphosis": "ShB", "Eden's Promise: Eternity": "ShB",
+        "The Copied Factory": "ShB", "The Puppets' Bunker": "ShB", "The Tower at Paradigm's Breach": "ShB",
+        "Castrum Lacus Litore": "ShB", "Delubrum Reginae": "ShB", "The Dalriada": "ShB",
+        
+        # EW Dungeons
+        "The Tower of Zot": "EW", "The Tower of Babil": "EW", "Vanaspati": "EW", "Ktisis Hyperboreia": "EW",
+        "The Aitiascope": "EW", "The Dead Ends": "EW", "Smileton": "EW", "The Stigma Dreamscape": "EW",
+        "Alzadaal's Legacy": "EW", "The Fell Court of Troia": "EW", "Lapis Manalis": "EW",
+        "The Aetherfont": "EW", "The Lunar Subterrane": "EW",
+        
+        # EW Trials
+        "The Dark Inside": "EW", "The Mothercrystal": "EW", "The Final Day": "EW", "Storm's Crown": "EW",
+        "Mount Ordeals": "EW", "The Voidcast Dais": "EW", "The Abyssal Fracture": "EW", "The Gilded Araya": "EW",
+        "The Minstrel's Ballad: Zodiark's Fall": "EW", "The Minstrel's Ballad: Hydaelyn's Call": "EW",
+        "The Minstrel's Ballad: Endsinger's Aria": "EW", "Storm's Crown (Extreme)": "EW",
+        "Mount Ordeals (Extreme)": "EW", "The Voidcast Dais (Extreme)": "EW", "The Abyssal Fracture (Extreme)": "EW",
+        
+        # EW Raids
+        "Asphodelos: The First Circle": "EW", "Asphodelos: The Second Circle": "EW", "Asphodelos: The Third Circle": "EW", 
+        "Asphodelos: The Fourth Circle": "EW", "Abyssos: The Fifth Circle": "EW", "Abyssos: The Sixth Circle": "EW", 
+        "Abyssos: The Seventh Circle": "EW", "Abyssos: The Eighth Circle": "EW", "Anabaseios: The Ninth Circle": "EW", 
+        "Anabaseios: The Tenth Circle": "EW", "Anabaseios: The Eleventh Circle": "EW", "Anabaseios: The Twelfth Circle": "EW",
+        "Aglaia": "EW", "Euphrosyne": "EW", "Thaleia": "EW",
+        "The Sil'dihn Subterrane": "EW", "Mount Rokkon": "EW", "Aloalo Island": "EW",
+        
+        # DT Dungeons
+        "Ihuykatumu": "DT", "Worqor Zormor": "DT", "The Skydeep Cenote": "DT", "Vanguard": "DT",
+        "Origenics": "DT", "Alexandria": "DT", "Tender Valley": "DT", "The Strayborough Deadwalk": "DT",
+        "Yuweyawata Field Station": "DT", "The Underkeep": "DT", "The Meso Terminal": "DT",
+        
+        # DT Trials
+        "Worqor Lar Dor": "DT", "Everkeep": "DT", "The Interphos": "DT", "Recollection": "DT",
+        "The Ageless Necropolis": "DT", "Worqor Lar Dor (Extreme)": "DT", "Everkeep (Extreme)": "DT",
+        "The Minstrel's Ballad: Sphene's Burden": "DT", "Recollection (Extreme)": "DT",
+        "The Minstrel's Ballad: Necron's Embrace": "DT",
+        
+        # DT Raids
+        "AAC Light-heavyweight M1": "DT", "AAC Light-heavyweight M2": "DT", "AAC Light-heavyweight M3": "DT", 
+        "AAC Light-heavyweight M4": "DT", "AAC Cruiserweight M1": "DT", "AAC Cruiserweight M2": "DT", 
+        "AAC Cruiserweight M3": "DT", "AAC Cruiserweight M4": "DT", "Jeuno: The First Walk": "DT", 
+        "San d'Oria: The Second Walk": "DT"
+    }
+
+def should_remove_item(item_name: str, expansions: int, max_level: int, blu_max_level: int, enabled_jobs: tuple) -> bool:
+    """Determine if an item should be removed based on expansion settings"""
+    dow_dom_jobs, doh_jobs, dol_jobs, blu_enabled = enabled_jobs
+    enabled_expansion_tags = get_enabled_expansion_tags(expansions)
+    
+    # Check if it's a job crystal or level progression item
+    for job in ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN","DRK","MCH","AST","SAM","RDM","GNB","DNC","RPR","SGE","VPR","PCT"]:
+        if job in item_name:
+            if job not in dow_dom_jobs:
+                return True
+            # For level progression items, check if they exceed the level cap
+            if "Level Increased by 5" in item_name:
+                if job in ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN"]:  # ARR jobs
+                    required_items = (max_level - 10) // 5 if max_level > 10 else 0
+                elif job in ["DRK","MCH","AST"]:  # HW jobs
+                    required_items = (max_level - 30) // 5 if max_level > 30 else 0
+                elif job in ["SAM","RDM"]:  # StB jobs
+                    required_items = (max_level - 50) // 5 if max_level > 50 else 0
+                elif job in ["GNB","DNC"]:  # ShB jobs
+                    required_items = (max_level - 60) // 5 if max_level > 60 else 0
+                elif job in ["RPR","SGE"]:  # EW jobs
+                    required_items = (max_level - 70) // 5 if max_level > 70 else 0
+                elif job in ["VPR","PCT"]:  # DT jobs
+                    required_items = (max_level - 80) // 5 if max_level > 80 else 0
+                # If we don't need any progression items for this job, remove them
+                if required_items <= 0:
+                    return True
+            break
+    
+    # Check BLU specifically
+    if "BLU" in item_name:
+        if not blu_enabled:
+            return True
+        if "Level Increased by 5" in item_name:
+            required_items = (blu_max_level - 1) // 5 if blu_max_level > 1 else 0
+            if required_items <= 0:
+                return True
+    
+    # Check DOH jobs
+    for job in doh_jobs:
+        if job in item_name and "Level Increased by 5" in item_name:
+            required_items = (max_level - 5) // 5 if max_level > 5 else 0
+            if required_items <= 0:
+                return True
+            break
+    
+    # Check DOL jobs  
+    for job in dol_jobs:
+        if job in item_name and "Level Increased by 5" in item_name:
+            required_items = (max_level - 5) // 5 if max_level > 5 else 0
+            if required_items <= 0:
+                return True
+            break
+    
+    # Check duties by expansion - comprehensive mapping
+    duty_expansions = get_duty_expansion_mapping()
+    
+    # Check if this is a duty from a disabled expansion
+    for duty, expansion in duty_expansions.items():
+        if duty in item_name and expansion not in enabled_expansion_tags:
+            return True
+    
+    # REMOVED: Level access items check - no longer using gate items
+    
+    return False
+
+def should_remove_location(location_name: str, expansions: int, max_level: int, blu_max_level: int, enabled_jobs: tuple) -> bool:
+    """Determine if a location should be removed based on expansion settings"""
+    dow_dom_jobs, doh_jobs, dol_jobs, blu_enabled = enabled_jobs
+    
+    # Check job level locations
+    for job in ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN","DRK","MCH","AST","SAM","RDM","GNB","DNC","RPR","SGE","VPR","PCT"]:
+        if f"{job} Level " in location_name:
+            if job not in dow_dom_jobs:
+                return True
+            # Check if level exceeds cap
+            try:
+                level_str = location_name.split(f"{job} Level ")[1]
+                level = int(level_str)
+                if level > max_level:
+                    return True
+            except (IndexError, ValueError):
+                pass
+            break
+    
+    # Check BLU specifically
+    if "BLU Level " in location_name:
+        if not blu_enabled:
+            return True
+        try:
+            level_str = location_name.split("BLU Level ")[1]
+            level = int(level_str)
+            if level > blu_max_level:
+                return True
+        except (IndexError, ValueError):
+            pass
+    
+    # Check DOH/DOL job levels
+    for job in doh_jobs + dol_jobs:
+        if f"{job} Level " in location_name:
+            try:
+                level_str = location_name.split(f"{job} Level ")[1]
+                level = int(level_str)
+                if level > max_level:
+                    return True
+            except (IndexError, ValueError):
+                pass
+            break
+    
+    # REMOVED: Level milestone locations check - no longer using milestone locations
+    
+    # Check duty completion locations
+    if "Complete " in location_name:
+        duty_name = location_name.replace("Complete ", "")
+        duty_expansions = get_duty_expansion_mapping()
+        
+        if duty_name in duty_expansions:
+            expansion = duty_expansions[duty_name]
+            enabled_expansion_tags = get_enabled_expansion_tags(expansions)
+            if expansion not in enabled_expansion_tags:
+                return True
+    
+    return False
+
 
 # Use this function to change the valid filler items to be created to replace item links or starting items.
 # Default value is the `filler_item_name` from game.json
@@ -60,102 +388,130 @@ def hook_get_filler_item_name(world: World, multiworld: MultiWorld, player: int)
 
 # Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
+    # Update category table based on expansion settings
+    expansions = get_option_value(multiworld, player, "included_expansions")
+    enabled_jobs = get_enabled_jobs(expansions)
+    dow_dom_jobs, doh_jobs, dol_jobs, blu_enabled = enabled_jobs
+    
+    # Hide job categories for disabled jobs
+    all_jobs = ARR_JOB + HW_JOB + STB_JOB + SHB_JOB + EW_JOB + DT_JOB + DOH + DOL + ["BLU"]
+    enabled_job_names = dow_dom_jobs + doh_jobs + dol_jobs
+    if blu_enabled:
+        enabled_job_names.append("BLU")
+    
+    from ..Data import category_table
+    for job in all_jobs:
+        if job not in enabled_job_names:
+            category_table[job] = {"hidden": True}
+    
+    # Hide expansion categories for disabled expansions
+    enabled_expansion_tags = get_enabled_expansion_tags(expansions)
+    expansion_tags = ["ARR", "HW", "StB", "ShB", "EW", "DT"]
+    
+    for expansion in expansion_tags:
+        if expansion not in enabled_expansion_tags:
+            category_table[expansion] = {"hidden": True}
+    
     pass
 
 # Called after regions and locations are created, in case you want to see or modify that information. Victory location is included.
 def after_create_regions(world: World, multiworld: MultiWorld, player: int):
-    # Get expansion limits
-    expansion_choice = get_option_value(multiworld, player, 'included_expansions')
-    available_jobs, max_level, available_expansions = get_expansion_limits(expansion_choice)
+    # Get expansion settings
+    expansions = get_option_value(multiworld, player, "included_expansions")
+    max_level = get_max_level(expansions)
+    blu_max_level = get_blu_max_level(expansions)
+    enabled_jobs = get_enabled_jobs(expansions)
     
-    # Define all possible jobs
-    all_jobs = ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN","DRK","MCH","AST","SAM","RDM","BLU","GNB","DNC","RPR","SGE","VPR","PCT","CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL","MIN","BTN","FSH"]
+    # Remove locations from disabled expansions/levels
+    locationNamesToRemove: list[str] = []
     
-    # Filter locations from regions
-    regions_to_process = [r for r in multiworld.regions if r.player == player]
+    for region in multiworld.regions:
+        if region.player == player:
+            for location in list(region.locations):
+                if should_remove_location(location.name, expansions, max_level, blu_max_level, enabled_jobs):
+                    locationNamesToRemove.append(location.name)
     
-    for region in regions_to_process:
-        # Check if this is a job region that shouldn't exist - mark all its locations for removal
-        if region.name in all_jobs and region.name not in available_jobs:
-            # Remove all locations from this unavailable job region
-            region.locations.clear()
-            continue
-        
-        # Filter locations within remaining regions
-        locations_to_remove = []
-        for location in list(region.locations):
-            should_remove = False
-            
-            # Check if location is for a job that shouldn't exist
-            location_job = None
-            for job in all_jobs:
-                if location.name.startswith(f"{job} Level "):
-                    location_job = job
-                    break
-            
-            if location_job and location_job not in available_jobs:
-                should_remove = True
-            elif location_job:
-                # Check if location is for a level above max level
-                level_str = location.name.replace(f"{location_job} Level ", "")
-                try:
-                    level = int(level_str)
-                    if level > max_level:
-                        should_remove = True
-                    # Special case for BLU - cap at 80 even in EW/DT expansions
-                    elif location_job == "BLU" and level > min(80, max_level):
-                        should_remove = True
-                except ValueError:
-                    pass
-            
-            if should_remove:
-                locations_to_remove.append(location)
-        
-        # Remove locations from region
-        for location in locations_to_remove:
-            region.locations.remove(location)
-
-    logging.info(f"Expansion filtering: Using {available_jobs} jobs with max level {max_level} for expansions {available_expansions}")
+    # Remove the locations
+    for region in multiworld.regions:
+        if region.player == player:
+            for location in list(region.locations):
+                if location.name in locationNamesToRemove:
+                    region.locations.remove(location)
 
 # This hook allows you to access the item names & counts before the items are created. Use this to increase/decrease the amount of a specific item in the pool
 def before_create_items_all(item_config: dict[str, int|dict], world: World, multiworld: MultiWorld, player: int) -> dict[str, int|dict]:
-    # Get expansion limits  
-    expansion_choice = get_option_value(multiworld, player, 'included_expansions')
-    available_jobs, max_level, available_expansions = get_expansion_limits(expansion_choice)
+    # Get expansion settings
+    expansions = get_option_value(multiworld, player, "included_expansions")
+    max_level = get_max_level(expansions)
+    blu_max_level = get_blu_max_level(expansions)
+    enabled_jobs = get_enabled_jobs(expansions)
+    dow_dom_jobs, doh_jobs, dol_jobs, blu_enabled = enabled_jobs
     
-    # Define all possible jobs
-    all_jobs = ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN","DRK","MCH","AST","SAM","RDM","BLU","GNB","DNC","RPR","SGE","VPR","PCT","CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL","MIN","BTN","FSH"]
+    # Check if we need to add Faded Job Crystals (only for goal 2 - crystals victory condition)
+    goal = get_option_value(multiworld, player, "goal")
+    if goal == 2:  # "Collect All Faded Job Crystals" victory condition
+        faded_crystals_required = get_option_value(multiworld, player, "faded_job_crystals_required")
+        item_config["A Faded Job Crystal"] = faded_crystals_required
     
-    # Filter items that shouldn't exist
-    items_to_remove = []
-    for item_name in list(item_config.keys()):
-        should_remove = False
-        
-        # Check job crystal and level progression items
-        for job in all_jobs:
-            if job not in available_jobs and (f"{job} Job Crystal" in item_name or f"{job} Level Increased by 5" in item_name):
-                should_remove = True
-                break
-        
-        # Check duty items from wrong expansions
-        if not should_remove:
-            item_data = world.item_name_to_item.get(item_name, {})
-            categories = item_data.get("category", [])
-            for category in categories:
-                if category in ["HW", "StB", "ShB", "EW", "DT"] and category not in available_expansions:
-                    should_remove = True
-                    break
-        
-        if should_remove:
-            items_to_remove.append(item_name)
+    # Filter items based on expansion settings
+    filtered_config = {}
     
-    # Remove filtered items by setting their count to 0
-    for item_name in items_to_remove:
-        item_config[item_name] = 0
+    for item_name, config in item_config.items():
+        if not should_remove_item(item_name, expansions, max_level, blu_max_level, enabled_jobs):
+            # For level progression items, adjust counts based on level caps
+            if "Level Increased by 5" in item_name:
+                # Calculate the required number of items based on level caps
+                required_count = 0
+                
+                # Check each job type
+                for job in dow_dom_jobs:
+                    if job in item_name:
+                        if job in ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN"]:  # ARR jobs
+                            required_count = max(0, (max_level - 10 + 4) // 5)
+                        elif job in ["DRK","MCH","AST"]:  # HW jobs
+                            required_count = max(0, (max_level - 30 + 4) // 5)
+                        elif job in ["SAM","RDM"]:  # StB jobs
+                            required_count = max(0, (max_level - 50 + 4) // 5)
+                        elif job in ["GNB","DNC"]:  # ShB jobs
+                            required_count = max(0, (max_level - 60 + 4) // 5)
+                        elif job in ["RPR","SGE"]:  # EW jobs
+                            required_count = max(0, (max_level - 70 + 4) // 5)
+                        elif job in ["VPR","PCT"]:  # DT jobs
+                            required_count = max(0, (max_level - 80 + 4) // 5)
+                        break
+                
+                # Check BLU specifically
+                if "BLU" in item_name and blu_enabled:
+                    required_count = max(0, (blu_max_level - 1 + 4) // 5)
+                
+                # Check DOH/DOL jobs
+                for job in doh_jobs + dol_jobs:
+                    if job in item_name:
+                        required_count = max(0, (max_level - 5 + 4) // 5)
+                        break
+                
+                # Update the config with the adjusted count
+                if required_count > 0:
+                    if isinstance(config, int):
+                        filtered_config[item_name] = required_count
+                    else:
+                        # If it's a dict config, we need to adjust it proportionally
+                        total_original = sum(config.values()) if isinstance(config, dict) else config
+                        if total_original > 0:
+                            ratio = required_count / total_original
+                            if isinstance(config, dict):
+                                new_config = {}
+                                for classification, count in config.items():
+                                    new_count = max(1, int(count * ratio))
+                                    new_config[classification] = new_count
+                                filtered_config[item_name] = new_config
+                            else:
+                                filtered_config[item_name] = required_count
+            else:
+                # For non-level items, keep the original config
+                filtered_config[item_name] = config
     
-    logging.info(f"Expansion filtering: Removed {len(items_to_remove)} items not available in selected expansions")
-    
-    return item_config
+    return filtered_config
 
 # The item pool before starting items are processed, in case you want to see the raw item pool at that stage
 def before_create_items_starting(item_pool: list, world: World, multiworld: MultiWorld, player: int) -> list:

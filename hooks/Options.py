@@ -10,21 +10,23 @@ from ..Helpers import is_option_enabled, get_option_value
 
 class FadedJobCrystalsRequired(Range):
     """
-    Number of Faded Job Crystals required for victory condition.
+    Number of Faded Job Crystals required for the "Collect All Faded Job Crystals" victory condition.
+    Only applies if that victory condition is selected.
     """
     display_name = "Faded Job Crystals Required"
     range_start = 1
-    range_end = 50
-    default = 25
+    range_end = 100
+    default = 50
 
 class TotalLevelsRequired(Range):
     """
-    Total levels across all jobs required for victory condition (0 = disabled).
+    Total levels across all jobs required for the "Reach Total Level Goal" victory condition.
+    Only applies if that victory condition is selected. This counts the sum of all your job levels.
     """
     display_name = "Total Levels Required"
-    range_start = 0
+    range_start = 50
     range_end = 2400  # 24 jobs * 100 levels max
-    default = 200
+    default = 500
 
 class StartingARRJobCrystals(Range):
     """
@@ -131,23 +133,13 @@ class IncludedExpansions(Choice):
     option_all_expansions = 5
     default = 0
 
-class DutyPrioritization(Choice):
-    """
-    How to prioritize duties in the item pool.
-    """
-    display_name = "Duty Prioritization"
-    option_all_equal = 0
-    option_main_scenario_priority = 1
-    option_early_duties_priority = 2
-    default = 2
-
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict) -> dict:
-    # Victory Conditions
+    # Victory Condition Configuration
     options["faded_job_crystals_required"] = FadedJobCrystalsRequired
     options["total_levels_required"] = TotalLevelsRequired
     
-    # Starting Items - These will override the game.json starting_items if set
+    # Starting Items
     options["starting_arr_job_crystals"] = StartingARRJobCrystals
     options["starting_doh_job_crystals"] = StartingDOHJobCrystals
     options["starting_dol_job_crystals"] = StartingDOLJobCrystals
@@ -156,7 +148,6 @@ def before_options_defined(options: dict) -> dict:
     
     # Progression Settings
     options["include_extreme_difficulty"] = IncludeExtremeDifficulty
-    options["duty_prioritization"] = DutyPrioritization
     
     # Content Toggles
     options["include_dungeons"] = IncludeDungeons
@@ -173,21 +164,34 @@ def before_options_defined(options: dict) -> dict:
 
 # This is called after any manual options are defined, in case you want to see what options are defined or want to modify the defined options
 def after_options_defined(options: Type[PerGameCommonOptions]) -> None:
-    # To access a modifiable version of options check the dict in options.type_hints
-    # For example if you want to change DLC_enabled's display name you would do:
-    # options.type_hints["DLC_enabled"].display_name = "New Display Name"
-    
-    # Here's an example on how to add your aliases to the generated goal
-    # options.type_hints['goal'].aliases.update({"example": 0, "second_alias": 1})
-    # options.type_hints['goal'].options.update({"example": 0, "second_alias": 1})  #for an alias to be valid it must also be in options
-    
-    pass
+    # Update the goal option to have better descriptions and aliases
+    if hasattr(options.type_hints, 'goal'):
+        goal_option = options.type_hints['goal']
+        
+        # Update descriptions to be clearer about what each victory condition does
+        goal_option.display_name = "Victory Condition"
+        goal_option.__doc__ = """Choose your victory condition:
+        - Max Level: Get any single job to maximum level (scales with expansions)
+        - Total Levels: Reach a total sum of levels across all unlocked jobs
+        - Faded Crystals: Collect the specified number of Faded Job Crystal McGuffins"""
+        
+        # Add some aliases for easier configuration
+        goal_option.aliases.update({
+            "max_level": 0,
+            "level_sum": 1, 
+            "crystals": 2,
+            "any_max": 0,
+            "total": 1,
+            "mcguffin": 2
+        })
+        # Update the options dict so aliases work
+        goal_option.options.update(goal_option.aliases)
 
 # Use this Hook if you want to add your Option to an Option group (existing or not)
 def before_option_groups_created(groups: dict[str, list[Option]]) -> dict[str, list[Option]]:
-    # Create organized option groups
+    # Group victory condition options together
     groups['Victory Conditions'] = [
-        FadedJobCrystalsRequired, 
+        FadedJobCrystalsRequired,
         TotalLevelsRequired
     ]
     
@@ -202,16 +206,12 @@ def before_option_groups_created(groups: dict[str, list[Option]]) -> dict[str, l
     groups['Content Selection'] = [
         IncludedExpansions,
         IncludeDungeons,
-        IncludeTrials, 
+        IncludeTrials,
         IncludeRaids,
+        IncludeExtremeDifficulty,
         IncludeGuildhests,
         IncludeVariantDungeons,
         IncludeBozjaContent
-    ]
-    
-    groups['Difficulty Options'] = [
-        IncludeExtremeDifficulty,
-        DutyPrioritization
     ]
     
     return groups

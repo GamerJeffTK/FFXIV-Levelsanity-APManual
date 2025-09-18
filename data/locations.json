@@ -1,14 +1,20 @@
 [
   {
-    "name": "Complete Job Crystal Collection",
+    "name": "Reach Maximum Level on Any Job",
     "victory": true,
-    "category": [ "Victory" ],
-    "requires": "|A Faded Job Crystal:25|"
+    "category": [ "Victory Condition" ],
+    "requires": "{anyClassLevel(100)}"
   },
   {
-    "name": "Reach Sufficient Total Levels",
+    "name": "Reach Total Level Goal Across All Jobs",
     "victory": true,
-    "category": [ "Victory" ],
-    "requires": "{TotalLevelsReached(200)}"
+    "category": [ "Victory Condition" ],
+    "requires": "{totalLevelsAcrossAllJobs(200)}"
+  },
+  {
+    "name": "Collect All Faded Job Crystals",
+    "victory": true,
+    "category": [ "Victory Condition" ],
+    "requires": "|A Faded Job Crystal:50|"
   }
 ]
