@@ -29,6 +29,30 @@ import logging
 ## The fill_slot_data method will be used to send data to the Manual client for later use, like deathlink.
 ########################################################################################
 
+def get_expansion_limits(expansion_choice):
+    """Returns the jobs, max level, and available expansions for the chosen expansion setting"""
+    ARR_JOB = ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN"]
+    HW_JOB = ["DRK","MCH","AST"]
+    STB_JOB = ["SAM","RDM","BLU"]  # BLU is a StB job
+    SHB_JOB = ["GNB","DNC"]
+    EW_JOB = ["RPR","SGE"]
+    DT_JOB = ["VPR","PCT"]
+    DOH = ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"]
+    DOL = ["MIN","BTN","FSH"]
+    
+    if expansion_choice == 0:  # ARR only
+        return ARR_JOB + DOH + DOL, 50, ["ARR"]
+    elif expansion_choice == 1:  # ARR + HW  
+        return ARR_JOB + HW_JOB + DOH + DOL, 60, ["ARR", "HW"]
+    elif expansion_choice == 2:  # ARR + HW + StB
+        return ARR_JOB + HW_JOB + STB_JOB + DOH + DOL, 70, ["ARR", "HW", "StB"]
+    elif expansion_choice == 3:  # ARR + HW + StB + ShB
+        return ARR_JOB + HW_JOB + STB_JOB + SHB_JOB + DOH + DOL, 80, ["ARR", "HW", "StB", "ShB"]
+    elif expansion_choice == 4:  # ARR + HW + StB + ShB + EW
+        return ARR_JOB + HW_JOB + STB_JOB + SHB_JOB + EW_JOB + DOH + DOL, 90, ["ARR", "HW", "StB", "ShB", "EW"]
+    else:  # All expansions (5)
+        return ARR_JOB + HW_JOB + STB_JOB + SHB_JOB + EW_JOB + DT_JOB + DOH + DOL, 100, ["ARR", "HW", "StB", "ShB", "EW", "DT"]
+
 # Use this function to change the valid filler items to be created to replace item links or starting items.
 # Default value is the `filler_item_name` from game.json
 def hook_get_filler_item_name(world: World, multiworld: MultiWorld, player: int) -> str | bool:
@@ -40,192 +64,101 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
 
 # Called after regions and locations are created, in case you want to see or modify that information. Victory location is included.
 def after_create_regions(world: World, multiworld: MultiWorld, player: int):
-    # Use this hook to remove locations from the world
-    locationNamesToRemove: list[str] = [] # List of location names
-
-    # Add your code here to calculate which locations to remove based on options
-    # For example, remove content based on expansion selection
-    included_expansions = get_option_value(multiworld, player, "included_expansions")
+    # Get expansion limits
+    expansion_choice = get_option_value(multiworld, player, 'included_expansions')
+    available_jobs, max_level, available_expansions = get_expansion_limits(expansion_choice)
     
-    if included_expansions < 5:  # Not all expansions
-        expansions_to_remove = []
-        if included_expansions < 4:  # No EW
-            expansions_to_remove.extend(["EW", "DT"])
-        if included_expansions < 3:  # No ShB
-            expansions_to_remove.extend(["ShB"])
-        if included_expansions < 2:  # No StB
-            expansions_to_remove.extend(["StB"])
-        if included_expansions < 1:  # No HW
-            expansions_to_remove.extend(["HW"])
+    # Define all possible jobs
+    all_jobs = ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN","DRK","MCH","AST","SAM","RDM","BLU","GNB","DNC","RPR","SGE","VPR","PCT","CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL","MIN","BTN","FSH"]
+    
+    # Filter locations from regions
+    regions_to_process = [r for r in multiworld.regions if r.player == player]
+    
+    for region in regions_to_process:
+        # Check if this is a job region that shouldn't exist - mark all its locations for removal
+        if region.name in all_jobs and region.name not in available_jobs:
+            # Remove all locations from this unavailable job region
+            region.locations.clear()
+            continue
+        
+        # Filter locations within remaining regions
+        locations_to_remove = []
+        for location in list(region.locations):
+            should_remove = False
             
-        for region in multiworld.regions:
-            if region.player == player:
-                for location in list(region.locations):
-                    # Check if location should be removed based on expansion
-                    location_data = world.location_name_to_location.get(location.name, {})
-                    location_categories = location_data.get("category", [])
-                    
-                    # Remove locations from excluded expansions
-                    for exp in expansions_to_remove:
-                        if exp in location_categories:
-                            locationNamesToRemove.append(location.name)
-                            break
+            # Check if location is for a job that shouldn't exist
+            location_job = None
+            for job in all_jobs:
+                if location.name.startswith(f"{job} Level "):
+                    location_job = job
+                    break
+            
+            if location_job and location_job not in available_jobs:
+                should_remove = True
+            elif location_job:
+                # Check if location is for a level above max level
+                level_str = location.name.replace(f"{location_job} Level ", "")
+                try:
+                    level = int(level_str)
+                    if level > max_level:
+                        should_remove = True
+                    # Special case for BLU - cap at 80 even in EW/DT expansions
+                    elif location_job == "BLU" and level > min(80, max_level):
+                        should_remove = True
+                except ValueError:
+                    pass
+            
+            if should_remove:
+                locations_to_remove.append(location)
+        
+        # Remove locations from region
+        for location in locations_to_remove:
+            region.locations.remove(location)
 
-    # Update victory conditions based on YAML options
-    faded_crystals_required = get_option_value(multiworld, player, "faded_job_crystals_required")
-    total_levels_required = get_option_value(multiworld, player, "total_levels_required")
-    
-    # Find and update victory locations
-    for region in multiworld.regions:
-        if region.player == player:
-            for location in region.locations:
-                location_data = world.location_name_to_location.get(location.name, {})
-                
-                if location.name == "Complete Job Crystal Collection":
-                    if faded_crystals_required == 0:
-                        # Disable this victory condition
-                        locationNamesToRemove.append(location.name)
-                    else:
-                        # Update the requirement
-                        location_data["requires"] = f"|A Faded Job Crystal:{faded_crystals_required}|"
-                        
-                elif location.name == "Reach Sufficient Total Levels":
-                    if total_levels_required == 0:
-                        # Disable this victory condition  
-                        locationNamesToRemove.append(location.name)
-                    else:
-                        # Update the requirement
-                        location_data["requires"] = f"{{TotalLevelsReached({total_levels_required})}}"
-
-    # Remove disabled locations
-    for region in multiworld.regions:
-        if region.player == player:
-            for location in list(region.locations):
-                if location.name in locationNamesToRemove:
-                    region.locations.remove(location)
+    logging.info(f"Expansion filtering: Using {available_jobs} jobs with max level {max_level} for expansions {available_expansions}")
 
 # This hook allows you to access the item names & counts before the items are created. Use this to increase/decrease the amount of a specific item in the pool
-# Valid item_config key/values:
-# {"Item Name": 5} <- This will create qty 5 items using all the default settings
-# {"Item Name": {"useful": 7}} <- This will create qty 7 items and force them to be classified as useful
-# {"Item Name": {"progression": 2, "useful": 1}} <- This will create 3 items, with 2 classified as progression and 1 as useful
-# {"Item Name": {0b0110: 5}} <- If you know the special flag for the item classes, you can also define non-standard options. This setup
-#       will create 5 items that are the "useful trap" class
-# {"Item Name": {ItemClassification.useful: 5}} <- You can also use the classification directly
 def before_create_items_all(item_config: dict[str, int|dict], world: World, multiworld: MultiWorld, player: int) -> dict[str, int|dict]:
-    # Filter items based on options
-    include_extreme = get_option_value(multiworld, player, "include_extreme_difficulty")
-    include_dungeons = get_option_value(multiworld, player, "include_dungeons")
-    include_trials = get_option_value(multiworld, player, "include_trials")
-    include_raids = get_option_value(multiworld, player, "include_raids")
-    include_guildhests = get_option_value(multiworld, player, "include_guildhests")
-    include_variant = get_option_value(multiworld, player, "include_variant_dungeons")
-    include_bozja = get_option_value(multiworld, player, "include_bozja_content")
-    included_expansions = get_option_value(multiworld, player, "included_expansions")
+    # Get expansion limits  
+    expansion_choice = get_option_value(multiworld, player, 'included_expansions')
+    available_jobs, max_level, available_expansions = get_expansion_limits(expansion_choice)
     
-    # Build list of items to remove based on options
+    # Define all possible jobs
+    all_jobs = ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN","DRK","MCH","AST","SAM","RDM","BLU","GNB","DNC","RPR","SGE","VPR","PCT","CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL","MIN","BTN","FSH"]
+    
+    # Filter items that shouldn't exist
     items_to_remove = []
-    
-    # Filter by content type
-    for item_name, item_data in world.item_name_to_item.items():
-        if item_name in item_config:
+    for item_name in list(item_config.keys()):
+        should_remove = False
+        
+        # Check job crystal and level progression items
+        for job in all_jobs:
+            if job not in available_jobs and (f"{job} Job Crystal" in item_name or f"{job} Level Increased by 5" in item_name):
+                should_remove = True
+                break
+        
+        # Check duty items from wrong expansions
+        if not should_remove:
+            item_data = world.item_name_to_item.get(item_name, {})
             categories = item_data.get("category", [])
-            
-            # Check extreme/savage content
-            if not include_extreme:
-                if any(cat in categories for cat in ["Savage Raid"]) or "(Extreme)" in item_name or "(Savage)" in item_name:
-                    items_to_remove.append(item_name)
-                    continue
-            
-            # Check content types
-            if not include_dungeons and "Dungeon" in categories:
-                items_to_remove.append(item_name)
-                continue
-            if not include_trials and "Trial" in categories:
-                items_to_remove.append(item_name)
-                continue
-            if not include_raids and any(cat in categories for cat in ["Normal Raid", "Alliance Raid", "Savage Raid"]):
-                items_to_remove.append(item_name)
-                continue
-            if not include_guildhests and "Guildhest" in categories:
-                items_to_remove.append(item_name)
-                continue
-            if not include_variant and "Variant Dungeon" in categories:
-                items_to_remove.append(item_name)
-                continue
-            if not include_bozja and "Bozja" in categories:
-                items_to_remove.append(item_name)
-                continue
-            
-            # Check expansion filtering
-            if included_expansions < 5:  # Not all expansions
-                expansion_categories = []
-                if included_expansions < 4:  # No EW/DT
-                    expansion_categories.extend(["EW", "DT"])
-                if included_expansions < 3:  # No ShB
-                    expansion_categories.extend(["ShB"])
-                if included_expansions < 2:  # No StB
-                    expansion_categories.extend(["StB"])
-                if included_expansions < 1:  # No HW
-                    expansion_categories.extend(["HW"])
-                
-                if any(exp in categories for exp in expansion_categories):
-                    items_to_remove.append(item_name)
-                    continue
+            for category in categories:
+                if category in ["HW", "StB", "ShB", "EW", "DT"] and category not in available_expansions:
+                    should_remove = True
+                    break
+        
+        if should_remove:
+            items_to_remove.append(item_name)
     
-    # Remove filtered items
+    # Remove filtered items by setting their count to 0
     for item_name in items_to_remove:
-        if item_name in item_config:
-            del item_config[item_name]
+        item_config[item_name] = 0
+    
+    logging.info(f"Expansion filtering: Removed {len(items_to_remove)} items not available in selected expansions")
     
     return item_config
 
 # The item pool before starting items are processed, in case you want to see the raw item pool at that stage
 def before_create_items_starting(item_pool: list, world: World, multiworld: MultiWorld, player: int) -> list:
-    # Handle YAML option-based starting items
-    # This integrates with the YAML configuration to override default starting items
-    
-    # Get option values
-    starting_arr_crystals = get_option_value(multiworld, player, "starting_arr_job_crystals")
-    starting_doh_crystals = get_option_value(multiworld, player, "starting_doh_job_crystals")
-    starting_dol_crystals = get_option_value(multiworld, player, "starting_dol_job_crystals")
-    starting_level_items = get_option_value(multiworld, player, "starting_level_increase_items")
-    starting_duties = get_option_value(multiworld, player, "starting_duties")
-    
-    # Helper function to add starting items
-    def add_starting_items_by_category(category: str, count: int):
-        if count <= 0:
-            return
-        available_items = [item for item in item_pool if category in world.item_name_to_item.get(item.name, {}).get("category", [])]
-        world.random.shuffle(available_items)
-        items_to_start = available_items[:count]
-        for item in items_to_start:
-            multiworld.push_precollected(item)
-            item_pool.remove(item)
-    
-    # Add starting items based on options
-    add_starting_items_by_category("ARR Starter Job", starting_arr_crystals)
-    add_starting_items_by_category("DOH Job Crystal", starting_doh_crystals)
-    add_starting_items_by_category("DOL Job Crystal", starting_dol_crystals)
-    add_starting_items_by_category("Level Progression", starting_level_items)
-    
-    # For duties, prioritize early duties
-    if starting_duties > 0:
-        # First try to get early duties
-        early_duty_items = [item for item in item_pool if "Early Duty" in world.item_name_to_item.get(item.name, {}).get("category", [])]
-        other_duty_items = [item for item in item_pool if "Duty" in world.item_name_to_item.get(item.name, {}).get("category", []) and "Early Duty" not in world.item_name_to_item.get(item.name, {}).get("category", [])]
-        
-        world.random.shuffle(early_duty_items)
-        world.random.shuffle(other_duty_items)
-        
-        # Combine with early duties first
-        all_duty_items = early_duty_items + other_duty_items
-        duties_to_start = all_duty_items[:starting_duties]
-        
-        for item in duties_to_start:
-            multiworld.push_precollected(item)
-            item_pool.remove(item)
-    
     return item_pool
 
 # The item pool after starting items are processed but before filler is added, in case you want to see the raw item pool at that stage
