@@ -524,11 +524,56 @@ def after_load_item_file(item_table: list) -> list:
             "progression": True,
         })
     
+    # Add Faded Job Crystals for victory condition validation
+    # This prevents validation errors regardless of which victory condition is selected
+    # The actual count will be adjusted later in World.py based on the selected goal
+    item_table.append({
+        "name": "A Faded Job Crystal",
+        "category": ["Victory Item"],
+        "count": 50,  # Default count for validation - will be adjusted in World.py
+        "progression": True,
+    })
+    
     return item_table
 
 def after_load_location_file(location_table: list) -> list:
     
-    # REMOVED: Level milestone locations - using anyClassLevel function instead
+    # Add early accessible starter locations in Manual region for early job crystals and items
+    # These don't require any job crystals, making them perfect for early placement
+    starter_locations = [
+        "Begin Your Adventure",
+        "Complete Character Creation", 
+        "Finish Opening Cutscene",
+        "Reach Level 5 on Any Job",
+        "Reach Level 10 on Any Job", 
+        "Unlock Your First Dungeon",
+        "Complete Your First Guildhest",
+        "Join a Grand Company",
+        "Unlock Retainers",
+        "Complete Main Story Quest: The Gridanian Envoy",
+        "Complete Main Story Quest: The Ul'dahn Envoy", 
+        "Complete Main Story Quest: The Lominsan Envoy",
+        "Unlock Chocobo Companion",
+        "Complete First Class Quest",
+        "Visit All Three Starting Cities",
+        "Unlock Market Board Access",
+        "Unlock Aetheryte System",
+        "Complete Tutorial: Combat Basics",
+        "Complete Tutorial: Equipment Basics",
+        "Complete Tutorial: Inventory Management",
+        "Reach Level 15 on Any Job",
+        "Earn 1,000 Gil",
+        "Equip Your First Weapon",
+        "Learn Your First Combat Skill"
+    ]
+    
+    for location in starter_locations:
+        location_table.append({
+            "name": location,
+            "category": ["Starter"],
+            "region": "Manual",
+            # No requires - these are always accessible for early item placement
+        })
     
     # Add level locations every level for each job
     for job in ARR_JOB:

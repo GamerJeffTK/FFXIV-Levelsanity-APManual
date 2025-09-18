@@ -137,8 +137,7 @@ def get_duty_expansion_mapping() -> dict[str, str]:
         "The Second Coil of Bahamut - Turn 4": "ARR", "The Final Coil of Bahamut - Turn 1": "ARR",
         "The Final Coil of Bahamut - Turn 2": "ARR", "The Final Coil of Bahamut - Turn 3": "ARR",
         "The Final Coil of Bahamut - Turn 4": "ARR", "The Second Coil of Bahamut (Savage) - Turn 1": "ARR",
-        "The Second Coil of Bahamut (Savage) - Turn 2": "ARR", "The Second Coil of Bahamut (Savage) - Turn 3": "ARR",
-        "The Second Coil of Bahamut (Savage) - Turn 4": "ARR", "The Labyrinth of the Ancients": "ARR",
+        "The Second Coil of Bahamut (Savage) - Turn 2": "ARR", "The Labyrinth of the Ancients": "ARR",
         "Syrcus Tower": "ARR", "The World of Darkness": "ARR",
         
         # ARR Guildhests
@@ -166,12 +165,6 @@ def get_duty_expansion_mapping() -> dict[str, str]:
         # HW Raids
         "Alexander - The Fist of the Father": "HW", "Alexander - The Cuff of the Father": "HW",
         "Alexander - The Arm of the Father": "HW", "Alexander - The Burden of the Father": "HW",
-        "Alexander - The Fist of the Son": "HW", "Alexander - The Cuff of the Son": "HW",
-        "Alexander - The Arm of the Son": "HW", "Alexander - The Burden of the Son": "HW",
-        "Alexander - The Eyes of the Creator": "HW", "Alexander - The Breath of the Creator": "HW",
-        "Alexander - The Heart of the Creator": "HW", "Alexander - The Soul of the Creator": "HW",
-        "Alexander - The Fist of the Father (Savage)": "HW", "Alexander - The Cuff of the Father (Savage)": "HW",
-        "Alexander - The Arm of the Father (Savage)": "HW", "Alexander - The Burden of the Father (Savage)": "HW",
         "The Void Ark": "HW", "The Weeping City of Mhach": "HW", "Dun Scaith": "HW",
         
         # StB Dungeons
@@ -191,8 +184,6 @@ def get_duty_expansion_mapping() -> dict[str, str]:
         
         # StB Raids
         "Deltascape V1.0": "StB", "Deltascape V2.0": "StB", "Deltascape V3.0": "StB", "Deltascape V4.0": "StB",
-        "Sigmascape V1.0": "StB", "Sigmascape V2.0": "StB", "Sigmascape V3.0": "StB", "Sigmascape V4.0": "StB",
-        "Alphascape V1.0": "StB", "Alphascape V2.0": "StB", "Alphascape V3.0": "StB", "Alphascape V4.0": "StB",
         "The Royal City of Rabanastre": "StB", "The Ridorana Lighthouse": "StB", "The Orbonne Monastery": "StB",
         
         # ShB Dungeons  
@@ -211,11 +202,9 @@ def get_duty_expansion_mapping() -> dict[str, str]:
         
         # ShB Raids
         "Eden's Gate: Resurrection": "ShB", "Eden's Gate: Descent": "ShB", "Eden's Gate: Inundation": "ShB", 
-        "Eden's Gate: Sepulture": "ShB", "Eden's Verse: Fulmination": "ShB", "Eden's Verse: Furor": "ShB", 
-        "Eden's Verse: Iconoclasm": "ShB", "Eden's Verse: Refulgence": "ShB", "Eden's Promise: Umbra": "ShB", 
-        "Eden's Promise: Litany": "ShB", "Eden's Promise: Anamorphosis": "ShB", "Eden's Promise: Eternity": "ShB",
-        "The Copied Factory": "ShB", "The Puppets' Bunker": "ShB", "The Tower at Paradigm's Breach": "ShB",
-        "Castrum Lacus Litore": "ShB", "Delubrum Reginae": "ShB", "The Dalriada": "ShB",
+        "Eden's Gate: Sepulture": "ShB", "The Copied Factory": "ShB", "The Puppets' Bunker": "ShB", 
+        "The Tower at Paradigm's Breach": "ShB", "Castrum Lacus Litore": "ShB", "Delubrum Reginae": "ShB", 
+        "The Dalriada": "ShB",
         
         # EW Dungeons
         "The Tower of Zot": "EW", "The Tower of Babil": "EW", "Vanaspati": "EW", "Ktisis Hyperboreia": "EW",
@@ -232,10 +221,7 @@ def get_duty_expansion_mapping() -> dict[str, str]:
         
         # EW Raids
         "Asphodelos: The First Circle": "EW", "Asphodelos: The Second Circle": "EW", "Asphodelos: The Third Circle": "EW", 
-        "Asphodelos: The Fourth Circle": "EW", "Abyssos: The Fifth Circle": "EW", "Abyssos: The Sixth Circle": "EW", 
-        "Abyssos: The Seventh Circle": "EW", "Abyssos: The Eighth Circle": "EW", "Anabaseios: The Ninth Circle": "EW", 
-        "Anabaseios: The Tenth Circle": "EW", "Anabaseios: The Eleventh Circle": "EW", "Anabaseios: The Twelfth Circle": "EW",
-        "Aglaia": "EW", "Euphrosyne": "EW", "Thaleia": "EW",
+        "Asphodelos: The Fourth Circle": "EW", "Aglaia": "EW", "Euphrosyne": "EW", "Thaleia": "EW",
         "The Sil'dihn Subterrane": "EW", "Mount Rokkon": "EW", "Aloalo Island": "EW",
         
         # DT Dungeons
@@ -251,9 +237,7 @@ def get_duty_expansion_mapping() -> dict[str, str]:
         
         # DT Raids
         "AAC Light-heavyweight M1": "DT", "AAC Light-heavyweight M2": "DT", "AAC Light-heavyweight M3": "DT", 
-        "AAC Light-heavyweight M4": "DT", "AAC Cruiserweight M1": "DT", "AAC Cruiserweight M2": "DT", 
-        "AAC Cruiserweight M3": "DT", "AAC Cruiserweight M4": "DT", "Jeuno: The First Walk": "DT", 
-        "San d'Oria: The Second Walk": "DT"
+        "AAC Light-heavyweight M4": "DT", "Jeuno: The First Walk": "DT", "San d'Oria: The Second Walk": "DT"
     }
 
 def should_remove_item(item_name: str, expansions: int, max_level: int, blu_max_level: int, enabled_jobs: tuple) -> bool:
@@ -318,8 +302,6 @@ def should_remove_item(item_name: str, expansions: int, max_level: int, blu_max_
         if duty in item_name and expansion not in enabled_expansion_tags:
             return True
     
-    # REMOVED: Level access items check - no longer using gate items
-    
     return False
 
 def should_remove_location(location_name: str, expansions: int, max_level: int, blu_max_level: int, enabled_jobs: tuple) -> bool:
@@ -364,8 +346,6 @@ def should_remove_location(location_name: str, expansions: int, max_level: int, 
             except (IndexError, ValueError):
                 pass
             break
-    
-    # REMOVED: Level milestone locations check - no longer using milestone locations
     
     # Check duty completion locations
     if "Complete " in location_name:
@@ -447,11 +427,13 @@ def before_create_items_all(item_config: dict[str, int|dict], world: World, mult
     enabled_jobs = get_enabled_jobs(expansions)
     dow_dom_jobs, doh_jobs, dol_jobs, blu_enabled = enabled_jobs
     
-    # Check if we need to add Faded Job Crystals (only for goal 2 - crystals victory condition)
+    # Adjust Faded Job Crystals count based on selected goal
+    # The item is already added in Data.py for validation, now we adjust the count
     goal = get_option_value(multiworld, player, "goal")
     if goal == 2:  # "Collect All Faded Job Crystals" victory condition
         faded_crystals_required = get_option_value(multiworld, player, "faded_job_crystals_required")
         item_config["A Faded Job Crystal"] = faded_crystals_required
+    # If goal != 2, we keep the default count (50) that was set in Data.py
     
     # Filter items based on expansion settings
     filtered_config = {}
