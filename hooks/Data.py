@@ -17,6 +17,28 @@ def after_load_item_file(item_table: list) -> list:
     
     # REMOVED: Level gate items - using anyClassLevel function instead
     
+    # Define early duties (level 25 and under) based on duties.csv
+    early_duties = {
+        # Dungeons level <= 25
+        "Sastasha",  # 18
+        "The Tam-Tara Deepcroft",  # 19
+        "Copperbell Mines",  # 20
+        "Halatali",  # 23
+        
+        # Trials level <= 25  
+        "The Bowl of Embers",  # 22
+        
+        # Guildhests level <= 25
+        "Basic Training: Enemy Parties",  # 10
+        "Under the Armor",  # 10
+        "Basic Training: Enemy Strongholds",  # 15
+        "Hero on the Half Shell",  # 15
+        "Pulling Poison Posies",  # 20
+        "Stinging Back",  # 20
+        "All's Well that Ends in the Well",  # 25
+        "Flicking Sticks and Taking Names",  # 25
+    }
+    
     # ARR Jobs
     for job in ARR_JOB:
         # Level increases - using "Level Increased by 5" naming
@@ -179,12 +201,16 @@ def after_load_item_file(item_table: list) -> list:
     ]
     
     for dungeon in dungeons_arr:
-        item_table.append({
+        duty_item = {
             "name": dungeon,
             "category": ["Dungeon", "ARR", "Duty"],
             "count": 1,
             "progression": True,
-        })
+        }
+        # Mark early duties (level <= 25) as early items
+        if dungeon in early_duties:
+            duty_item["early"] = True
+        item_table.append(duty_item)
 
     # ARR Trials
     trials_arr = [
@@ -200,12 +226,16 @@ def after_load_item_file(item_table: list) -> list:
     ]
     
     for trial in trials_arr:
-        item_table.append({
+        duty_item = {
             "name": trial,
             "category": ["Trial", "ARR", "Duty"],
             "count": 1,
             "progression": True,
-        })
+        }
+        # Mark early duties (level <= 25) as early items
+        if trial in early_duties:
+            duty_item["early"] = True
+        item_table.append(duty_item)
 
     # HW Dungeons
     dungeons_hw = [
@@ -495,12 +525,16 @@ def after_load_item_file(item_table: list) -> list:
     ]
     
     for guildhest in guildhests:
-        item_table.append({
+        duty_item = {
             "name": guildhest,
             "category": ["Guildhest", "ARR", "Duty"],
             "count": 1,
             "progression": True,
-        })
+        }
+        # Mark early duties (level <= 25) as early items
+        if guildhest in early_duties:
+            duty_item["early"] = True
+        item_table.append(duty_item)
 
     # Variant Dungeons (EW)
     variant_dungeons = ["The Sil'dihn Subterrane", "Mount Rokkon", "Aloalo Island"]
@@ -564,7 +598,46 @@ def after_load_location_file(location_table: list) -> list:
         "Reach Level 15 on Any Job",
         "Earn 1,000 Gil",
         "Equip Your First Weapon",
-        "Learn Your First Combat Skill"
+        "Learn Your First Combat Skill",
+        # Additional starting locations to handle increased early items
+        "Reach Level 20 on Any Job",
+        "Complete Your First Dungeon Run",
+        "Unlock Your First Mount",
+        "Complete Your First Trial",
+        "Earn 5,000 Gil",
+        "Reach Level 25 on Any Job",
+        "Complete 5 Quests",
+        "Complete 10 Quests", 
+        "Complete 15 Quests",
+        "Unlock Glamour System",
+        "Complete Your First Guildhest Victory",
+        "Join Your First Party via Duty Finder",
+        "Complete Tutorial: Hotbar Setup",
+        "Complete Tutorial: Targeting",
+        "Complete Tutorial: Status Effects",
+        "Complete Tutorial: Party System",
+        "Unlock Inn Room",
+        "Complete First Sidequest",
+        "Discover 5 Aetherytes",
+        "Discover 10 Aetherytes",
+        "Complete First Levemete Introduction",
+        "Unlock Challenge Log",
+        "Complete First Hunting Log Entry",
+        "Unlock Mentor System",
+        "Complete First FATE",
+        "Complete 3 FATEs",
+        "Complete 5 FATEs",
+        "Obtain First Achievement",
+        "Obtain 5 Achievements",
+        "Obtain 10 Achievements",
+        "Complete Tutorial: Map Navigation",
+        "Complete Tutorial: Journal System",
+        "Reach Rank 2 in Grand Company",
+        "Complete First Company Leve",
+        "Unlock First Emote",
+        "Complete Character Appearance Tutorial",
+        "Complete First Weather Change",
+        "Complete Tutorial: Teleportation"
     ]
     
     for location in starter_locations:
