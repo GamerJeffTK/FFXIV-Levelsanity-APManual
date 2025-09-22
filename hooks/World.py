@@ -240,8 +240,8 @@ def get_duty_expansion_mapping() -> dict[str, str]:
         "AAC Light-heavyweight M4": "DT", "Jeuno: The First Walk": "DT", "San d'Oria: The Second Walk": "DT"
     }
 
-def should_remove_item(item_name: str, expansions: int, max_level: int, blu_max_level: int, enabled_jobs: tuple) -> bool:
-    """Determine if an item should be removed based on expansion settings"""
+def should_remove_item(item_name: str, expansions: int, max_level: int, blu_max_level: int, enabled_jobs: tuple, multiworld, player: int) -> bool:
+    """Determine if an item should be removed based on expansion settings and content toggles"""
     dow_dom_jobs, doh_jobs, dol_jobs, blu_enabled = enabled_jobs
     enabled_expansion_tags = get_enabled_expansion_tags(expansions)
     
@@ -302,10 +302,113 @@ def should_remove_item(item_name: str, expansions: int, max_level: int, blu_max_
         if duty in item_name and expansion not in enabled_expansion_tags:
             return True
     
+    # Check content type toggles - only apply to duties, not job crystals or level progression items
+    if any(duty in item_name for duty in duty_expansions.keys()):
+        # Check if dungeons are disabled
+        if not get_option_value(multiworld, player, "include_dungeons"):
+            # Check if this is a dungeon (including hard modes)
+            dungeon_indicators = [
+                "Sastasha", "The Tam-Tara Deepcroft", "Copperbell Mines", "Halatali",
+                "The Thousand Maws of Toto-Rak", "Haukke Manor", "Brayflox's Longstop",
+                "The Sunken Temple of Qarn", "Cutter's Cry", "The Stone Vigil",
+                "Dzemael Darkhold", "The Aurum Vale", "Castrum Meridianum", "The Praetorium",
+                "The Wanderer's Palace", "Amdapor Keep", "Pharos Sirius",
+                "The Lost City of Amdapor", "Hullbreaker Isle", "Snowcloak",
+                "The Keeper of the Lake", "The Dusk Vigil", "Sohm Al", "The Aery",
+                "The Vault", "The Great Gubal Library", "The Aetherochemical Research Facility",
+                "Neverreap", "The Fractal Continuum", "Saint Mocianne's Arboretum",
+                "The Antitower", "Xelphatol", "Baelsar's Wall", "The Sirensong Sea",
+                "Shisui of the Violet Tides", "Bardam's Mettle", "Doma Castle",
+                "Castrum Abania", "Ala Mhigo", "Kugane Castle", "The Temple of the Fist",
+                "The Drowned City of Skalla", "Hells' Lid", "The Swallow's Compass",
+                "The Burn", "The Ghimlyt Dark", "Holminster Switch", "Dohn Mheg",
+                "The Qitana Ravel", "Malikah's Well", "Mt. Gulg", "Amaurot",
+                "The Twinning", "Akadaemia Anyder", "The Grand Cosmos",
+                "Anamnesis Anyder", "The Heroes' Gauntlet", "Matoya's Relict",
+                "Paglth'an", "The Tower of Zot", "The Tower of Babil", "Vanaspati",
+                "Ktisis Hyperboreia", "The Aitiascope", "The Dead Ends", "Smileton",
+                "The Stigma Dreamscape", "Alzadaal's Legacy", "The Fell Court of Troia",
+                "Lapis Manalis", "The Aetherfont", "The Lunar Subterrane",
+                "Ihuykatumu", "Worqor Zormor", "The Skydeep Cenote", "Vanguard",
+                "Origenics", "Alexandria", "Tender Valley", "The Strayborough Deadwalk",
+                "Yuweyawata Field Station", "The Underkeep", "The Meso Terminal"
+            ]
+            if any(dungeon in item_name for dungeon in dungeon_indicators):
+                return True
+        
+        # Check if trials are disabled
+        if not get_option_value(multiworld, player, "include_trials"):
+            trial_indicators = [
+                "The Bowl of Embers", "The Navel", "The Howling Eye", "The Porta Decumana",
+                "Thornmarch", "A Relic Reborn", "The Whorleater", "Battle on the Big Bridge",
+                "The Striking Tree", "The Akh Afah Amphitheatre", "The Dragon's Neck",
+                "The Chrysalis", "Battle in the Big Keep", "Urth's Fount",
+                "The Minstrel's Ballad", "Thok ast Thok", "The Limitless Blue",
+                "The Singularity Reactor", "Containment Bay", "The Final Steps of Faith",
+                "The Pool of Tribute", "Emanation", "The Royal Menagerie",
+                "The Jade Stoa", "Castrum Fluminis", "The Great Hunt", "Hells' Kier",
+                "The Wreath of Snakes", "Kugane Ohashi", "The Dancing Plague",
+                "The Crown of the Immaculate", "The Dying Gasp", "Cinder Drift",
+                "The Seat of Sacrifice", "Castrum Marinum", "The Cloud Deck",
+                "Memoria Misera", "The Dark Inside", "The Mothercrystal", "The Final Day",
+                "Storm's Crown", "Mount Ordeals", "The Voidcast Dais",
+                "The Abyssal Fracture", "The Gilded Araya", "Worqor Lar Dor",
+                "Everkeep", "The Interphos", "Recollection", "The Ageless Necropolis"
+            ]
+            if any(trial in item_name for trial in trial_indicators):
+                return True
+        
+        # Check if raids are disabled
+        if not get_option_value(multiworld, player, "include_raids"):
+            raid_indicators = [
+                "The Binding Coil", "The Second Coil", "The Final Coil",
+                "The Labyrinth of the Ancients", "Syrcus Tower", "The World of Darkness",
+                "Alexander", "The Void Ark", "The Weeping City", "Dun Scaith",
+                "Deltascape", "Sigmascape", "Alphascape", "The Royal City of Rabanastre",
+                "The Ridorana Lighthouse", "The Orbonne Monastery", "Eden's Gate",
+                "Eden's Verse", "Eden's Promise", "The Copied Factory",
+                "The Puppets' Bunker", "The Tower at Paradigm's Breach",
+                "Asphodelos", "Abyssos", "Anabaseios", "Aglaia", "Euphrosyne",
+                "Thaleia", "AAC Light-heavyweight", "AAC Cruiserweight",
+                "Jeuno: The First Walk", "San d'Oria: The Second Walk"
+            ]
+            if any(raid in item_name for raid in raid_indicators):
+                return True
+        
+        # Check if guildhests are disabled
+        if not get_option_value(multiworld, player, "include_guildhests"):
+            guildhest_indicators = [
+                "Basic Training: Enemy Parties", "Under the Armor",
+                "Basic Training: Enemy Strongholds", "Hero on the Half Shell",
+                "Pulling Poison Posies", "Stinging Back",
+                "All's Well that Ends in the Well", "Flicking Sticks and Taking Names",
+                "More than a Feeler", "Annoy the Void", "Shadow and Claw",
+                "Long Live the Queen", "Ward Up", "Solemn Trinity"
+            ]
+            if any(guildhest in item_name for guildhest in guildhest_indicators):
+                return True
+        
+        # Check if variant dungeons are disabled
+        if not get_option_value(multiworld, player, "include_variant_dungeons"):
+            variant_indicators = ["The Sil'dihn Subterrane", "Mount Rokkon", "Aloalo Island"]
+            if any(variant in item_name for variant in variant_indicators):
+                return True
+        
+        # Check if Bozja content is disabled
+        if not get_option_value(multiworld, player, "include_bozja_content"):
+            bozja_indicators = ["Castrum Lacus Litore", "Delubrum Reginae", "The Dalriada"]
+            if any(bozja in item_name for bozja in bozja_indicators):
+                return True
+        
+        # Check if extreme difficulty is disabled
+        if not get_option_value(multiworld, player, "include_extreme_difficulty"):
+            if "(Extreme)" in item_name or "(Savage)" in item_name or "The Minstrel's Ballad:" in item_name:
+                return True
+    
     return False
 
-def should_remove_location(location_name: str, expansions: int, max_level: int, blu_max_level: int, enabled_jobs: tuple) -> bool:
-    """Determine if a location should be removed based on expansion settings"""
+def should_remove_location(location_name: str, expansions: int, max_level: int, blu_max_level: int, enabled_jobs: tuple, multiworld, player: int) -> bool:
+    """Determine if a location should be removed based on expansion settings and content toggles"""
     dow_dom_jobs, doh_jobs, dol_jobs, blu_enabled = enabled_jobs
     
     # Check job level locations
@@ -357,6 +460,60 @@ def should_remove_location(location_name: str, expansions: int, max_level: int, 
             enabled_expansion_tags = get_enabled_expansion_tags(expansions)
             if expansion not in enabled_expansion_tags:
                 return True
+            
+            # Check content type toggles for duty completion locations
+            # Check if dungeons are disabled
+            if not get_option_value(multiworld, player, "include_dungeons"):
+                dungeon_indicators = [
+                    "Sastasha", "The Tam-Tara Deepcroft", "Copperbell Mines", "Halatali",
+                    "The Thousand Maws of Toto-Rak", "Haukke Manor", "Brayflox's Longstop",
+                    "The Sunken Temple of Qarn", "Cutter's Cry", "The Stone Vigil",
+                    "Dzemael Darkhold", "The Aurum Vale", "Castrum Meridianum", "The Praetorium",
+                    "The Wanderer's Palace", "Amdapor Keep", "Pharos Sirius",
+                    "The Lost City of Amdapor", "Hullbreaker Isle", "Snowcloak",
+                    "The Keeper of the Lake", "The Dusk Vigil", "Sohm Al", "The Aery",
+                    "The Vault", "The Great Gubal Library", "The Aetherochemical Research Facility",
+                    "Neverreap", "The Fractal Continuum", "Saint Mocianne's Arboretum",
+                    "The Antitower", "Xelphatol", "Baelsar's Wall", "The Sirensong Sea",
+                    "Shisui of the Violet Tides", "Bardam's Mettle", "Doma Castle",
+                    "Castrum Abania", "Ala Mhigo", "Kugane Castle", "The Temple of the Fist",
+                    "The Drowned City of Skalla", "Hells' Lid", "The Swallow's Compass",
+                    "The Burn", "The Ghimlyt Dark", "Holminster Switch", "Dohn Mheg",
+                    "The Qitana Ravel", "Malikah's Well", "Mt. Gulg", "Amaurot",
+                    "The Twinning", "Akadaemia Anyder", "The Grand Cosmos",
+                    "Anamnesis Anyder", "The Heroes' Gauntlet", "Matoya's Relict",
+                    "Paglth'an", "The Tower of Zot", "The Tower of Babil", "Vanaspati",
+                    "Ktisis Hyperboreia", "The Aitiascope", "The Dead Ends", "Smileton",
+                    "The Stigma Dreamscape", "Alzadaal's Legacy", "The Fell Court of Troia",
+                    "Lapis Manalis", "The Aetherfont", "The Lunar Subterrane",
+                    "Ihuykatumu", "Worqor Zormor", "The Skydeep Cenote", "Vanguard",
+                    "Origenics", "Alexandria", "Tender Valley", "The Strayborough Deadwalk",
+                    "Yuweyawata Field Station", "The Underkeep", "The Meso Terminal"
+                ]
+                if duty_name in dungeon_indicators:
+                    return True
+            
+            # Check if trials are disabled
+            if not get_option_value(multiworld, player, "include_trials"):
+                trial_indicators = [
+                    "The Bowl of Embers", "The Navel", "The Howling Eye", "The Porta Decumana",
+                    "Thornmarch", "A Relic Reborn", "The Whorleater", "Battle on the Big Bridge",
+                    "The Striking Tree", "The Akh Afah Amphitheatre", "The Dragon's Neck",
+                    "The Chrysalis", "Battle in the Big Keep", "Urth's Fount",
+                    "The Minstrel's Ballad", "Thok ast Thok", "The Limitless Blue",
+                    "The Singularity Reactor", "Containment Bay", "The Final Steps of Faith",
+                    "The Pool of Tribute", "Emanation", "The Royal Menagerie",
+                    "The Jade Stoa", "Castrum Fluminis", "The Great Hunt", "Hells' Kier",
+                    "The Wreath of Snakes", "Kugane Ohashi", "The Dancing Plague",
+                    "The Crown of the Immaculate", "The Dying Gasp", "Cinder Drift",
+                    "The Seat of Sacrifice", "Castrum Marinum", "The Cloud Deck",
+                    "Memoria Misera", "The Dark Inside", "The Mothercrystal", "The Final Day",
+                    "Storm's Crown", "Mount Ordeals", "The Voidcast Dais",
+                    "The Abyssal Fracture", "The Gilded Araya", "Worqor Lar Dor",
+                    "Everkeep", "The Interphos", "Recollection", "The Ageless Necropolis"
+                ]
+                if any(trial in duty_name for trial in trial_indicators):
+                    return True
     
     return False
 
@@ -384,7 +541,7 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     for region in multiworld.regions:
         if region.player == player:
             for location in list(region.locations):
-                if should_remove_location(location.name, expansions, max_level, blu_max_level, enabled_jobs):
+                if should_remove_location(location.name, expansions, max_level, blu_max_level, enabled_jobs, multiworld, player):
                     locationNamesToRemove.append(location.name)
     
     # Remove the locations
@@ -415,7 +572,7 @@ def before_create_items_all(item_config: dict[str, int|dict], world: World, mult
     filtered_config = {}
     
     for item_name, config in item_config.items():
-        if not should_remove_item(item_name, expansions, max_level, blu_max_level, enabled_jobs):
+        if not should_remove_item(item_name, expansions, max_level, blu_max_level, enabled_jobs, multiworld, player):
             # For level progression items, adjust counts based on level caps
             if "Level Increased by 5" in item_name:
                 # Calculate the required number of items based on level caps
@@ -473,6 +630,22 @@ def before_create_items_all(item_config: dict[str, int|dict], world: World, mult
 
 # The item pool before starting items are processed, in case you want to see the raw item pool at that stage
 def before_create_items_starting(item_pool: list, world: World, multiworld: MultiWorld, player: int) -> list:
+    # Filter starting items based on content toggles to ensure consistency
+    # Get expansion settings
+    expansions = get_option_value(multiworld, player, "included_expansions")
+    max_level = get_max_level(expansions)
+    blu_max_level = get_blu_max_level(expansions)
+    enabled_jobs = get_enabled_jobs(expansions)
+    
+    # Remove items that should be filtered out
+    items_to_remove = []
+    for item in item_pool:
+        if should_remove_item(item.name, expansions, max_level, blu_max_level, enabled_jobs, multiworld, player):
+            items_to_remove.append(item)
+    
+    for item in items_to_remove:
+        item_pool.remove(item)
+    
     return item_pool
 
 # The item pool after starting items are processed but before filler is added, in case you want to see the raw item pool at that stage
