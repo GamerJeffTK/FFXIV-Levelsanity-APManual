@@ -630,8 +630,7 @@ def before_create_items_all(item_config: dict[str, int|dict], world: World, mult
 
 # The item pool before starting items are processed, in case you want to see the raw item pool at that stage
 def before_create_items_starting(item_pool: list, world: World, multiworld: MultiWorld, player: int) -> list:
-    # Filter starting items based on content toggles to ensure consistency
-    # Get expansion settings
+    # Filter out items based on expansion settings to ensure consistency
     expansions = get_option_value(multiworld, player, "included_expansions")
     max_level = get_max_level(expansions)
     blu_max_level = get_blu_max_level(expansions)
@@ -645,6 +644,91 @@ def before_create_items_starting(item_pool: list, world: World, multiworld: Mult
     
     for item in items_to_remove:
         item_pool.remove(item)
+    
+    # NEW: Handle YAML starting item options
+    items_started: list[Item] = []
+    
+    # ARR Job Crystals
+    arr_crystals = get_option_value(multiworld, player, "starting_arr_job_crystals")
+    if arr_crystals > 0:
+        dow_dom_jobs, _, _, _ = enabled_jobs
+        arr_jobs = [job for job in ["PLD","WAR","DRG","MNK","BRD","BLM","WHM","SMN/SCH","NIN"] if job in dow_dom_jobs]
+        world.random.shuffle(arr_jobs)
+        
+        for i in range(min(arr_crystals, len(arr_jobs))):
+            job = arr_jobs[i]
+            crystal_name = f"{job} Job Crystal (default cap 10)"
+            crystal_item = next((item for item in item_pool if item.name == crystal_name), None)
+            if crystal_item:
+                items_started.append(crystal_item)
+                item_pool.remove(crystal_item)
+                world.multiworld.push_precollected(crystal_item)
+    
+    # DOH Job Crystals
+    doh_crystals = get_option_value(multiworld, player, "starting_doh_job_crystals")
+    if doh_crystals > 0:
+        _, doh_jobs_list, _, _ = enabled_jobs
+        doh_jobs_copy = doh_jobs_list.copy()
+        world.random.shuffle(doh_jobs_copy)
+        
+        for i in range(min(doh_crystals, len(doh_jobs_copy))):
+            job = doh_jobs_copy[i]
+            crystal_name = f"{job} Job Crystal (default cap 5)"
+            crystal_item = next((item for item in item_pool if item.name == crystal_name), None)
+            if crystal_item:
+                items_started.append(crystal_item)
+                item_pool.remove(crystal_item)
+                world.multiworld.push_precollected(crystal_item)
+    
+    # DOL Job Crystals
+    dol_crystals = get_option_value(multiworld, player, "starting_dol_job_crystals")
+    if dol_crystals > 0:
+        _, _, dol_jobs_list, _ = enabled_jobs
+        dol_jobs_copy = dol_jobs_list.copy()
+        world.random.shuffle(dol_jobs_copy)
+        
+        for i in range(min(dol_crystals, len(dol_jobs_copy))):
+            job = dol_jobs_copy[i]
+            crystal_name = f"{job} Job Crystal (default cap 5)"
+            crystal_item = next((item for item in item_pool if item.name == crystal_name), None)
+            if crystal_item:
+                items_started.append(crystal_item)
+                item_pool.remove(crystal_item)
+                world.multiworld.push_precollected(crystal_item)
+    
+    # Level Increase Items
+    level_items = get_option_value(multiworld, player, "starting_level_increase_items")
+    if level_items > 0:
+        level_progression_items = [item for item in item_pool if "Level Increased by 5" in item.name]
+        world.random.shuffle(level_progression_items)
+        
+        for i in range(min(level_items, len(level_progression_items))):
+            level_item = level_progression_items[i]
+            items_started.append(level_item)
+            item_pool.remove(level_item)
+            world.multiworld.push_precollected(level_item)
+    
+    # Starting Duties
+    starting_duties = get_option_value(multiworld, player, "starting_duties")
+    if starting_duties > 0:
+        duty_items = [item for item in item_pool if any(category in item.name for category in ["Dungeon", "Trial", "Raid", "Guildhest"])]
+        # Prioritize early duties for starting duties
+        early_duties = [item for item in duty_items if item.early]
+        non_early_duties = [item for item in duty_items if not item.early]
+        
+        # Start with early duties, then add non-early if needed
+        combined_duties = early_duties + non_early_duties
+        world.random.shuffle(combined_duties)
+        
+        for i in range(min(starting_duties, len(combined_duties))):
+            duty_item = combined_duties[i]
+            items_started.append(duty_item)
+            item_pool.remove(duty_item)
+            world.multiworld.push_precollected(duty_item)
+    
+    # Update start inventory for display
+    if items_started:
+        world.start_inventory = {i.name: items_started.count(i) for i in items_started}
     
     return item_pool
 
